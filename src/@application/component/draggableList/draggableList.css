@@ -1,0 +1,59 @@
+/* VIVEK - Draggable List CSS */
+
+.dragParent {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background: #f0f0f0; */
+  cursor: grab;
+}
+
+.draggable-main {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  position: relative;
+  /* width: 90%; */
+  height: 240px;
+  margin: 0 5%;
+}
+
+.content > div {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  pointer-events: auto;
+  transform-origin: 50% 50% 0px;
+  border-radius: 25px;
+  /* line-height: 50px; */
+  padding: 4px;
+  /* background: lightblue; */
+}
+
+.content > div:nth-child(1) {
+  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+}
+.content > div:nth-child(2) {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+.content > div:nth-child(3) {
+  background: linear-gradient(135deg, #5ee7df 0%, #b490ca 100%);
+}
+.content > div:nth-child(4) {
+  background: linear-gradient(135deg, #c3cfe2 0%, #c3cfe2 100%);
+}

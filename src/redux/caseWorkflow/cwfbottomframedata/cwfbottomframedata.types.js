@@ -1,0 +1,1 @@
+export const SET_CWF_SEARCH_DATA = "SET_CWF_SEARCH_DATA";

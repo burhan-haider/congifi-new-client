@@ -1,0 +1,196 @@
+/* @tailwind base; */
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "GoogleSans-Medium";
+  src: url("./assets/fonts/GoogleSans-Medium.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "GoogleSans-Regular";
+  src: url("./assets/fonts/GoogleSans-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "GoogleSans-Bold";
+  src: url("./assets/fonts/GoogleSans-Bold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+html{
+  font-family: "GoogleSans-Regular",-apple-system, BlinkMacSystemFont, 'Segoe UI',Roboto, Helvetica Neue, Arial, sans-serif;
+  height: 100%;
+  min-height: 100%;
+
+}
+body {
+  margin: 0;
+  font-family: 'GoogleSans-Regular',-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100%;
+  height: 100%;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  overflow-y: scroll;
+}
+
+.node {
+	cursor: pointer;
+}
+
+.node circle {
+	fill: #fff;
+	stroke: white;
+	stroke-width: 1.5px;
+}
+
+.node text {
+	font-family: 'Work Sans', sans-serif;
+	font-size: 50%;
+	font-weight: 600;
+}
+
+.keyText {
+	text-transform: capitalize;
+}
+
+.link {
+	fill: none;
+	/* stroke: #ccc; */
+	stroke-width: 0.3px;
+}
+
+.rotatecss {
+	float: right;
+	display: block;
+	margin: 20px;
+	cursor: pointer;
+	z-index: 1;
+	position: fixed;
+	height: 100px;
+	padding: 0;
+	transition: opacity 0.6s ease-out;
+}
+
+#rotateDiv {
+	width: 120px;
+	height: 100px;
+	background-color: yellow;
+	transform: rotate(7deg);
+	-ms-transform: rotate(7deg);
+	-webkit-transform: rotate(7deg);
+}
+
+text.keyText {
+	/* stroke: white;
+    stroke-opacity: 0.1; */
+	
+}
+
+#chartParentDiv {
+	overflow: hidden;
+	background-size: 100%;
+}
+
+#zoomer {
+	display: block;
+	width: 100%;
+	margin: 2rem auto;
+}
+
+@media all and (max-width: 500px) {
+	#zoomer, #hubble-container {
+		width: 85%;
+	}
+}
+
+.inactive {
+	opacity: 0;
+}
+
+#collapseAllButton {
+	border-radius: 50%;
+	background-color: transparent;
+	color: white;
+	margin-right: 10px;
+	border-color: black;
+	font-size: 5px;
+	width: 5px;
+	margin-bottom: 5px;
+	margin-left: 5px;
+	border-width: thin;
+}
+
+#collapseAllButton:focus {
+	background: #3071A9;
+	color: #3071A9;
+}
+
+#expandAllButton {
+	border-radius: 50%;
+	background-color: transparent;
+	color: white;
+	border-color: black;
+	font-size: 5px;
+	width: 5px;
+	margin-bottom: 5px;
+	margin-left: 5px;
+	border-width: thin;
+}
+
+#expandAllButton:focus {
+	background: #6babe3;
+	color: #6babe3;
+}
+
+#save {
+	background-color: transparent;
+	border-color: transparent;
+	margin: 20px;
+	float: right;
+	font-size: x-large;
+}
+
+
+.rdg-cell[role='columnheader'] {
+    box-shadow: 0 10px 10px -3px rgb(0 0 0 / 0.05),
+        0 4px 4px -4px rgb(0 0 0 / 0.05);
+    padding: 0px;
+	text-align: left;
+}
+
+.rdg-cell[role='gridcell'] {
+    padding: 0px 10px;
+	font-size: 13px;
+	text-align: left;
+}
+
+.rdg-header-sort-cell{
+    padding: 0px 8px;
+}
+
+.rdg-cell[role='columnheader'] input[type='checkbox'] {
+    margin-left: 12px;
+}
