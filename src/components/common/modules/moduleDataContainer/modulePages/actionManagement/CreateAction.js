@@ -6,10 +6,10 @@ import {
   Grid,
   Accordion,
   AccordionDetails,
-  AccordionSummary
+  AccordionSummary,
 } from "@mui/material";
 // import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { MdExpandMore as ExpandMoreIcon } from 'react-icons/md'
+import { MdExpandMore as ExpandMoreIcon } from "react-icons/md";
 
 import { useDispatch, useSelector } from "react-redux";
 import { GenericDatatable, GenericButton, GenericDatagrid } from "@application";
@@ -17,24 +17,22 @@ import { ActionsBottomContainer } from "../common/bottomPages";
 import * as Actions from "redux/caseWorkflow/cwfbottomframedata/cwfbottomframedata.actions";
 import caseWorkflowService from "services/caseWorkflow/caseWorkflowService";
 import ActionDetailsForm from "./ActionDetailsForm";
-import { useClasses } from "@application";
 
-const styles = theme => ({
-  root: {
-    width: "100%"
-  },
-  expandedPanel: {
-    backgroundColor: "#f4f5fa"
-  },
-  heading: {
-    color: "#052a4f",
-    fontSize: theme.typography.pxToRem(18),
-    fontWeight: "500"
-  }
-});
+// const styles = theme => ({
+//   root: {
+//     width: "100%"
+//   },
+//   expandedPanel: {
+//     backgroundColor: "#f4f5fa"
+//   },
+//   heading: {
+//     color: "#052a4f",
+//     fontSize: theme.typography.pxToRem(18),
+//     fontWeight: "500"
+//   }
+// });
 
 export default function CreateAction(props) {
-  const classes = useClasses(styles);
   const paramObj = props.data;
   const dataMap = props.fieldMap;
 
@@ -58,11 +56,11 @@ export default function CreateAction(props) {
   const selectionIndex = "all";
   //const selectionIndex = "0,1";
 
-  const handlePanelExpansion = panel => (event, expandedPanel) => {
+  const handlePanelExpansion = (panel) => (event, expandedPanel) => {
     setExpandedPanel(expandedPanel ? panel : false);
   };
 
-  const handleActionRoleTrayMapping = e => {
+  const handleActionRoleTrayMapping = (e) => {
     setOpenMappingDiv(true);
   };
 
@@ -71,14 +69,14 @@ export default function CreateAction(props) {
     //(searchFormData);
     caseWorkflowService
       .searchAction(searchFormData)
-      .then(data => {
+      .then((data) => {
         setActionData(data);
         setShowResults(true);
         setExpandedPanel(false);
         setIsFormValid(true);
       })
-      .catch(error => {
-        console.log("caseworkflow Service Error:-",error);
+      .catch((error) => {
+        console.log("caseworkflow Service Error:-", error);
       });
   };
 
@@ -93,13 +91,13 @@ export default function CreateAction(props) {
   //   setShowActionForm2(true);
   // };
 
-  const handleActionSubmit = paramData => {
+  const handleActionSubmit = (paramData) => {
     setIsFormValid(false);
     //console.log("Form JSON data ", JSON.stringify(paramData));
     if (submitType === "create") {
       caseWorkflowService
         .createAction(paramData)
-        .then(data => {
+        .then((data) => {
           // console.log(data);
           setActionData(data);
           setShowResults(true);
@@ -107,17 +105,17 @@ export default function CreateAction(props) {
           setIsFormValid(true);
           //setShowActionForm2(true);
         })
-        .catch(error => {
-          console.log("caseworkflow Service Error:-",error);
+        .catch((error) => {
+          console.log("caseworkflow Service Error:-", error);
         });
     } else if (submitType === "update") {
       caseWorkflowService
         .updateAction(paramData)
-        .then(data => {
+        .then((data) => {
           alert(data);
         })
-        .catch(error => {
-          console.log("caseworkflow Service Error:-",error);
+        .catch((error) => {
+          console.log("caseworkflow Service Error:-", error);
         });
     }
   };
@@ -129,7 +127,7 @@ export default function CreateAction(props) {
   // }, [isFormValid]);
 
   const ResultFrame = () => (
-    <div id="bottomFrame" className={classes.root} style={{ paddingTop: 20 }}>
+    <div id="bottomFrame" className={"w-full"} style={{ paddingTop: 20 }}>
       {actionData && actionData !== null ? (
         <>
           {/* <GenericDatatable
@@ -144,10 +142,10 @@ export default function CreateAction(props) {
               BottomContainer={ActionsBottomContainer}
               hyperlinkFunction={props.openActionParamTab}
           ></GenericDatatable> */}
-          <GenericDatagrid 
-                title={'Actions List'} 
-                tableData={actionData} 
-                utilColumn={'info'}
+          <GenericDatagrid
+            title={"Actions List"}
+            tableData={actionData}
+            utilColumn={"info"}
           />
         </>
       ) : (
@@ -159,7 +157,7 @@ export default function CreateAction(props) {
   return (
     // <Paper style={{ padding: 16 }}>
     <React.Fragment>
-      <div id="topFrame" className={classes.root}>
+      <div id="topFrame" className={"w-full"}>
         <Accordion
           expanded={expandedPanel === "actionExpansionPanel"}
           onChange={handlePanelExpansion("actionExpansionPanel")}
@@ -170,13 +168,13 @@ export default function CreateAction(props) {
             aria-controls="actionPanelcontent"
             id="actionPanelHeader"
             classes={{
-              root: classes.root,
-              expanded: classes.expandedPanel
+              root: "w-full",
+              expanded: "bg-[#f4f5fa]",
             }}
           >
             <Typography
               component={"p"}
-              className={classes.heading}
+              className={"text-[#052a4f] text-normal"}
               id="actionHeader"
             >
               Action Master
@@ -188,7 +186,7 @@ export default function CreateAction(props) {
             style={{ padding: 5 }}
           >
             <Formsy
-              onValidSubmit={data => handleActionSubmit(data)}
+              onValidSubmit={(data) => handleActionSubmit(data)}
               onValid={() => setIsFormValid(true)}
               onInvalid={() => setIsFormValid(false)}
               ref={formRef}
@@ -215,7 +213,6 @@ export default function CreateAction(props) {
                     variant="outlined"
                     color="primary"
                     aria-label="create"
-                    className={classes.button}
                     id="create"
                     style={{ margin: 10 }}
                     disabled={!isFormValid}
@@ -229,7 +226,6 @@ export default function CreateAction(props) {
                     variant="outlined"
                     color="primary"
                     aria-label="search"
-                    className={classes.button}
                     id="search"
                     style={{ margin: 10 }}
                     //disabled={!isFormValid}
@@ -252,7 +248,6 @@ export default function CreateAction(props) {
                     variant="outlined"
                     color="primary"
                     aria-label="update"
-                    className={classes.button}
                     id="update"
                     style={{ margin: 10 }}
                     disabled={!isFormValid}

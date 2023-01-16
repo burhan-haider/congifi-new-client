@@ -3,7 +3,7 @@ import { makeStyles } from "@mui/styles";
 import Formsy from "formsy-react";
 import {
   TextFieldFormsy,
-  SelectFormsy
+  SelectFormsy,
 } from "components/common/formsyComponents";
 import {
   MenuItem,
@@ -12,38 +12,38 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Typography
+  Typography,
 } from "@mui/material";
 import caseWorkflowService from "services/caseWorkflow/caseWorkflowService";
 import { GenericButton } from "@application";
 // import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { MdExpandMore as ExpandMoreIcon } from 'react-icons/md'
+import { MdExpandMore as ExpandMoreIcon } from "react-icons/md";
 import { useClasses } from "@application";
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
-    width: "100%"
+    width: "w-full",
   },
   formControl: {
     margin: theme.spacing(1),
     fullWidth: true,
     display: "flex",
-    wrap: "nowrap"
+    wrap: "flex nowrap w-full m-2",
   },
   rowDesign: {
-    paddingTop: 15
+    paddingTop: "pt-5",
   },
   actionParamsUpdateDiv: {
-    backgroundColor: "#f4f5fa"
+    backgroundColor: "bg-[#f4f5fa]",
   },
   expandedPanel: {
-    backgroundColor: "#f4f5fa"
+    backgroundColor: "#f4f5fa",
   },
   heading: {
-    color: "#052a4f",
+    color: "text-[#052a4f]",
     fontSize: theme.typography.pxToRem(18),
-    fontWeight: "500"
-  }
+    fontWeight: "500",
+  },
 });
 
 function ActionParamsUpdateForm(props) {
@@ -55,7 +55,7 @@ function ActionParamsUpdateForm(props) {
     "actionParamsExpansionPanel"
   );
 
-  const handlePanelExpansion = panel => (event, expandedPanel) => {
+  const handlePanelExpansion = (panel) => (event, expandedPanel) => {
     setExpandedPanel(expandedPanel ? panel : false);
   };
 
@@ -102,14 +102,14 @@ function ActionParamsUpdateForm(props) {
     });
   }
   //console.log(actionCode);
-  const updateActionParams = paramData => {
+  const updateActionParams = (paramData) => {
     caseWorkflowService
       .updateActionParams(paramData)
-      .then(data => {
+      .then((data) => {
         alert(data);
       })
-      .catch(error => {
-        console.log("caseworkflow Service Error:-",error);
+      .catch((error) => {
+        console.log("caseworkflow Service Error:-", error);
       });
   };
 
@@ -125,13 +125,13 @@ function ActionParamsUpdateForm(props) {
         aria-controls="actionParamsPanelcontent"
         id="actionParamsPanelHeader"
         classes={{
-          root: classes.root,
-          expanded: classes.expandedPanel
+          root: "w-full",
+          expanded: "bg-[#f4f5fa]",
         }}
       >
         <Typography
           component={"p"}
-          className={classes.heading}
+          className={"text-[#052a4f]"}
           id="actionParamsHeader"
         >
           Action Parameter Details
@@ -143,7 +143,7 @@ function ActionParamsUpdateForm(props) {
         style={{ padding: 5 }}
       >
         <Formsy
-          onValidSubmit={data => updateActionParams(data)}
+          onValidSubmit={(data) => updateActionParams(data)}
           onValid={() => setIsFormValid(true)}
           onInvalid={() => setIsFormValid(false)}
           className="flex flex-col justify-center w-full"
@@ -152,10 +152,10 @@ function ActionParamsUpdateForm(props) {
             container
             alignItems="flex-start"
             spacing={2}
-            className={classes.rowDesign}
+            className={"pt-5"}
           >
             <Grid item xs={4}>
-              <FormControl className={classes.formControl}>
+              <FormControl className={"flex nowrap w-full m-2"}>
                 <TextFieldFormsy
                   variant="outlined"
                   name="actionCode"
@@ -170,7 +170,7 @@ function ActionParamsUpdateForm(props) {
               </FormControl>
             </Grid>
             <Grid item xs={4}>
-              <FormControl className={classes.formControl}>
+              <FormControl className={"flex nowrap w-full m-2"}>
                 <SelectFormsy
                   variant="outlined"
                   name="actionParamDatatype"
@@ -196,7 +196,7 @@ function ActionParamsUpdateForm(props) {
               </FormControl>
             </Grid>
             <Grid item xs={4}>
-              <FormControl className={classes.formControl}>
+              <FormControl className={"flex nowrap w-full m-2"}>
                 <SelectFormsy
                   variant="outlined"
                   name="actionParamIsEnabled"
@@ -214,7 +214,7 @@ function ActionParamsUpdateForm(props) {
               </FormControl>
             </Grid>
             <Grid item xs={4}>
-              <FormControl className={classes.formControl}>
+              <FormControl className={"flex nowrap w-full m-2"}>
                 <TextFieldFormsy
                   variant="outlined"
                   name="actionParamName"
@@ -228,7 +228,7 @@ function ActionParamsUpdateForm(props) {
               </FormControl>
             </Grid>
             <Grid item xs={4}>
-              <FormControl className={classes.formControl}>
+              <FormControl className={"flex nowrap w-full m-2"}>
                 <TextFieldFormsy
                   variant="outlined"
                   name="actionParamId"
@@ -243,7 +243,7 @@ function ActionParamsUpdateForm(props) {
               </FormControl>
             </Grid>
             <Grid item xs={4}>
-              <FormControl className={classes.formControl}>
+              <FormControl className={"flex nowrap w-full m-2"}>
                 <TextFieldFormsy
                   variant="outlined"
                   name="actionParamAliasName"
@@ -257,7 +257,7 @@ function ActionParamsUpdateForm(props) {
               </FormControl>
             </Grid>
             <Grid item xs={4}>
-              <FormControl className={classes.formControl}>
+              <FormControl className={"flex nowrap w-full m-2"}>
                 <TextFieldFormsy
                   variant="outlined"
                   name="actionParamIndex"
@@ -272,7 +272,7 @@ function ActionParamsUpdateForm(props) {
             </Grid>
             {showStaticValuesField ? (
               <Grid item xs={4}>
-                <FormControl className={classes.formControl}>
+                <FormControl className={"flex nowrap w-full m-2"}>
                   <TextFieldFormsy
                     variant="outlined"
                     name="actionParamStaticValues"
@@ -287,7 +287,7 @@ function ActionParamsUpdateForm(props) {
               </Grid>
             ) : null}
             <Grid item xs={4}>
-              <FormControl className={classes.formControl}>
+              <FormControl className={"flex nowrap w-full m-2"}>
                 <TextFieldFormsy
                   variant="outlined"
                   name="actionParamDefaultValue"
@@ -301,7 +301,7 @@ function ActionParamsUpdateForm(props) {
               </FormControl>
             </Grid>
             <Grid item xs={4}>
-              <FormControl className={classes.formControl}>
+              <FormControl className={"flex nowrap w-full m-2"}>
                 <TextFieldFormsy
                   variant="outlined"
                   name="actionParamValidationType"
@@ -315,7 +315,7 @@ function ActionParamsUpdateForm(props) {
               </FormControl>
             </Grid>
             <Grid item xs={4}>
-              <FormControl className={classes.formControl}>
+              <FormControl className={"flex nowrap w-full m-2"}>
                 <TextFieldFormsy
                   variant="outlined"
                   name="actionParamValidationField"
