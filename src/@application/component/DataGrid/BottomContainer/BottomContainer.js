@@ -7,6 +7,7 @@ import {
     InputBase,
     Typography,
     Select,
+    Menu,
     MenuItem,
     InputLabel,
     FormControl,
@@ -15,7 +16,7 @@ import {
 
 import { GenericButton } from '@application'
 
-import { TextFieldFormsy, DatePickerFormsy,  } from 'components/common/formsyComponents';
+import { TextFieldFormsy, DatePickerFormsy, SelectFormsy } from 'components/common/formsyComponents';
 
 import Formsy from 'formsy-react';
 
@@ -100,7 +101,7 @@ const BottomContainer = (props) => {
                             className="flex flex-col justify-center w-full"
                         >
                             <Grid container gap={2}>
-                                {currentAction.actionParams.map((param)=>(
+                                {currentAction.actionParams.map((param, index)=>(
                                     <>
                                         {param.paramDataType === "textarea" && (
                                             <Grid item xs={12} >
@@ -141,9 +142,9 @@ const BottomContainer = (props) => {
                                             <Grid item xs={12}>
                                                 <FormControl className="m-2 w-100 flex flex-nowrap" >
                                                     <DatePickerFormsy
-                                                        variant="outlined"
-                                                        name="lastReviewedDate"
-                                                        label="Account Reviewed Date"
+                                                        variant="filled"
+                                                        name={param.paramId}
+                                                        label={param.paramName}
                                                         ampm={false}
                                                         className={undefined}
                                                         dateTime={false}
@@ -154,6 +155,36 @@ const BottomContainer = (props) => {
                                                 </FormControl>
                                           </Grid>
                                         )}
+                                        {param.paramDataType === 'select' && param.paramStaticValues !== null ? (
+                                            <Grid item xs={12} key={index}>
+                                            <FormControl className="m-2 w-100 flex flex-nowrap">
+                                              <SelectFormsy
+                                                variant="outlined"
+                                                name={param.paramId}
+                                                label={param.paramName}
+                                                value={
+                                                    param.paramDefaultValues === null || " "
+                                                    ? `NA`
+                                                    : param.paramDefaultValues
+                                                }
+                                                className="w-100"
+                                                onChange={() => {}}
+                                                validationError=""
+                                                //required={true}
+                                              >
+                                                <MenuItem value="">Select One</MenuItem>
+                                                {param.paramStaticValues.split(',').map((option, index) => {
+                                                  return (
+                                                    <MenuItem value={option} key={index}>
+                                                      {option === null || "" ? `NA` : option}
+                                                    </MenuItem>
+                                                  );
+                                                })}
+                                              </SelectFormsy>
+                                            </FormControl>
+                                          </Grid>
+                      
+                                        ):(<></>)}
 
                                     </>
                                 ))}
