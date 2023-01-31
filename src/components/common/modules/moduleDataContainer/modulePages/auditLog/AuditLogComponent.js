@@ -75,7 +75,7 @@ const styles = theme => ({
     }
   });
 
-const TransactionDashboard = (props) => {
+const AuditLogComponent = (props) => {
 
     const { 
         indexPageData,
@@ -115,21 +115,10 @@ const TransactionDashboard = (props) => {
 
         setIsFormValid(false);
         
-        httpService.post('/api/investigation/searchTransactions', 
-            {
-                headers: {
-                    Authorization: `Bearer ${window.localStorage.getItem(
-                        "cognifi_token"
-                    )}`
-                }
-            },
-            {
-                params: data
-            }
-        ).then(response => {
-          setSearchData(response.data);
-        //   setActionButtons(response.data[response.data.length-1])
-        //   console.log("Response", response)
+        data["moduleType"] = moduleType;
+        searchFormData = data;
+        commonService.fetchMasterSearchData(data).then(response => {
+          setSearchData(response);
         });
     };
 
@@ -150,7 +139,7 @@ const TransactionDashboard = (props) => {
                 inputParams={inputParams}
                 title={`${moduleHeader[0]} Results`}
                 // actionButtons={GenericDetailsBottomContainer}
-                moduleType={"transactionDashboard"}
+                moduleType={"auditLog"}
           />
           ) : (
             "No data available"
@@ -176,7 +165,7 @@ const TransactionDashboard = (props) => {
                     }}
                 >
                     <Typography className={classes.heading} id="searchHeader">
-                        Transaction Details Search
+                        Audit Log Search
                     </Typography>
                 </AccordionSummary>
                 <AccordionDetails
@@ -381,4 +370,4 @@ const TransactionDashboard = (props) => {
     )
 }
 
-export default TransactionDashboard;
+export default AuditLogComponent;

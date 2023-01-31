@@ -34,7 +34,7 @@ const styles = theme => ({
   paper: {
     width: "100%",
     borderRadius: 15,
-    marginBottom: theme.spacing(2)
+    marginBottom: 2
   },
   table: {
     minWidth: 750

@@ -87,6 +87,7 @@ const DataGrid = (props) => {
     }, [currentPage, dataPerPage])
 
     useEffect(() => {
+        console.log("Table Data:-", tableData)
         let tempColumns = []
         let tempRows = []
 

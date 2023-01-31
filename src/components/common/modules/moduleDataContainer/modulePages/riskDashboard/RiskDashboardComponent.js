@@ -63,7 +63,7 @@ const RiskDashboardComponent = () => {
         formData.append("ReportFrequency", data.ReportFrequency);
 
         await httpService
-            .get("/reports/getConsolidatedReportTabView",  formData, config)
+            .get("/api/reports/getConsolidatedReportTabView",  formData, config)
             .then(response => {
                 // console.log("API Response",response)
                 setTableData(response.data);
@@ -117,10 +117,10 @@ const RiskDashboardComponent = () => {
       }
 
     return(
-        <div>
+        <div className='p-5' >
             <Formsy onValidSubmit={data=>handleSubmit(data)} >
-                <Grid container className="py-5 container">
-                    <Grid item sm={3}>
+                <Grid container className="py-5 container" alignItems={'center'}>
+                    <Grid item sm={3} className='pr-3'>
                         <DatePickerFormsy
                             variant="outlined"
                             name={`FromDate`}
@@ -132,7 +132,7 @@ const RiskDashboardComponent = () => {
                             value={moment(new Date()).format('L')}
                         />
                     </Grid>
-                    <Grid item sm={3}>
+                    <Grid item sm={3} className='pr-3'>
                         <DatePickerFormsy
                             variant="outlined"
                             name={`ToDate`}
@@ -144,12 +144,12 @@ const RiskDashboardComponent = () => {
                             value={moment(new Date()).format('L')}
                         />
                     </Grid>
-                    <Grid item sm={3} >
+                    <Grid item sm={3} className='pr-3' >
                         <SelectFormsy 
                             variant="outlined"
                             name="ReportFrequency"
                             label="Report Frequency"
-                            className={"w-5/6 text-left"}
+                            className={"w-full text-left"}
                             required={true}
                             value={list}
                         >

@@ -221,7 +221,8 @@ export const bonafideOkayByLEVEL1 = (action, data, caseNo) =>{
           { params: {
             caseNo: caseNo,
             ActionCode: action.actionCode,
-            comments: data.comments
+            comments: data.comments,
+            subAction: data.subAction,
           } }
         )
         .then(response => {

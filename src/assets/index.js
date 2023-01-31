@@ -11,7 +11,6 @@ import masterFeature from './icons/feature/allMaster.png'
 import userAndRole from './icons/feature/userAndRole.png'
 import scenarios from './icons/feature/scenarios.png'
 import scanning from './icons/feature/scanning.png'
-import checker from './icons/feature/scanning.png'
 import labelsFeature from './icons/feature/labelsFeature.png'
 import features from './icons/feature/features.png';
 import closeBlue from './icons/close_blue.png';
@@ -20,6 +19,12 @@ import pdf from './icons/new_pdf.png';
 import excel from './icons/new_excel.png';
 import csv from './icons/new_csv.png';
 import print from './icons/new_print.png';
+import invTools from './icons/feature/invTools.png'
+import checkerActivity from './icons/feature/checkerActivity.png'
+import alEngine from './icons/feature/alertEngine.png'
+import audit from './icons/feature/auditLog.png'
+import raiseSuspision from './icons/feature/raiseSuspicion.png'
+import riskCategorization from './icons/feature/riskDashboard.png'
 
 import viewMatches from './icons/View_Matches.png'
 import addToAccept from './icons/Add_To_Acceptlist.png'
@@ -52,7 +57,6 @@ const icons = {
     actionManagement,
     scenarios,
     scanning,
-    checker,
     userAndRole,
     labelsFeature,
     features,
@@ -80,6 +84,12 @@ const icons = {
     yellowPin,
     collapse,
     expand,
+    invTools,
+    raiseSuspision,
+    alEngine,
+    audit,
+    checkerActivity,
+    riskCategorization
 }
 
 const getIconByKey = (key) => {

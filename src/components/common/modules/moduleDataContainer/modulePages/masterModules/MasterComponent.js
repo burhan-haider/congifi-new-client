@@ -28,7 +28,7 @@ import {
   MdOutlineSearch as SearchButtonIcon,
 } from "react-icons/md"
 import commonService from "services/common/commonService";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
 import { GenericDatatable, GenericButton } from "@application";
 import { GenericDetailsBottomContainer } from "components/common/modules/moduleDataContainer/modulePages/common/bottomPages";
 import { useClasses } from "@application";
@@ -46,7 +46,7 @@ const styles = theme => ({
     }
   },
   formControl: {
-    // margin: theme.spacing(1),
+    // margin: 1,
     fullWidth: true,
     display: "flex",
     wrap: "nowrap"
@@ -56,7 +56,7 @@ const styles = theme => ({
   },
   heading: {
     color: "#052a4f",
-    fontSize: theme.typography.pxToRem(18),
+    fontSize: 18,
     fontWeight: "500"
   },
   rowDesign: {
