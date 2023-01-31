@@ -15,7 +15,7 @@ const styles = theme => ({
   root: {
     display: "flex",
     flexShrink: 0,
-    marginLeft: theme.spacing(1)
+    marginLeft: 1
   },
   paginationRoot: {
     "& .MuiPaginationItem-root": {

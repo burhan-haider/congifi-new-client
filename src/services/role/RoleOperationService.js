@@ -24,7 +24,7 @@ class RoleOperationService {
   assignRoleToUser = async (userCode, roleIds) => {
     return await new Promise((resolve, reject) => {
       httpService
-        .post("/user/assignRole/" + userCode, roleIds)
+        .post("/api/user/assignRole/" + userCode, roleIds)
         .then(response => {
           if (response.status === 200) {
             resolve(response.data);

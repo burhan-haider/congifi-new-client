@@ -20,7 +20,7 @@ const styles = theme => ({
     width: "100%"
   },
   formControl: {
-    margin: theme.spacing(1),
+    margin: 1,
     fullWidth: true,
     display: "flex",
     wrap: "nowrap"
@@ -30,7 +30,7 @@ const styles = theme => ({
   },
   heading: {
     color: "#052a4f",
-    fontSize: theme.typography.pxToRem(18),
+    fontSize: 18,
     fontWeight: "500"
   },
   rowDesign: {

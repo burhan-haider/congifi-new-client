@@ -12,7 +12,7 @@ import _ from "lodash";
 
 const styles = theme =>({
   formControl: {
-    // margin: theme.spacing(1),
+    // margin: 1,
     fullWidth: true,
     display: "flex",
     wrap: "nowrap"

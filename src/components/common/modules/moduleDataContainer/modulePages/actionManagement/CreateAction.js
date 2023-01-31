@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import Formsy from "formsy-react";
-import { makeStyles } from "@mui/styles";
+// import { makeStyles } from "@mui/styles";
 import {
   Typography,
   Grid,
@@ -11,10 +11,10 @@ import {
 // import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { MdExpandMore as ExpandMoreIcon } from "react-icons/md";
 
-import { useDispatch, useSelector } from "react-redux";
-import { GenericDatatable, GenericButton, GenericDatagrid } from "@application";
-import { ActionsBottomContainer } from "../common/bottomPages";
-import * as Actions from "redux/caseWorkflow/cwfbottomframedata/cwfbottomframedata.actions";
+// import { useDispatch, useSelector } from "react-redux";
+import { GenericButton, GenericDatagrid } from "@application";
+// import { ActionsBottomContainer } from "../common/bottomPages";
+// import * as Actions from "redux/caseWorkflow/cwfbottomframedata/cwfbottomframedata.actions";
 import caseWorkflowService from "services/caseWorkflow/caseWorkflowService";
 import ActionDetailsForm from "./ActionDetailsForm";
 
@@ -27,7 +27,7 @@ import ActionDetailsForm from "./ActionDetailsForm";
 //   },
 //   heading: {
 //     color: "#052a4f",
-//     fontSize: theme.typography.pxToRem(18),
+//     fontSize: 18,
 //     fontWeight: "500"
 //   }
 // });
@@ -48,21 +48,21 @@ export default function CreateAction(props) {
   const [expandedPanel, setExpandedPanel] = useState("actionExpansionPanel");
   const [actionData, setActionData] = useState({});
   const [submitType, setSubmitType] = useState(null);
-  const [dataSelected, setDataSelected] = useState([]);
-  const [openMappingDiv, setOpenMappingDiv] = useState(false);
-  const [showActionForm2, setShowActionForm2] = useState(false);
+  // const [dataSelected, setDataSelected] = useState([]);
+  // const [openMappingDiv, setOpenMappingDiv] = useState(false);
+  // const [showActionForm2, setShowActionForm2] = useState(false);
 
   //console.log(dataSelected);
-  const selectionIndex = "all";
+  // const selectionIndex = "all";
   //const selectionIndex = "0,1";
 
   const handlePanelExpansion = (panel) => (event, expandedPanel) => {
     setExpandedPanel(expandedPanel ? panel : false);
   };
 
-  const handleActionRoleTrayMapping = (e) => {
-    setOpenMappingDiv(true);
-  };
+  // const handleActionRoleTrayMapping = (e) => {
+  //   setOpenMappingDiv(true);
+  // };
 
   const searchAction = () => {
     const searchFormData = formRef.current.getModel();

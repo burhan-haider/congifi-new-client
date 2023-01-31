@@ -27,7 +27,7 @@ const Customer360Component = () => {
         console.log("Form Data:-", formData)
 
         await httpService
-            .post("/investigation/searchCustomer360Data", config, {
+            .post("/api/investigation/searchCustomer360Data", config, {
                 params: formData
             })
             .then(response => {
@@ -41,7 +41,7 @@ const Customer360Component = () => {
     };
 
     return(
-        <div>
+        <div className='p-5' >
             <Formsy onValidSubmit={data=>handleSubmit(data)} >
                 <Grid container spacing={3} className="py-5 container">
                     <Grid item xs={4} className="" >
@@ -65,7 +65,7 @@ const Customer360Component = () => {
                     </Grid>
                 </Grid>
             </Formsy>
-            {showTree && customerData!=null && (
+            {showTree && (customerData!=null && Object.keys(customerData).length > 0) && (
                 <div id={"chartParentDiv"} >
                     <GraphComponent data={customerData} />
                 </div>

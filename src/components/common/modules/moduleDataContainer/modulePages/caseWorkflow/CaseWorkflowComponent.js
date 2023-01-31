@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo, useCallback } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import Formsy from "formsy-react";
 import {
   TextFieldFormsy,
@@ -31,8 +31,8 @@ import {
 import commonService from "services/common/commonService";
 import { useDispatch, useSelector } from "react-redux";
 import * as CWFActions from "redux/caseWorkflow/cwfbottomframedata/cwfbottomframedata.actions";
-import { GenericDatatable, GenericButton, useClasses, GenericDatagrid } from "@application";
-import { CWFDetailsBottomContainer } from "../common/bottomPages";
+import { GenericButton, useClasses, GenericDatagrid } from "@application";
+// import { CWFDetailsBottomContainer } from "../common/bottomPages";
 
 const styles = theme => ({
   root: {
@@ -47,7 +47,7 @@ const styles = theme => ({
     }
   },
   formControl: {
-    margin: theme.spacing(1),
+    margin: 1,
     fullWidth: true,
     display: "flex",
     wrap: "nowrap"
@@ -57,11 +57,14 @@ const styles = theme => ({
   },
   heading: {
     color: "#052a4f",
-    fontSize: theme.typography.pxToRem(18),
+    fontSize: 18,
     fontWeight: "500"
   },
   rowDesign: {
     paddingTop: 15
+  },
+  button: {
+    marginLeft: 10
   }
 });
 
@@ -86,7 +89,7 @@ export default function CaseWorkflowComponent(props) {
 
   const [dataSelected, setDataSelected] = useState([]);
   //console.log(dataSelected);
-  const selectionIndex = "all";
+  // const selectionIndex = "all";
   //const selectionIndex = "0,1";
 
   const handlePanelExpansion = panel => (event, expandedPanel) => {
@@ -104,17 +107,17 @@ export default function CaseWorkflowComponent(props) {
     console.log("Selected Data In Parent", dataSelected);
   }, [dataSelected])
 
-  const newdate = new Date();
-  const datetime = new Date(
-    newdate.getTime() - newdate.getTimezoneOffset() * 60000
-  ).toJSON();
-  const formattedDate =
-    datetime
-      .slice(0, 10)
-      .replace(new RegExp("-", "g"), "-")
-      .split("-")
-      .reverse()
-      .join("-") + datetime.slice(11, 19);
+  // const newdate = new Date();
+  // const datetime = new Date(
+  //   newdate.getTime() - newdate.getTimezoneOffset() * 60000
+  // ).toJSON();
+  // const formattedDate =
+  //   datetime
+  //     .slice(0, 10)
+  //     .replace(new RegExp("-", "g"), "-")
+  //     .split("-")
+  //     .reverse()
+  //     .join("-") + datetime.slice(11, 19);
   //console.log(formattedDate);
   // const [selectedFromDate, setSelectedFromDate] = useState(new Date());
   // const [selectedToDate, setSelectedToDate] = useState(new Date());

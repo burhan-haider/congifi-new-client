@@ -11,6 +11,8 @@ import {
     Grid, 
     Link,
     CircularProgress,
+    Card,
+    Typography
 } from '@mui/material';
 // import { MdPushPin, MdBookmark, MdArrowDropDown, MdRefresh } from 'react-icons/md'
 import { IoMdRefreshCircle } from 'react-icons/io'
@@ -34,6 +36,7 @@ import featureService from 'services/features/featureService'
 import getIconByKey from 'assets';
 import ModuleChartFrame from 'components/common/modules/mainModuleSearchFrame/ModuleChartFrame'
 import { Sticky, StickyContainer } from 'react-sticky';
+import buttonIconMapping from 'assets/buttonIconMapping';
 // import { handleBreakpoints } from '@mui/system';
 
 const styles = theme => ({
@@ -571,34 +574,52 @@ const MainPage = ({feature, getModuleChartData, isRefreshing, setIsRefreshing}) 
       <Grid container direction={'row'} justifyContent={'flex-start'} alignItems={'flex-start'} className="px-5 py-3" >
 
 				{/* mapping all the modules inside a feature as button */}
-        {feature.modules.length>0 && feature.modules.map((item, index)=>(
-					<Grid item key={index} xs={6} className="sm:max-h-[300px] lg:min-h-[450px]" >
-						{item.parentModule_Id == null?(
-							<>
-								{item.parentModuleId==null&&item.moduleChartDetails!=null?(
-									<div className="text-center mx-2 my-0" >
-										<p>{item.moduleName}</p>
-										<ModuleChartFrame 
-											current={item} 
-											getModuleChartData={getModuleChartData} 
-											feature={feature} 
-											isRefreshing={isRefreshing}
-											setIsRefreshing={setIsRefreshing}
-										/>
-									</div>
-								):(
-									<>
-										{item.parentModuleId==null&&(
-											<button key={item.id} onClick={()=>handleClick(item)} className="m-5 text-white font-bold border-none bg-red-500 hover:bg-red-700 rounded-md p-3 cursor-pointer">
-												{item.moduleName}
-											</button>
-										)}   
-									</>
-								)}
-							</>
-						):""}
-					</Grid>
-        ))}
+        {feature.modules.length>0 && feature.modules.map((item, index)=>{
+
+          let ModuleIcon = buttonIconMapping(item.moduleCode)
+
+          return (
+            <Grid item key={index} xs={6} className="sm:max-h-[300px] lg:min-h-[450px]" >
+              {item.parentModule_Id == null?(
+                <>
+                  {item.parentModuleId==null&&item.moduleChartDetails!=null?(
+                    <div className="text-center mx-2 my-0" >
+                      <p>{item.moduleName}</p>
+                      <ModuleChartFrame 
+                        current={item} 
+                        getModuleChartData={getModuleChartData} 
+                        feature={feature} 
+                        isRefreshing={isRefreshing}
+                        setIsRefreshing={setIsRefreshing}
+                      />
+                    </div>
+                  ):(
+                    <>
+                      {item.parentModuleId==null&&(
+                        <Card 
+                          elevation={2} 
+                          key={item.uniqueNo} 
+                          onClick={()=>handleClick(item)} 
+                          className='hover:bg-[#eee] cursor-pointer m-3 pt-10'
+                          sx={{
+                              height: '100%',
+                              minHeight: '300px',
+                              width: '90%',
+                          }}
+                        >
+                          <Typography className='font-bold text-xl mb-20' >{item.moduleName}</Typography>
+                          {/* {ModuleIcon !== null && (
+                              <ModuleIcon className="text-[#aaa]" size={120} />
+                          )} */}
+                        </Card>
+                      )}   
+                    </>
+                  )}
+                </>
+              ):""}
+            </Grid>
+          )
+        })}
         
       </Grid>
     )

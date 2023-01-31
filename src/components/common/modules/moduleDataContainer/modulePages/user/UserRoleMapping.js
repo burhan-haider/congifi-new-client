@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import InputLabel from "@mui/material/InputLabel";
+// import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+// import Select from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
 import Grid from "@mui/material/Grid";
 import Input from "@mui/material/Input";
 import MenuItem from "@mui/material/MenuItem";
 import { 
   Accordion, 
-  AccordionActions, 
+  // AccordionActions, 
   AccordionDetails, 
   AccordionSummary,
   Typography 
@@ -23,11 +23,11 @@ import { useClasses } from "@application";
 
 const styles = theme => ({
   formControl: {
-    margin: theme.spacing(1),
+    margin: 1,
     minWidth: 120
   },
   selectEmpty: {
-    marginTop: theme.spacing(2)
+    marginTop: 2
   },
   chips: {
     display: "flex",
@@ -56,18 +56,23 @@ function UserRoleMapping(props) {
     if(userCodeList.filter(e=>e===key).length===0){
       userCodeList.push(key);
     }
+    return 0
   })
   
   Object.keys(pendingUsers).map((user, index)=>{
     if(userCodeList.filter(e=>e===user).length===0){
       userCodeList.push(user)
     }
+
+    return 0
   })
 
   Object.keys(approvedUserPendingRole).map((user, index)=>{
     if(userCodeList.filter(e=>e===user).length===0){
       userCodeList.push(user)
     }
+
+    return 0
   })
 
   const classes = useClasses(styles);
@@ -108,6 +113,7 @@ function UserRoleMapping(props) {
           if(currentSelectedUserRoleList.filter(e=>e===role).length === 0){
             removedRoles.push(role);
           }
+          return 0
         })
         console.log("Removed Roles",removedRoles);
         setRemoved(removedRoles);
@@ -133,7 +139,7 @@ function UserRoleMapping(props) {
     if(selectedList.length > 0){
       selectedList.map(roleId => {
         allRoles.map(role => {
-          if(role.roleName == roleId){
+          if(role.roleName === roleId){
             if(currentSelectedRoleCodeList.filter(e=>e===role.roleName).length === 0){
               currentSelectedRoleCodeList.push(role.roleId);
             }
@@ -148,6 +154,7 @@ function UserRoleMapping(props) {
       if(pendingRoles.filter(e=>e===item).length === 0){
         newRolesList.push(item);
       }
+      return 0
     })
 
     newPendingRolesList = pendingRoles.filter(x=>
@@ -275,7 +282,7 @@ function UserRoleMapping(props) {
                         List of Features for {item}:
                       </Typography>
                       {roleFeatureMap&&roleFeatureMap.map((obj, objIndex)=>{
-                          if(obj.ROLE&&obj.ROLE.roleName == item){
+                          if(obj.ROLE&&obj.ROLE.roleName === item){
                             return (
                               <ul key={objIndex} >
                                   {obj.FEATURELIST && obj.FEATURELIST.length>0 ? obj.FEATURELIST.map((feature, featureIndex)=>(
@@ -284,6 +291,7 @@ function UserRoleMapping(props) {
                               </ul>
                             )
                           }
+                          return ""
                         })}
                     </AccordionDetails>
                   </Accordion>
@@ -315,7 +323,7 @@ function UserRoleMapping(props) {
                         List of Features for {item}:
                       </Typography>
                       {roleFeatureMap&&roleFeatureMap.map((obj, objIndex)=>{
-                          if(obj.ROLE&&obj.ROLE.roleName == item){
+                          if(obj.ROLE&&obj.ROLE.roleName === item){
                             return (
                               <ul key={objIndex} >
                                   {obj.FEATURELIST && obj.FEATURELIST.length>0 ? obj.FEATURELIST.map((feature, featureIndex)=>(
@@ -324,6 +332,7 @@ function UserRoleMapping(props) {
                               </ul>
                             )
                           }
+                          return ""
                         })}
                     </AccordionDetails>
                   </Accordion>
@@ -346,7 +355,7 @@ function UserRoleMapping(props) {
                         List of Features for {item}:
                       </Typography>
                       {roleFeatureMap&&roleFeatureMap.map((obj, objIndex)=>{
-                          if(obj.ROLE&&obj.ROLE.roleName == item){
+                          if(obj.ROLE&&obj.ROLE.roleName === item){
                             return (
                               <ul key={objIndex} >
                                   {obj.FEATURELIST && obj.FEATURELIST.length>0 ? obj.FEATURELIST.map((feature, featureIndex)=>(
@@ -355,6 +364,7 @@ function UserRoleMapping(props) {
                               </ul>
                             )
                           }
+                          return 0
                         })}
                     </AccordionDetails>
                   </Accordion>
@@ -376,7 +386,7 @@ function UserRoleMapping(props) {
                         List of Features for {item}:
                       </Typography>
                       {roleFeatureMap&&roleFeatureMap.map((obj, objIndex)=>{
-                        if(obj.ROLE&&obj.ROLE.roleName == item){
+                        if(obj.ROLE&&obj.ROLE.roleName === item){
                           return (
                             <ul key={objIndex} >
                                 {obj.FEATURELIST && obj.FEATURELIST.length>0 ? obj.FEATURELIST.map((feature, featureIndex)=>(
@@ -385,6 +395,7 @@ function UserRoleMapping(props) {
                             </ul>
                           )
                         }
+                        return ""
                       })}
                     </AccordionDetails>
                   </Accordion>

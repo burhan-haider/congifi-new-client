@@ -8,7 +8,7 @@ import Dialog from "@mui/material/Dialog";
 import Grid from "@mui/material/Grid";
 import { AppBar, Toolbar, Typography } from "@mui/material";
 import userOperationService from "services/user/UserOperationService";
-import UserList from "../user/UserList";
+// import UserList from "../user/UserList";
 
 export default function UserComponent(props) {
   const [isDialogopen, setDialogOpen] = React.useState(false);
@@ -69,11 +69,6 @@ export default function UserComponent(props) {
           selected={rowData}
           selectHandler={setRowData}
         ></GenericDatatable>
-        {/* <UserList
-          columnNames={props.indexPageData.HEADER}
-          rows={props.indexPageData.DATA}
-          currentRowData={currentRowData}
-        ></UserList> */}
       </Grid>
       <Grid
         style={{ padding: "2px  8px 10px 3px" }}

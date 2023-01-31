@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import {
     Grid,
     MenuItem,
     Box,
-    TextField,
+    // TextField,
     Accordion,
     AccordionDetails,
     AccordionSummary,
@@ -12,7 +12,8 @@ import {
     Menu,
 } from '@mui/material'
 import ReactEcharts from 'echarts-for-react';
-import { FaAngleDown } from 'react-icons/fa';
+import { FaAngleDown, FaTable } from 'react-icons/fa';
+import { RiNodeTree } from 'react-icons/ri';
 import httpService from 'services/httpservice/httpService'
 import Formsy from "formsy-react";
 import { 
@@ -23,7 +24,7 @@ import { TextFieldFormsy, DatePickerFormsy } from "components/common/formsyCompo
 import { useClasses } from '@application'
 import { 
     MdExpandMore as ExpandMoreIcon, 
-    MdOutlineSearch as SearchButtonIcon,
+    // MdOutlineSearch as SearchButtonIcon,
   } from "react-icons/md"
 // import GraphComponent from './data/GraphComponent'
 import moment from 'moment';
@@ -42,7 +43,7 @@ const styles = theme => ({
       }
     },
     formControl: {
-      // margin: theme.spacing(1),
+      // margin: 1,
       fullWidth: true,
       display: "flex",
       wrap: "nowrap"
@@ -52,7 +53,7 @@ const styles = theme => ({
     },
     heading: {
       color: "#052a4f",
-      fontSize: theme.typography.pxToRem(18),
+      fontSize: 18,
       fontWeight: "500"
     },
     rowDesign: {
@@ -70,14 +71,16 @@ const ELAComponent = () => {
     const verParentRef = useRef();
     const verChartRef = useRef();
     
-    const [customerData, setCustomerData] = useState({});
-    const [showTree, setShowTree] = useState(false);
+    // const [customerData, setCustomerData] = useState({});
+    // const [showTree, setShowTree] = useState(false);
     const [graphMenu, setGraphMenu] = useState(null)
     const [expandedPanel, setExpandedPanel] = useState(true);
     const [showData, setShowData] = useState(false)
     const [displayType, setDisplayType] = useState('table')
+    const [tabViewData, setTabViewData] = useState({})
+    const [graphViewData, setGraphViewData] = useState({})
 
-    const [horOptions, setHorOptions] = useState({
+    const horOptions = {
         tooltip: {
             trigger: 'item',
             triggerOn: 'mousemove'
@@ -119,9 +122,9 @@ const ELAComponent = () => {
               
             }
           ]
-    })
+    }
 
-    const [verOptions, setVerOptions] = useState({
+    const verOptions = {
         ...horOptions,
         series: [
             {
@@ -129,15 +132,15 @@ const ELAComponent = () => {
                 orient: 'vertical',
             }
         ]
-    })
+    }
 
-    // const token = window.localStorage.getItem("cognifi_token");
-    // let config = {
-    //     headers: {
-    //         Authorization: "Bearer " + token,
-    //         'Content-Type': `multipart/form-data`,
-    //     }
-    // };
+    const token = window.localStorage.getItem("cognifi_token");
+    let config = {
+        headers: {
+            Authorization: "Bearer " + token,
+            'Content-Type': `multipart/form-data`,
+        }
+    };
     const openGraphMenu = Boolean(graphMenu)
 
     const handleOpen = (event) => {
@@ -149,27 +152,32 @@ const ELAComponent = () => {
 
     const classes = useClasses(styles);
 
-    const handlePanelExpansion = panel => (event, expandedPanel) => {
-        //console.log(expandedPanel, panel);
-        setExpandedPanel(expandedPanel ? panel : false);
-    };
+    // const handlePanelExpansion = panel => (event, expandedPanel) => {
+    //     //console.log(expandedPanel, panel);
+    //     setExpandedPanel(expandedPanel ? panel : false);
+    // };
 
     const handleSubmit = async(formData) => {
         // console.log("Form Data:-", formData)
         setShowData(true)
         setExpandedPanel(false)
-        // await httpService
-        //     .post("/investigation/searchCustomer360Data", config, {
-        //         params: formData
-        //     })
-        //     .then(response => {
-        //         console.log("Response:-", response)
-        //         setCustomerData(response.data);
-        //         setShowTree(true);
-        //     })
-        //     .catch(err=>{
-        //         console.log(err);
-        //     });
+        await httpService
+            .post("/api/investigation/getEntityLinkedDetails", config, {
+                params: {
+                    LevelCount: 1,
+                    MinLinks: 1,
+                    TransactionLink: 'y',
+                    ...formData
+                }
+            })
+            .then(response => {
+                console.log("Response:-", response)
+                // setCustomerData(response.data);
+                // setShowTree(true);
+            })
+            .catch(err=>{
+                console.log(err);
+            });
     };
 
     const handleClickNode = (e) => {
@@ -237,16 +245,24 @@ const ELAComponent = () => {
                                     value={moment(new Date()).format('L')}
                                 />
                             </Grid>
+                            {/* <Grid item xs={4} className="" >
+                                <TextFieldFormsy
+                                    variant="outlined"
+                                    name={`CustomerId`}
+                                    label={`Customer Id`}
+                                    required={true}
+                                    value=""
+                                ></TextFieldFormsy>
+                            </Grid> */}
+
                             <Grid item xs={4} className="" >
                                 <TextFieldFormsy
                                     variant="outlined"
-                                    name={`accNo`}
+                                    name={`AccountNumber`}
                                     label={`Account Number`}
-                                    className="w-[100%]"
                                     required={true}
                                     value=""
-                                ></TextFieldFormsy>   
-                                
+                                ></TextFieldFormsy>
                             </Grid>
                             
                         </Grid>
@@ -284,14 +300,18 @@ const ELAComponent = () => {
                         style={{ padding: '15px' }}
                     >
                         <Box className="flex flex-row justify-start items-center" >
-                            <Button
-                                className="px-5 py-2 mx-2 my-3 normal-case text-app-primary bg-transparent hover:bg-app-primary hover:text-white  text-sm rounded-[25px] shadow-none border-solid border-[1px] border-[#052a4f]"
-                                variant="contained"
-                                size="small"
-                                onClick={()=>setDisplayType('table')}
-                            >
-                                Show Table View
-                            </Button>
+                            {displayType !== 'table' && (
+                                <Button
+                                    className="px-5 py-2 mx-2 my-3 normal-case text-app-primary bg-transparent hover:bg-app-primary hover:text-white  text-sm rounded-[25px] shadow-none border-solid border-[1px] border-[#052a4f]"
+                                    variant="contained"
+                                    size="small"
+                                    onClick={()=>setDisplayType('table')}
+                                >
+                                    <FaTable size={20} className="mr-3" />
+                                    Show Table View
+                                </Button>
+                            )}
+                            
                             <Button
                                 className="px-5 py-2 mx-2 my-3 normal-case text-app-primary bg-transparent hover:bg-app-primary hover:text-white  text-sm rounded-[25px] shadow-none border-solid border-[1px] border-[#052a4f]"
                                 aria-controls={openGraphMenu ? 'freeze-dropdown-menu' : undefined}
@@ -302,6 +322,7 @@ const ELAComponent = () => {
                                 onClick={handleOpen}
                                 endIcon={<FaAngleDown size={12} />}
                             >
+                                <RiNodeTree size={20} className="mr-3" />
                                 Show Graph View
                             </Button>
                             <Menu

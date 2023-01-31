@@ -41,7 +41,7 @@ function selectedTabProps(index) {
 
 const Tabs = withStyles(theme => ({
   root: {
-    minHeight: theme.typography.pxToRem("30"),
+    minHeight: 30,
     backgroundColor: "#f4f5fa",
     padding: '10px 10px'
   },
@@ -52,8 +52,8 @@ const Tabs = withStyles(theme => ({
 
 const Tab = withStyles(theme => ({
   root: {
-    minHeight: theme.typography.pxToRem("30"),
-    borderRadius: theme.typography.pxToRem("20"),
+    minHeight: 30,
+    borderRadius: 20,
     color: "#333333",
     opacity: 1,
     "&$selected": {
@@ -66,7 +66,7 @@ const Tab = withStyles(theme => ({
       color: "#f4f5fa",
       opacity: 1
     },
-    marginRight: theme.typography.pxToRem("2")
+    marginRight: 2,
   },
   selected: {}
 }))(MuiTab);

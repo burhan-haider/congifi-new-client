@@ -8,7 +8,7 @@
 //     width: 36,
 //     height: 20,
 //     padding: 0,
-//     margin: theme.spacing(1)
+//     margin: 1
 //   },
 //   switchBase: {
 //     height: "inherit",

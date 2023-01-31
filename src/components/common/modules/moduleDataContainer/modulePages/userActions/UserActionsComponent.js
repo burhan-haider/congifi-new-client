@@ -65,29 +65,30 @@ const UserActionsComponent = (props) => {
     };
 
     useEffect(() => {
-      console.log("UserActionsComponent props :", props);
+        console.log("Props:-", props.indexPageData)
+        console.log("UserActionsComponent props :", props);
     })
 
     const handleSubmit = async(data) => {
         console.log("Form Data:-", data)
         setShowTable(false);
         
-        httpService.get(`/user/userDto/${data.username}`, config).then(res => {
+        httpService.get(`/api/user/userDto/${data.username}`, config).then(res => {
 
             console.log("User Data:-", res.data);
             setUserData(res.data);
 
-            httpService.get(`/user/userRole/${data.username}`, config).then(res2 => {
+            httpService.get(`/api/user/userRole/${data.username}`, config).then(res2 => {
 
                 console.log("User Role Data:-", res2.data);
                 setUserRoles(res2.data);
 
-                httpService.get(`/checker/getTempUser/${data.username}`, config).then(res3 => {
+                httpService.get(`/api/checker/getTempUser/${data.username}`, config).then(res3 => {
                     
                     console.log("Temp User Data:-", res3.data);
                     setTempUserData(res3.data);
                     
-                    httpService.get(`/user/tempUserRoleDto/${data.username}`, config).then(res4 => {
+                    httpService.get(`/api/user/tempUserRoleDto/${data.username}`, config).then(res4 => {
  
                         console.log("Temp User Role Data:-", res4.data);
                         setTempUserRoles(res4.data);
@@ -111,7 +112,7 @@ const UserActionsComponent = (props) => {
     }
 
     const handleApprove = async() => {
-        await httpService.post(`/user/verify?username=${selectedUser}`, config)
+        await httpService.post(`/api/user/verify?username=${selectedUser}`, config)
             .then(res=>{
                 console.log("Verify User:-", res);
                 alert("User Verified Successfully");
@@ -121,7 +122,7 @@ const UserActionsComponent = (props) => {
     
     const handleReject = async() => {
 
-        await httpService.post(`/user/rejectUser?username=${selectedUser}`, config)
+        await httpService.post(`/api/user/rejectUser?username=${selectedUser}`, config)
             .then(res=>{
                 console.log("Reject User:-", res);
                 alert("User Rejected Successfully");

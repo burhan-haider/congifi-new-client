@@ -14,11 +14,11 @@ import Formsy from "formsy-react";
 
 const styles = theme => ({
   formControl: {
-    margin: theme.spacing(1),
+    margin: 1,
     minWidth: 120
   },
   selectEmpty: {
-    marginTop: theme.spacing(2)
+    marginTop: 2
   },
   chips: {
     display: "flex",
@@ -52,6 +52,7 @@ function RoleFeatureMapping(props) {
     ) {
       return roleFeaturemapping.ROLE.roleId === currentSelectedroleId;
     });
+    console.log("Feature List:-",roleAssignedFeatureList)
     let currentSelectedFeatureCodeList = [];
     let currentSelectedFeatureList = [];
 
@@ -72,13 +73,13 @@ function RoleFeatureMapping(props) {
     let currentSelectedFeatureCodeList = [];
 
     if(selectedList.length > 0){
-      // console.log("Event is an Array!")
       selectedList.map(value=>{
         allFeatures.map(feature => {
           if(feature.featureName === value){
             if(currentSelectedFeatureCodeList.filter(e=>e===feature.featureName).length === 0){
-              currentSelectedFeatureCodeList.push(feature.featureMapping_Id);
+              currentSelectedFeatureCodeList.push(feature.featureCode);
             }
+            console.log("Selected Feature Code List:-", currentSelectedFeatureCodeList);
           }
           return null;
         })

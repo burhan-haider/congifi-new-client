@@ -3,7 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setSelectedModule, addToBreadcrumbs, addToOpenTabs } from 'redux/features/features.actions';
 import ModuleDataContainer from 'components/common/modules/moduleDataContainer/ModuleDataContainer';
 import ModuleChartFrame from 'components/common/modules/mainModuleSearchFrame/ModuleChartFrame';
-import { Grid } from '@mui/material';
+import { Grid, Card, Typography } from '@mui/material';
+import buttonIconMapping from 'assets/buttonIconMapping';
 // import ModuleFrame from './ModuleFrame';
 
 const ModuleHolder = ({feature, module, getModuleChartData, isRefreshing, setIsRefreshing}) => {
@@ -12,9 +13,9 @@ const ModuleHolder = ({feature, module, getModuleChartData, isRefreshing, setIsR
     const selectedFeature = useSelector(state=>state.features.features.featureCode);
     
     let modules = feature.modules.filter(item=>item.parentModule_Id === module.moduleCode);
-    
-    
 
+
+    
     const handleClick = (item) => {
         // if(feature.modules.filter(e=>e.uniqueNo === item.uniqueNo).length<1){
         //     dispatch(addToModules(feature.featureCode, item))
@@ -102,10 +103,24 @@ const ModuleHolder = ({feature, module, getModuleChartData, isRefreshing, setIsR
                             )
                         }
                         else{
+                            let ModuleIcon = buttonIconMapping(item.moduleCode)
                             return(
-                                <button key={item.uniqueNo} onClick={()=>handleClick(item)} className=" m-5 text-white font-bold border-none bg-red-500 hover:bg-red-700 rounded-md p-3 cursor-pointer max-h-12">
-                                    {item.moduleName}
-                                </button>
+                                <Card 
+                                    elevation={2} 
+                                    key={item.uniqueNo} 
+                                    onClick={()=>handleClick(item)} 
+                                    className='hover:bg-[#eee] cursor-pointer p-10'
+                                    sx={{
+                                        height: '100%',
+                                        minHeight: '200px',
+                                        width: 1/4,
+                                    }}
+                                >
+                                    <Typography className='font-bold text-xl mb-10' >{item.moduleName}</Typography>
+                                    {/* {ModuleIcon !== null && (
+                                        <ModuleIcon className="text-[#aaa]" size={120} />
+                                    )} */}
+                                </Card>
                             )
                         }
                     })}

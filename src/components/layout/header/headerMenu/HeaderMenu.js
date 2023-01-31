@@ -107,13 +107,11 @@ function HeaderMenu() {
   }, [open]);
 
   return (
-    <div className="hidden xl:block">
-      <ul className="content-center ml-0 pl-0">
-        <li className={classes.topbarLi} key="list">
-          <div className={classes.iconsDiv}>
+    <div className="hidden xl:flex justify-center items-center ">
+          <div className="border-0 border-l-2 border-l-[#4993b8] border-solid pl-4 pr-2" >
             <img
               src={getIconByKey('list')}
-              className={classes.topbarIcons}
+              className="h-4 w-auto mt-1"
               ref={anchorRef}
               aria-controls={open ? "menu-list-grow" : undefined}
               //aria-haspopup="true"
@@ -121,8 +119,6 @@ function HeaderMenu() {
               alt="list"
             />
           </div>
-        </li>
-      </ul>
       <Popper
         style={{ zIndex: 200 }}
         open={open}
