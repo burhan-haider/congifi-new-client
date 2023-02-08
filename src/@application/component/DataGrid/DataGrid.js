@@ -49,6 +49,7 @@ const DataGrid = (props) => {
     const [selectedRowsArray, setSelectedRowsArray] = useState([])
     const [isSelected, setIsSelected] = useState(false)
     const [showSelected, setShowSelected] = useState(false)
+    const [selectedCaseStatus, setSelectedCaseStatus] = useState(null)
 
     // eslint-disable-next-line no-unused-vars
     const [direction, setDirection] = useState('ltr')
@@ -259,6 +260,9 @@ const DataGrid = (props) => {
             if(selectedRows.size === 1 ){
 
                 console.log("Selected Row Data", [tableData.DATA[selectedRows.values().next().value-1][0]])
+                console.log("Selected CaseNo", [tableData.DATA[selectedRows.values().next().value-1][0]])
+                console.log("Selected Row Data", totalRows[selectedRows.values().next().value-1]["app.common.CURRENT_CASESTATUS"])
+                setSelectedCaseStatus(totalRows[selectedRows.values().next().value-1]["app.common.CURRENT_CASESTATUS"])
                 setCaseNo(tableData.DATA[selectedRows.values().next().value-1][0])
                 // setSelectedData([tableData.DATA[selectedRows.values().next().value-1]])
             }
@@ -342,6 +346,8 @@ const DataGrid = (props) => {
         function handleClick(e) {
             if (e.target.tabIndex === 0 && selectedRows.size > 0) {
                 e.target.checked = false
+                setCaseNo("")
+                setSelectedCaseStatus(null)
                 setSelectedRows(new Set([]))
             }
         }
@@ -448,6 +454,7 @@ const DataGrid = (props) => {
                             selectedData={selectedData}
                             moduleType={moduleType}
                             caseNo={caseNo}
+                            selectedCaseStatus= {selectedCaseStatus} 
                         />
                     </>
                 )}
