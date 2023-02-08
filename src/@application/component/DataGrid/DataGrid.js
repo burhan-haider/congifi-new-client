@@ -37,6 +37,7 @@ const DataGrid = (props) => {
         setSelectedData, 
         actionButtons = [],
         moduleType = null,
+        ComponentBottomContainer = null,
     } = props
 
 
@@ -444,12 +445,22 @@ const DataGrid = (props) => {
                 {actionButtons.length>0 && (
                     <>
                         <hr color='#ddd' />
-                        <BottomContainer 
-                            actionButtons={actionButtons} 
-                            selectedData={selectedData}
-                            moduleType={moduleType}
-                            caseNo={caseNo}
-                        />
+                        {ComponentBottomContainer!==null?(
+                            <ComponentBottomContainer
+                                actionButtons={actionButtons} 
+                                selectedData={selectedData}
+                                moduleType={moduleType}
+                                caseNo={caseNo} 
+                            />
+                        ):(
+                            <BottomContainer 
+                                actionButtons={actionButtons} 
+                                selectedData={selectedData}
+                                moduleType={moduleType}
+                                caseNo={caseNo}
+                            />
+                        )}
+                        
                     </>
                 )}
                 

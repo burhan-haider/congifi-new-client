@@ -32,6 +32,7 @@ import commonService from "services/common/commonService";
 import { useDispatch, useSelector } from "react-redux";
 import * as CWFActions from "redux/caseWorkflow/cwfbottomframedata/cwfbottomframedata.actions";
 import { GenericButton, useClasses, GenericDatagrid } from "@application";
+import CWFBottomContainer from "./BottomContainer/CWFBottomContainer";
 // import { CWFDetailsBottomContainer } from "../common/bottomPages";
 
 const styles = theme => ({
@@ -179,6 +180,7 @@ export default function CaseWorkflowComponent(props) {
             title={`${moduleHeader[0]} Results`}
             actionButtons={bottomAction}
             moduleType={"caseworkflow"}
+            ComponentBottomContainer={CWFBottomContainer}
           />
         </>
       ) : (
