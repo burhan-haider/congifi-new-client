@@ -1510,9 +1510,9 @@ export const graphDataTree = {
     children: [
       {
         TRANSACTIONRISK: "N.A.",
-        LINKEDACCOUNTNO: "078908902",
+        LINKEDACCOUNTNO: "610351976",
         LINKEDNAME: "K. K. BANSAL",
-        SEARCHACCOUNTNO: "078908902",
+        SEARCHACCOUNTNO: "610351976",
         IFEXISTINGTAB: "Level_1",
         ENTITYICON: "M",
         LINKEDCUSTOMERID: "201077902",
@@ -1521,7 +1521,7 @@ export const graphDataTree = {
         children: [],
         LINKEDTYPE: "M",
         LINKEDCUSTOMERTYPE: "I",
-        name: "078908902",
+        name: "610351976",
         DUPLICATEVALUE: "N.A.",
         CUSTOMERRISK: "N.A.",
         TRANSACTEDAMOUNT: "N.A."
@@ -2118,7 +2118,7 @@ export const graphDataTree = {
       }
     ],
     LINKEDTYPE: "TRANSACTION",
-    name: "078908902",
+    name: "610351976",
     levelName: "1",
     CUSTOMERRISK: "N.A."
   }

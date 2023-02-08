@@ -37,6 +37,7 @@ const DataGrid = (props) => {
         setSelectedData, 
         actionButtons = [],
         moduleType = null,
+        ComponentBottomContainer = null,
     } = props
 
 
@@ -88,6 +89,7 @@ const DataGrid = (props) => {
     }, [currentPage, dataPerPage])
 
     useEffect(() => {
+        console.log("Table Data:-", tableData)
         let tempColumns = []
         let tempRows = []
 
@@ -449,13 +451,24 @@ const DataGrid = (props) => {
                 {actionButtons.length>0 && (
                     <>
                         <hr color='#ddd' />
-                        <BottomContainer 
-                            actionButtons={actionButtons} 
-                            selectedData={selectedData}
-                            moduleType={moduleType}
-                            caseNo={caseNo}
-                            selectedCaseStatus= {selectedCaseStatus} 
-                        />
+                        {ComponentBottomContainer!==null?(
+                            <ComponentBottomContainer
+                                actionButtons={actionButtons} 
+                                selectedData={selectedData}
+                                moduleType={moduleType}
+                                caseNo={caseNo} 
+                                selectedCaseStatus={selectedCaseStatus}
+                            />
+                        ):(
+                            <BottomContainer 
+                                actionButtons={actionButtons} 
+                                selectedData={selectedData}
+                                moduleType={moduleType}
+                                caseNo={caseNo}
+                                selectedCaseStatus={selectedCaseStatus}
+                            />
+                        )}
+                        
                     </>
                 )}
                 

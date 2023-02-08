@@ -17,6 +17,8 @@ import { RiskDashboardComponent } from './modulePages';
 import { Customer360Component } from './modulePages';
 import { UserActionsComponent } from './modulePages';
 import { ELAComponent } from './modulePages'
+import { TransactionDashboard } from './modulePages'
+import { AuditLogComponent } from './modulePages'
 import { store } from 'redux/store'
 
 /*
@@ -31,7 +33,7 @@ const moduleComponentConfig = {
   master: MasterComponent,
   roleComponent: RoleComponent,
   roleFeatureMapping: RoleFeatureMapping,
-  userOperations: UserList,
+  // userOperations: UserList,
   // singleRowEntity: SingleRowEntity,
   userRoleMapping: UserRoleMapping,
   userAction: UserActionsComponent,
@@ -48,6 +50,8 @@ const moduleComponentConfig = {
   riskDashboard: RiskDashboardComponent,
   customer360: Customer360Component,
   entityLinkAnalysis: ELAComponent,
+  transactionDashboard: TransactionDashboard,
+  auditLog: AuditLogComponent,
 };
 
 export default moduleComponentConfig;

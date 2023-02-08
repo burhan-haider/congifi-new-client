@@ -50,7 +50,7 @@ function TextFieldFormsy(props) {
     <TextField
       {...importedProps}
       onChange={changeValue}
-      className="w-100"
+      className="w-full"
       value={value}
       error={Boolean(props.showError && errorMessage)}
       helperText={props.showError && errorMessage ? errorMessage : undefined}

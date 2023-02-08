@@ -22,8 +22,10 @@ import UserMenuList from './userMenu/UserMenu';
 import HeaderMenu from './headerMenu/HeaderMenu';
 
 const MyTabScrollButton = styled(TabScrollButton)({
-    display: 'none',
+    // display: 'none',
     width: 12,
+    marginLeft: 10,
+    marginRight: 10,
     root: {
       display: 'none',
       width: 28,
@@ -88,15 +90,15 @@ const Header = () => {
                 {/* <Tab icon={<MdHome size={24} />} component={Link} value="/" to={'/'} iconPosition="start"  label="Item One" />
                 <Tab icon={<MdSettings size={24} />} component={Link} value="/page-one" to={'/page-one'} iconPosition="start"   label="Item Two" />
                 <Tab icon={<MdLocationOn size={24} />} component={Link} value="/page-two" to={'/page-two'} iconPosition="start"  label="Item Three" /> */}
-                {newFeatures.map((item)=>(
+                {newFeatures.map((item, index)=>(
                     <Tab 
                         key={item.featureCode?item.featureCode:item.featureMapping_Id} 
                         icon={
-                            <img src={getIconByKey(item.featureIcon)} style={{height: '0.9rem', width: 'auto'}} className="mr-2" alt={item.featureIcon}/>
+                            <img src={getIconByKey(item.icon)} style={{height: '1.2rem', width: 'auto'}} className="mr-2" alt={item.featureIcon}/>
                         } 
                         iconPosition="start" 
                         value={item.featureCode?item.featureCode:item.featureMapping_Id}
-                        className="text-white border-none text-lg font-gSans"
+                        className={`text-white border-solid border-0 text-lg font-gSans ${index !== newFeatures.length-1&&"border-r-gray-400 border-r-[1px]"} `}
                         label={
                             item.featureName
                         }
@@ -110,8 +112,8 @@ const Header = () => {
                 
                 <img src={headerBar} alt="header-bar" className="h-9 w-auto m-0 mt-[6px]" />
 
-                <IconButton onClick={()=>{}} color="primary" className="mb-0 ml-10 hidden xl:block" >
-                    <img src={getIconByKey('searchOne')} alt={'search_icon'} className="h-4 w-auto " />
+                <IconButton onClick={()=>{}} color="primary" className="mb-0 ml-5 hidden xl:block h-fit pt-3" >
+                    <img src={getIconByKey('searchOne')} alt={'search_icon'} className="h-4 w-auto mb-0 pb-0" />
                 </IconButton>
 
                 <HeaderMenu   />

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { makeStyles } from "@mui/styles";
+import React, { useState } from "react";
+// import { makeStyles } from "@mui/styles";
 import Formsy from "formsy-react";
 import {
   TextFieldFormsy,
@@ -25,7 +25,7 @@ const styles = (theme) => ({
     width: "w-full",
   },
   formControl: {
-    margin: theme.spacing(1),
+    margin: 1,
     fullWidth: true,
     display: "flex",
     wrap: "flex nowrap w-full m-2",
@@ -41,7 +41,7 @@ const styles = (theme) => ({
   },
   heading: {
     color: "text-[#052a4f]",
-    fontSize: theme.typography.pxToRem(18),
+    fontSize: 18,
     fontWeight: "500",
   },
 });

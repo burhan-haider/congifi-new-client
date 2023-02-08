@@ -74,6 +74,8 @@ export default function ModuleDataContainer(props) {
   useEffect(() => {
     // document.title = moduleCode;
     console.log('Show Module', feature.showModule)
+    console.log('Show ModuleId', moduleId)
+    console.log('Show ModuleURL', moduleURL)
     let errorDetails = {};
 
     if(moduleURL && moduleId === feature.showModule){
@@ -95,6 +97,10 @@ export default function ModuleDataContainer(props) {
           setError(errorDetails);
           setDataLoading(false);
         });
+    }
+    else{
+      setindexPageData([]);
+      setDataLoading(false);
     }
       
     return () => {

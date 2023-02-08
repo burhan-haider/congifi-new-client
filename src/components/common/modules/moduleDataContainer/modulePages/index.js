@@ -15,3 +15,5 @@ export { default as RiskDashboardComponent } from "./riskDashboard/RiskDashboard
 export { default as Customer360Component } from "./customer360/Customer360Component";
 export { default as UserActionsComponent } from './userActions/UserActionsComponent';
 export { default as ELAComponent } from './entityLinkAnalysis'
+export { default as TransactionDashboard } from './transactionDashboard'
+export { default as AuditLogComponent } from './auditLog';

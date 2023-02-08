@@ -7,11 +7,10 @@ import { useClasses } from "@application";
 
 const styles = theme => ({
   arrow: {
-    color: theme.palette.common.black
+    color: '#242526'
   },
   tooltip: {
-    backgroundColor: theme.palette.common.black,
-    //backgroundColor: "#242526",
+    backgroundColor: '#242526',
     fontSize: "16px",
     color: "#fff",
     marginBottom: "7px"
