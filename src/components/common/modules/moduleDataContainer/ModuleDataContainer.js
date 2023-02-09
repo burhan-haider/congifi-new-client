@@ -5,6 +5,8 @@ import ModuleComponentConfig from "components/common/modules/moduleDataContainer
 import CommonService from "services/common/commonService";
 import LinearLoading from "components/common/dataLoading/LinearLoading";
 import Error from "components/common/errorPages/Error";
+import {   CircularProgress } from "@mui/material";
+
 
 import { removerFromRefreshModule } from "redux/features/features.actions";
 
