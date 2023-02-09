@@ -115,7 +115,9 @@ export default function ModuleDataContainer(props) {
   return (
     <div>
       {dataLoading ? (
-        <LinearLoading />
+        /* <LinearLoading /> */
+        <CircularProgress size={70} color={'inherit'} />
+
       ) : indexPageData ? (
         <PageComponent
           moduleCode={moduleCode}
