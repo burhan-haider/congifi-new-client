@@ -37,6 +37,7 @@ const DataGrid = (props) => {
         setSelectedData, 
         actionButtons = [],
         moduleType = null,
+        ComponentBottomContainer = null,
     } = props
 
 
@@ -346,6 +347,8 @@ const DataGrid = (props) => {
         function handleClick(e) {
             if (e.target.tabIndex === 0 && selectedRows.size > 0) {
                 e.target.checked = false
+                setCaseNo("")
+                setSelectedCaseStatus(null)
                 setSelectedRows(new Set([]))
                 setCaseNo("")
                 setSelectedCaseStatus(null)
@@ -449,13 +452,24 @@ const DataGrid = (props) => {
                 {actionButtons.length>0 && (
                     <>
                         <hr color='#ddd' />
-                        <BottomContainer 
-                            actionButtons={actionButtons} 
-                            selectedData={selectedData}
-                            moduleType={moduleType}
-                            caseNo={caseNo}
-                            selectedCaseStatus={selectedCaseStatus}
-                        />
+                        {ComponentBottomContainer!==null?(
+                            <ComponentBottomContainer
+                                actionButtons={actionButtons} 
+                                selectedData={selectedData}
+                                moduleType={moduleType}
+                                caseNo={caseNo} 
+                                selectedCaseStatus={selectedCaseStatus}
+                            />
+                        ):(
+                            <BottomContainer 
+                                actionButtons={actionButtons} 
+                                selectedData={selectedData}
+                                moduleType={moduleType}
+                                caseNo={caseNo}
+                                selectedCaseStatus={selectedCaseStatus}
+                            />
+                        )}
+                        
                     </>
                 )}
                 

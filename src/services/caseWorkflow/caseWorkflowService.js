@@ -15,7 +15,7 @@ class caseWorkflowService {
 
   createAction = paramData => {
     return new Promise((resolve, reject) => {
-      httpService.post("/action/create", paramData).then(response => {
+      httpService.post("/api/action/create", paramData).then(response => {
         if (response.status === 200) {
           resolve(response.data);
           //console.log(response.data);

@@ -3,7 +3,8 @@ import {
   referToBranchManager1ByLevel2,
   approveCaseByLEVEL1,
   rejectCaseByLEVEL1,
-  uploadPromise
+  uploadPromise,
+  getCWFCaseAndCommentsDetails
 } from "./CWFActions";
 
 export const actionMapping = {
@@ -16,5 +17,6 @@ export const actionMapping = {
   approveCaseByLEVEL1: (action, data, caseNo, userActionType) => approveCaseByLEVEL1(action, data, caseNo, userActionType),
   rejectCaseByLEVEL1: (action, data, caseNo, userActionType) => rejectCaseByLEVEL1(action, data, caseNo, userActionType),
 
-  uploadPromise: (action, data, caseNo, userActionType) => uploadPromise(action, data, caseNo, userActionType)
+  uploadPromise: (action, data, caseNo, userActionType) => uploadPromise(action, data, caseNo, userActionType),
+  getCWFCaseAndCommentsDetails: (action,caseNo, userActionType) => getCWFCaseAndCommentsDetails(action, caseNo, userActionType)
 };
