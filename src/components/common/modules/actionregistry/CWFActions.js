@@ -126,3 +126,48 @@ export const rejectCaseByLEVEL1 = (action, data, caseNo, userActionType) =>{
         });
     })
 }
+
+export const uploadPromise = (action, data, caseNo, userActionType) =>{
+  return new Promise((resolve, reject)=>{
+      const caseStatus = {
+          RSLVD: '28',
+          STAB: '29',
+          PARTP: '30', 
+          
+      }
+      const actionType = {
+        Post: 'LEVEL2',
+        PostAndClose: 'BRANCHMANAGER1'
+      }
+      
+
+      httpService
+      .post(
+        "/api/caseworkflow/saveCWFCaseAndCommentsDetails",
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem(
+              "cognifi_token"
+            )}`
+          }
+        },
+        { params: {
+          caseNo: caseNo,
+          ActionCode: action.actionCode,
+          comments: data.comments,
+          userActionType: userActionType||"defaultAction",
+          caseStatus: caseStatus[data.uploadPromise] || "27",
+          reassignToUserCode:actionType[userActionType],
+          fromDate: data.promiseFromDate,
+          toDate: data.promiseToDate
+        } }
+      )
+      .then(response => {
+        if (response.status === 200) {
+          resolve(response.data);
+        } else {
+          reject(response.data.err);
+        }
+      });
+  })
+}
