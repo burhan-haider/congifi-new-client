@@ -58,6 +58,7 @@ const CWFBottomContainer = (props) => {
         .then(res=>{
                 var allTabNames = res['TABNAMES']
                 console.log('tabname///////////////////////////',allTabNames)
+                console.log('res in CWFBottomContainer///////////////////////////',res)
                 setAllTabs(allTabNames)
                 setTabName(allTabNames[0])
                 setTotalRes(res)
@@ -109,17 +110,22 @@ const CWFBottomContainer = (props) => {
                 {currentAction!=null&&currentAction.actionParams.length>0?(
                     <>
                         {showCommentActions.includes(currentAction.actionCode)?(
-                            <CommentsContainer
-                                handleSubmit={handleSubmit}
-                                setIsFormValid={setIsFormValid}
-                                currentAction={currentAction}
-                                tabName={tabName}
-                                setTabName={setTabName}
-                                allTabs={allTabs}
-                                totalRes={totalRes}
-                                setUserActionType={setUserActionType}
-                                setModalOpen={setModalOpen}
-                            />
+                            <>
+                                {Object.keys(totalRes).length>0&&(
+                                    <CommentsContainer
+                                        handleSubmit={handleSubmit}
+                                        setIsFormValid={setIsFormValid}
+                                        currentAction={currentAction}
+                                        tabName={tabName}
+                                        setTabName={setTabName}
+                                        allTabs={allTabs}
+                                        totalRes={totalRes}
+                                        setUserActionType={setUserActionType}
+                                        setModalOpen={setModalOpen}
+                                    />
+                                )}
+                            </>
+                            
                         ):(
                             <Box className='min-w-[600px]'>
                                 <Formsy
