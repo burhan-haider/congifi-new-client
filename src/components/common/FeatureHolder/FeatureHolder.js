@@ -579,7 +579,7 @@ const MainPage = ({feature, getModuleChartData, isRefreshing, setIsRefreshing}) 
           let ModuleIcon = buttonIconMapping(item.moduleCode)
 
           return (
-            <Grid item key={index} xs={6} className="sm:max-h-[300px] lg:min-h-[450px]" >
+            <Grid item key={index} xs={6} className="lg:min-h-[400px] sm:max-h-[380px]" >
               {item.parentModule_Id == null?(
                 <>
                   {item.parentModuleId==null&&item.moduleChartDetails!=null?(

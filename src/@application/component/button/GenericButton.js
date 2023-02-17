@@ -6,6 +6,7 @@ import { useClasses } from "@application/hooks";
 
 const styles = theme => ({
   buttonRoot: {
+    left: '5px',
     borderRadius: "25px",
     marginRight: "1%",
     color: "#052a4f",

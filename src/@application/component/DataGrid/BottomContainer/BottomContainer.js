@@ -31,11 +31,11 @@ const BottomContainer = (props) => {
 
  
     return (
-        <Box className="flex flex-row justify-end items-center" >
+        <Box className="flex flex-row justify-evenly items-center overflow-x-auto" >
             {actionButtons.length > 0 && actionButtons.map((action, index)=>(
                 <Button
                     onClick={()=>handleClick(action)}
-                    className="px-5 py-2 mx-2 my-3 normal-case text-app-primary bg-transparent hover:bg-app-primary hover:text-white  text-sm rounded-[25px] shadow-none border-solid border-[1px] border-[#052a4f]">
+                    className="px-2 py-2 mx-0 my-0 normal-case text-app-primary bg-transparent hover:bg-app-primary hover:text-white  text-sm rounded-[25px] shadow-none border-solid border-[1px] border-[#052a4f]">
                         {action.actionName}
                 </Button>
             ))}

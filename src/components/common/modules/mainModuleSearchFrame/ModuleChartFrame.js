@@ -229,7 +229,7 @@ function ModuleChartFrame(props) {
   }
   const classes = useClasses(styles);
   return (
-    <Box className={classes.chartContentContainer}>
+    <Box className="w-auto m-0 h-[400px] sm:h-[350px]">
       {
             current.moduleChartDetails !== null ? (
                 <Card elevation={2} className="max-h-[3500px]">

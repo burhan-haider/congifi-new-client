@@ -20,12 +20,6 @@ const styles = theme => ({
     paddingLeft: "20px",
     paddingRight: "20px"
   },
-  treeview: {
-    flexGrow: 1,
-    maxHeight: "450px",
-    //maxWidth: "400px",
-    overflowY: "auto"
-  },
   // VIVEK - CHECKBOX
   checkboxRoot: {
     color: "#052a4f",
