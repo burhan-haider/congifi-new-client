@@ -34,6 +34,7 @@
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-chartjs-2": "^4.1.0",
+    "react-csv": "^2.2.2",
     "react-csv-downloader": "^2.8.0",
     "react-d3-library": "^1.1.8",
     "react-data-grid": "^7.0.0-beta.15",
@@ -52,6 +53,7 @@
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.1",
     "stream-browserify": "^3.0.0",
+    "use-file-picker": "^1.5.2",
     "web-vitals": "^2.1.4",
     "webpack": "^5.72.0"
   },
