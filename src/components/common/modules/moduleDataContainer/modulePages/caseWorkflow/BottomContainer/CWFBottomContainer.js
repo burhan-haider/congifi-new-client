@@ -34,8 +34,8 @@ const CWFBottomContainer = (props) => {
     const [totalRes, setTotalRes] = useState({})
 
     const showCommentActions = [
-        'addViewComments',
-        'escalateCasesByBranchManager1'
+        'addViewComments'
+        //'escalateCasesByBranchManager1'
     ]
     
 
@@ -187,15 +187,17 @@ const CWFBottomContainer = (props) => {
                                                                 label={param.paramName}
                                                                 ampm={false}
                                                                 className={undefined}
+                                                                format="dd/MM/yyyy"
+                                                                inputFormat="dd/MM/yyyy"
+                                                                toolbarFormat="dd/MM/yyyy"
                                                                 dateTime={false}
                                                                 allowKeyboardControl={true}
                                                                 required={true}
-                                                                value={new Date()}
-                                                                disabled={!param.enabled}
                                                             />
                                                         </FormControl>
                                                     </Grid>
                                                 )}
+                                                
                                                 {param.paramDataType === 'select' && param.paramStaticValues !== null ? (
                                                     <Grid item xs={12} key={index}>
                                                     <FormControl className="m-2 w-100 flex flex-nowrap">
