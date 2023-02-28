@@ -5,3 +5,4 @@ export { default as SelectFormsy } from "../../common/formsyComponents/SelectFor
 export { default as DatePickerFormsy } from "../../common/formsyComponents/DatePickerFormsy";
 export { default as ViewFieldFormsy } from "../../common/formsyComponents/ViewFieldFormsy";
 export { default as SwitchFormsy } from "../../common/formsyComponents/SwitchFormsy";
+export { default as FileUploadFormsy } from "../../common/formsyComponents/FileUploadFormsy";

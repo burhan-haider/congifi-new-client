@@ -5,7 +5,9 @@ import {
    referToBranchManager1ByLevel2,
    approveCaseByLEVEL1,
    rejectCaseByLEVEL1,
-   getCWFCaseAndCommentsDetails
+   getCWFCaseAndCommentsDetails,
+   getFileUploadConfig,
+   fileUploadConfig
 } from "./CWFActions";
 
 export const actionMapping = {
@@ -14,5 +16,7 @@ export const actionMapping = {
     referToBranchManager1ByLevel2: (action, data, caseNo, userActionType) => referToBranchManager1ByLevel2(action, data, caseNo, userActionType),
     approveCaseByLEVEL1: (action, data, caseNo, userActionType) => approveCaseByLEVEL1(action, data, caseNo, userActionType),
     rejectCaseByLEVEL1: (action, data, caseNo, userActionType) => rejectCaseByLEVEL1(action, data, caseNo, userActionType),
-    getCWFCaseAndCommentsDetails: (action,caseNo, userActionType) => getCWFCaseAndCommentsDetails(action, caseNo, userActionType)
+    getCWFCaseAndCommentsDetails: (action,caseNo, userActionType) => getCWFCaseAndCommentsDetails(action, caseNo, userActionType),
+    getFileUploadConfig: (action,caseNo, userActionType) => getFileUploadConfig(action,caseNo, userActionType), 
+    fileUploadConfig: (filesContent,caseNo) => fileUploadConfig(filesContent,caseNo) 
 }
