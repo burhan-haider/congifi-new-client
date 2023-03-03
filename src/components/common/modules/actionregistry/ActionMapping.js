@@ -6,7 +6,10 @@ import {
   uploadPromise,
   getCWFCaseAndCommentsDetails,
   escalateCaseByLEVEL2,
-  parkedCasesByLEVEL1
+  parkedCasesByLEVEL1,
+  getFileUploadConfig,
+  fileUploadConfig,
+  closeCasesBYLEVEL1
 
 } from "./CWFActions";
 
@@ -39,5 +42,8 @@ export const actionMapping = {
   getFileUploadConfig(action,caseNo, userActionType), 
   
   fileUploadConfig: (filesContent,caseNo) => 
-  fileUploadConfig(filesContent,caseNo) 
+  fileUploadConfig(filesContent,caseNo), 
+
+  closeCasesBYLEVEL1: (action,data,caseNo,userActionType) =>
+  closeCasesBYLEVEL1(action,data,caseNo,userActionType),
 };

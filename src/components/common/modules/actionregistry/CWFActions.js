@@ -43,9 +43,18 @@ export const escalateCaseByLEVEL2 = (action, data, caseNo, userActionType) =>{
           Post: '27',
           PostAndClose: '51' 
       }
+
+      const promiseStatus = {
+        INIT: '27',
+        RSLVD: '28',
+        STAB: '29',
+        PARTP: '30', 
+        
+    }
+      
       const reassignTo={
           Post: 'LEVEL2',
-          PostAndClose: 'LEVEL1'
+          PostAndClose: 'BRANCHMANAGER1'
         }
         httpService
         .post(
@@ -63,7 +72,9 @@ export const escalateCaseByLEVEL2 = (action, data, caseNo, userActionType) =>{
             comments: data.comments,
             userActionType: userActionType||"defaultAction",
             reassignToUserCode: reassignTo[userActionType],
-            caseStatus: caseStatus[userActionType],
+            caseStatus: promiseStatus[data.status],
+          //  promiseStatus: promiseStatus[data.status],
+            observation: data.status
           } }
           )
           .then(response => {
@@ -503,6 +514,47 @@ const genericFileProcess = (caseNo) => {
 })
 
 
+}
+
+export const closeCasesBYLEVEL1 = (action, data, caseNo, userActionType) =>{
+    return new Promise((resolve, reject)=>{
+      // const caseStatus = {
+      //   Post: '27',
+      //   PostAndClose: '100' 
+      // }
+
+      // const reassignTo={
+      //   Post: 'BRANCHMANAGER1',
+      //   PostAndClose: 'BRANCHMANAGER1'
+      // }
+
+        httpService
+        .post(
+          "/api/caseworkflow/saveCWFCaseAndCommentsDetails",
+          {
+            headers: {
+              Authorization: `Bearer ${window.localStorage.getItem(
+                "cognifi_token"
+              )}`
+            }
+          },
+          { params: {
+            caseNo: caseNo,
+            ActionCode: action.actionCode,
+            comments: data.comments,
+            userActionType: userActionType||"defaultAction",
+            caseStatus:userActionType === 'Post' ? '27' : '100',
+            reassignToUserCode: 'BRANCHMANAGER1'
+          } }
+          )
+        .then(response => {
+          if (response.status === 200) {
+            resolve(response.data);
+          } else {
+            reject(response.data.err);
+          }
+        });
+    })
 }
 
 // const excelFileProcess = (caseNo) => {
