@@ -16,6 +16,9 @@ import Formsy from 'formsy-react';
 import { actionMapping } from 'components/common/modules/actionregistry/ActionMapping';
 
 import CommentsContainer from './CommentsContainer';
+import EmailContainer from './EmailContainer';
+
+import { GenericAlert } from '@application';
 
 const CWFBottomContainer = (props) => {
 
@@ -27,11 +30,18 @@ const CWFBottomContainer = (props) => {
 
     const [modalOpen, setModalOpen] = useState(false)
     const [currentAction, setCurrentAction] = useState(null)
+    const [commAction, setCommAction] = useState("Email")
     const [isFormValid, setIsFormValid] = useState(true)
     const [userActionType, setUserActionType] = useState(null)
     const [tabName, setTabName] = useState('')
     const [allTabs, setAllTabs] = useState([])
     const [totalRes, setTotalRes] = useState({})
+
+    const [noCaseAlert, setNoCaseAlert] = useState(false);
+
+    const openNoCaseAlert = () => {
+        setNoCaseAlert(true);
+    }
 
     const showCommentActions = [
         'addViewComments',
@@ -40,8 +50,10 @@ const CWFBottomContainer = (props) => {
     
 
     const formRef = useRef()
+
     useEffect(()=>{
         console.log("Action Buttons", actionButtons)
+        console.log("Case No:-", caseNo)
     })
 
     const handleClickClose = () => {
@@ -50,23 +62,28 @@ const CWFBottomContainer = (props) => {
 
     const handleClick = (action) => {
 
-        setCurrentAction(action)
+        if(caseNo === "") {
+            openNoCaseAlert()
+        } else {
+            setCurrentAction(action)
 
-       if(showCommentActions.includes(action.actionCode)){
+            if(showCommentActions.includes(action.actionCode)){
+            
+                actionMapping['getCWFCaseAndCommentsDetails'](action, caseNo, userActionType)
+                .then(res=>{
+                        var allTabNames = res['TABNAMES']
+                        console.log('tabname///////////////////////////',allTabNames)
+                        setAllTabs(allTabNames)
+                        setTabName(allTabNames[0])
+                        setTotalRes(res)
+                    })
+                .catch(err=>{
+                    console.log(err)
+                })
+            }
+            setModalOpen(true)
+        }
         
-        actionMapping['getCWFCaseAndCommentsDetails'](action, caseNo, userActionType)
-        .then(res=>{
-                var allTabNames = res['TABNAMES']
-                console.log('tabname///////////////////////////',allTabNames)
-                setAllTabs(allTabNames)
-                setTabName(allTabNames[0])
-                setTotalRes(res)
-            })
-        .catch(err=>{
-            console.log(err)
-        })
-       }
-        setModalOpen(true)
     }
 
     const handleSubmit = (data) => {
@@ -83,7 +100,7 @@ const CWFBottomContainer = (props) => {
 
         }
     }
- 
+
     return (
         <Box className="flex flex-row justify-end items-center" >
             {actionButtons.length > 0 && actionButtons.map((action, index)=>(
@@ -264,6 +281,12 @@ const CWFBottomContainer = (props) => {
                     
                 ):'Action Not Found'}
             </Dialog>
+            <GenericAlert
+                message={"Please Select A Case!"}
+                type={"error"}
+                snackbarOpen={noCaseAlert}
+                setSnackbarOpen={setNoCaseAlert}
+            />
         </Box>
     )
 }

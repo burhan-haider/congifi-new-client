@@ -33,7 +33,6 @@ class featureService {
       httpService.get(`/api/features/modules/all`).then(response => {
         console.table(response);
         if (response.status === 200) {
-          console.log("hit");
           resolve(response.data);
         } else {
           reject(response.data.err);
@@ -42,21 +41,21 @@ class featureService {
     });
   };
 
-  // getFeaturesHierarchy = async featurecode => {
-  //   //console.log(featurecode);
-  //   return new Promise((resolve, reject) => {
-  //     httpService
-  //       .get(`/features/getFeaturesHierarchy/${featurecode}`)
-  //       .then(response => {
-  //         if (response.status === 200) {
-  //           //console.log(response.data);
-  //           resolve(response.data);
-  //         } else {
-  //           reject(response.data.err);
-  //         }
-  //       });
-  //   });
-  // };
+  getFeaturesHierarchy = async featurecode => {
+    //console.log(featurecode);
+    return new Promise((resolve, reject) => {
+      httpService
+        .get(`/api/features/getFeaturesHierarchy/${featurecode}`)
+        .then(response => {
+          if (response.status === 200) {
+            //console.log(response.data);
+            resolve(response.data);
+          } else {
+            reject(response.data.err);
+          }
+        });
+    });
+  };
 
   createFeature = async featureData => {
     return new Promise((resolve, reject) => {

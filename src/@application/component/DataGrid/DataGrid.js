@@ -19,7 +19,7 @@ import {
     FormControl
 } from '@mui/material'
 import Pagination from './Pagination/Pagination'
-import { BsInfoCircleFill, BsCaretRightFill, BsFilter, BsChevronDown } from 'react-icons/bs'
+import { BsInfoCircleFill, BsCaretRightFill, BsFilter } from 'react-icons/bs'
 import { AiOutlineSortAscending, AiOutlineSortDescending } from 'react-icons/ai'
 
 import moment from 'moment'
@@ -88,7 +88,6 @@ const DataGrid = (props) => {
     }, [currentPage, dataPerPage])
 
     useEffect(() => {
-        console.log("Table Data:-", tableData)
         let tempColumns = []
         let tempRows = []
 
@@ -175,8 +174,6 @@ const DataGrid = (props) => {
         
 
         setColumns(tempColumns)
-        console.log('tempColumns', tempColumns)
-        console.log('tempRows', tempRows)
         setCheckedState(new Array(tempColumns.length).fill(false))
         setTotalRows(tempRows)
         setTempRowState(tempRows)
@@ -232,12 +229,10 @@ const DataGrid = (props) => {
     //Handle Selected Cells for multiselect
     useEffect(() => {
         if (utilColumn === 'select') {
-            console.log(selectedRows)
             if (selectedRows.size > 0) {
                 if (isSelected === false) {
                     setIsSelected(true)
                 }
-                // console.log('Current Rows:-', sortedRows)
                 setSelectedRowsArray(
                     totalRows.filter((e) => selectedRows.has(e.INDEX))
                 )
@@ -256,21 +251,17 @@ const DataGrid = (props) => {
     }, [selectedRows, isSelected, totalRows, utilColumn])
 
     useEffect(()=>{
-        console.log("Selected Row:-", selectedRows.size);
         if(utilColumn === 'singleSelect'){
             if(selectedRows.size === 1 ){
-
-                console.log("Selected Row Data", [tableData.DATA[selectedRows.values().next().value-1][0]])
                 setCaseNo(tableData.DATA[selectedRows.values().next().value-1][0])
                 // setSelectedData([tableData.DATA[selectedRows.values().next().value-1]])
             }
+            else{
+                setCaseNo('')
+            }
         }
-    },[selectedRows])
+    },[selectedRows, utilColumn, tableData])
 
-    useEffect(() => {
-        console.log('Selected Rows Array', selectedRowsArray)
-        console.log("Selected Rows", selectedRows);
-    }, [selectedRowsArray])
 
     // const summaryRows = useMemo(() => {
     //     const summaryRow = {
@@ -338,7 +329,6 @@ const DataGrid = (props) => {
 
     const RadioFormatter = ({ disabled, onChange, ...props }, ref) => {
         function handleChange(e) {
-            console.log('Row Target:', e.target.tabIndex)
             onChange(e.target.checked, e.nativeEvent.shiftKey)
         }
         function handleClick(e) {
@@ -488,16 +478,11 @@ const FiltersRenderer = ({isCellSelected, column, children, rows}) => {
 
         let colValues = [];
 
-        // console.log("Column in Filters:-", column)
-        // console.log("Rows in Filters:-", rows)
-
         rows.forEach((row)=>{
             colValues.push(row[column.key])
         })
 
-        console.log("Filtered Row:-", colValues)
         let uniqueValues = colValues.filter((v, i, a) => a.indexOf(v) === i)
-        console.log("Unique Values in Row:-", uniqueValues)
 
         setRowData(colValues);
         setUniqueRowData(uniqueValues);
@@ -533,7 +518,7 @@ const FiltersRenderer = ({isCellSelected, column, children, rows}) => {
     
     return (
         <>
-            {/* <ClickAwayListener onClickAway={handleClose} > */}
+            <ClickAwayListener onClickAway={handleClose} >
                 <div className='flex flex-row justify-between items-center px-2 bg-app-primary text-white'>
                     {column.name}
                     <IconButton className="p-0" onClick={(e) => handleClick(column.key, e)}>
@@ -610,7 +595,8 @@ const FiltersRenderer = ({isCellSelected, column, children, rows}) => {
                                                 className: 'max-h-[240px]',
                                                 sx: {
                                                     maxHeight: '240px'
-                                                }
+                                                },
+                                                disablePortal: true
                                             }}
                                         >
                                             <MenuItem className='text-sm' value="">
@@ -692,7 +678,7 @@ const FiltersRenderer = ({isCellSelected, column, children, rows}) => {
                         </ListItem>
                     </Menu>   
                 </div>
-            {/* </ClickAwayListener> */}
+            </ClickAwayListener>
           
         </>
     );
