@@ -1,213 +1,61 @@
 import httpService from "services/httpservice/httpService";
+import { setCWFFileResponse } from "redux/caseWorkflow/cwfbottomframedata/cwfbottomframedata.actions";
+import { store } from 'redux/store'
 
-export const downloadExcel = (moduleCode) =>{
+const reduxStore = store.getState();
 
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for downloadExcel action button");
+
+/* ----------- Taha's escalateCasesByBranchManager1 ----------- */
+// export const escalateCasesByBranchManager1 = (action, data, caseNo, userActionType) =>{
+//     return new Promise((resolve, reject)=>{
+//         httpService
+//         .post(
+//           "/api/caseworkflow/saveCWFCaseAndCommentsDetails",
+//           {
+//             headers: {
+//               Authorization: `Bearer ${window.localStorage.getItem(
+//                 "cognifi_token"
+//               )}`
+//             }
+//           },
+//           { params: {
+//             caseNo: caseNo,
+//             ActionCode: action.actionCode,
+//             comments: data.comments,
+//             userActionType: userActionType||"defaultAction",
+//             reassignToUserCode: 'LEVEL2',
+//             caseStatus: '2',
+//           } }
+//         )
+//         .then(response => {
+//           if (response.status === 200) {
+//             resolve(response.data);
+//           } else {
+//             reject(response.data.err);
+//           }
+//         });
+//     })
+// }
+
+export const escalateCaseByLEVEL2 = (action, data, caseNo, userActionType) =>{
+  return new Promise((resolve, reject)=>{
+      const caseStatus = {
+          Post: '27',
+          PostAndClose: '51' 
+      }
+
+      const promiseStatus = {
+        INIT: '27',
+        RSLVD: '28',
+        STAB: '29',
+        PARTP: '30', 
+        
     }
-
-}
-
-export const uploadFeedBack = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for uploadFeedback action button");
-    }
-
-}
-
-export const allocateCases = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for allocateCases action button");
-    }
-
-}
-
-export const approveCasesByAMLO = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for approveCasesByAMLO action button");
-    }
-
-}
-
-export const bonafideOkay = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for bonafideOkay action button");
-    }
-
-}
-
-export const approveCasesByAMLO1 = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for approveCasesByAMLO1 action button");
-    }
-
-}
-
-export const approveCasesByAMLO3 = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for approveCasesByAMLO3 action button");
-    }
-
-}
-
-export const viewCommentsLEVEL2 = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for viewCommentsLEVEL2 action button");
-    }
-
-}
-
-export const initiateCommunicationByLEVEL2 = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for initiateCommunicationByLEVEL2 action button");
-    }
-
-}
-
-export const parkCasesByLEVEL2 = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for parkCasesByLEVEL2 action button");
-    }
-
-}
-
-export const viewEvidenceLEVEL2 = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for viewEvidenceLEVEL2 action button");
-    }
-
-}
-
-export const fileCasesByLEVEL3 = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for fileCasesByLEVEL3 action button");
-    }
-
-}
-
-export const rejectCaseSByLEVEL3 = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for rejectCaseSByLEVEL3 action button");
-    }
-
-}
-
-export const approveCasesByLEVEL3 = (action) =>{
-
-    return new Promise((resolve, reject)=>{
-        if(action.actionCode === "approveCasesByLEVEL3"){
-            resolve(action)
+      
+      const reassignTo={
+          Post: 'LEVEL2',
+          PostAndClose: 'BRANCHMANAGER1'
         }
-        else{
-            reject(action)
-        }
-    })
-
-}
-
-export const viewCommentsLEVEL3 = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for viewCommentsLEVEL3 action button");
-    }
-
-}
-
-export const viewEvidenceLEVEL3 = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for viewEvidenceLEVEL3 action button");
-    }
-
-}
-
-export const rejectCase = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for rejectCase action button");
-    }
-
-}
-
-export const approveCasesByLEVEL2 = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for approveCasesByLEVEL2 action button");
-    }
-
-}
-
-export const searchParkedCasesLEVEL3 = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for searchParkedCasesLEVEL3 action button");
-    }
-
-}
-
-export const approveCasesByLEVEL1 = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for approveCasesByLEVEL1 action button");
-    }
-
-}
-
-export const searchParkedCasesLEVEL2 = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for searchParkedCasesLEVEL2 action button");
-    }
-
-}
-
-export const approveParkedCasesByLEVEL1 = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for approveParkedCasesByLEVEL1 action button");
-    }
-
-}
-
-export const rejectParkedCasesByLEVEL1 = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for rejectParkedCasesByLEVEL1 action button");
-    }
-
-}
-
-export const bonafideOkayParkedCasesByLEVEL1 = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for bonafideOkayParkedCasesByLEVEL1 action button");
-    }
-
-}
-
-export const rejectCaseSByLEVEL1 = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for rejectCaseSByLEVEL1 action button");
-    }
-
-}
-
-export const bonafideOkayByLEVEL1 = (action, data, caseNo) =>{
-
-    return new Promise((resolve, reject)=>{
         httpService
         .post(
           "/api/caseworkflow/saveCWFCaseAndCommentsDetails",
@@ -222,8 +70,242 @@ export const bonafideOkayByLEVEL1 = (action, data, caseNo) =>{
             caseNo: caseNo,
             ActionCode: action.actionCode,
             comments: data.comments,
-            subAction: data.subAction,
+            userActionType: userActionType||"defaultAction",
+            reassignToUserCode: reassignTo[userActionType],
+            caseStatus: promiseStatus[data.status],
+          //  promiseStatus: promiseStatus[data.status],
+            observation: data.status
           } }
+          )
+          .then(response => {
+            if (response.status === 200) {
+              resolve(response.data);
+            } else {
+              reject(response.data.err);
+            }
+          });
+      })
+  }
+
+
+export const escalateCasesByBranchManager1 = (action, data, caseNo, userActionType) =>{
+    return new Promise((resolve, reject)=>{
+        const caseStatus = {
+            Post: '27',
+            PostAndClose: '2' 
+        }
+        const reassignTo={
+            Post: 'LEVEL1',
+            PostAndClose: 'LEVEL2'
+          }
+          httpService
+          .post(
+            "/api/caseworkflow/saveCWFCaseAndCommentsDetails",
+            {
+              headers: {
+                Authorization: `Bearer ${window.localStorage.getItem(
+                  "cognifi_token"
+                )}`
+              }
+            },
+            { params: {
+              caseNo: caseNo,
+              ActionCode: action.actionCode,
+              comments: data.comments,
+              userActionType: userActionType||"defaultAction",
+              reassignToUserCode: reassignTo[userActionType],
+              caseStatus: caseStatus[userActionType],
+            } }
+            )
+            .then(response => {
+              if (response.status === 200) {
+                resolve(response.data);
+              } else {
+                reject(response.data.err);
+              }
+            });
+        })
+    }
+    
+export const approveCaseByLEVEL1 = (action, data, caseNo, userActionType) =>{
+  return new Promise((resolve, reject)=>{
+    const caseStatus = {
+      Post: '27',
+      PostAndClose: '13' ,
+      Legal: '7',
+      CRIB: '8',
+      SKIP: '9'
+    }
+    const reassignTo={
+      Post: 'LEVEL1',
+      PostAndClose: 'LEVEL3'
+    }
+    httpService
+    .post(
+      "/api/caseworkflow/saveCWFCaseAndCommentsDetails",
+      {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem(
+            "cognifi_token"
+          )}`
+        }
+      },
+      { params: {
+        caseNo: caseNo,
+        ActionCode: action.actionCode,
+        comments: data.comments,
+        userActionType: userActionType||"defaultAction",
+        caseStatus: caseStatus[userActionType],
+        reassignToUserCode: reassignTo[userActionType]
+      } }
+      )
+      .then(response => {
+        if (response.status === 200) {
+          resolve(response.data);
+        } else {
+          reject(response.data.err);
+        }
+      });
+  })
+
+}
+
+export const referToBranchManager1ByLevel2 = (action, data, caseNo, userActionType) =>{
+  return new Promise((resolve, reject)=>{
+    const caseStatus = {
+        Post: '27',      
+        Legal: '7',
+        CRIB: '8',
+        SKIP: '9'
+    }
+
+    const reassignTo={
+      Post: 'LEVEL2',
+      PostAndClose: 'LEVEL1'
+    }
+    httpService
+    .post(
+      "/api/caseworkflow/saveCWFCaseAndCommentsDetails",
+      {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem(
+            "cognifi_token"
+          )}`
+        }
+      },
+      { params: {
+        caseNo: caseNo,
+        ActionCode: action.actionCode,
+        comments: data.comments,
+        userActionType: userActionType||"defaultAction",
+        caseStatus: caseStatus[userActionType] || caseStatus[data.referTo], 
+        reassignToUserCode: reassignTo[userActionType],
+        observation: data.observation
+      } }
+      )
+      .then(response => {
+        if (response.status === 200) {
+          resolve(response.data);
+        } else {
+          reject(response.data.err);
+        }
+      });
+  })
+
+}
+export const rejectCaseByLEVEL1 = (action, data, caseNo, userActionType) =>{
+  console.log("Form Data:-", data)
+    return new Promise((resolve, reject)=>{
+      const caseStatus = {
+        Post: '27',
+        PostAndClose: '14' 
+      }
+
+      const reassignTo={
+        Post: 'LEVEL1',
+        PostAndClose: 'LEVEL3'
+      }
+
+        httpService
+        .post(
+          "/api/caseworkflow/saveCWFCaseAndCommentsDetails",
+          {
+            headers: {
+              Authorization: `Bearer ${window.localStorage.getItem(
+                "cognifi_token"
+              )}`
+            }
+          },
+          { params: {
+            caseNo: caseNo,
+            ActionCode: action.actionCode,
+            comments: data.comments,
+            userActionType: userActionType||"defaultAction",
+            caseStatus: '14',
+            reassignToUserCode: 'LEVEL2'
+          } }
+          )
+        .then(response => {
+          if (response.status === 200) {
+            resolve(response.data);
+          } else {
+            reject(response.data.err);
+          }
+        });
+    })
+}
+
+/* ----------- Prerna's approveCaseByLevel1 ----------- */
+
+// export const approveCaseByLEVEL1 = (action, data, caseNo, userActionType) =>{
+//     return new Promise((resolve, reject)=>{
+//         httpService
+//         .post(
+//           "/api/caseworkflow/saveCWFCaseAndCommentsDetails",
+//           {
+//             headers: {
+//               Authorization: `Bearer ${window.localStorage.getItem(
+//                 "cognifi_token"
+//               )}`
+//             }
+//           },
+//           { params: {
+//             caseNo: caseNo,
+//             ActionCode: action.actionCode,
+//             comments: data.comments,
+//             userActionType: userActionType||"defaultAction",
+//             caseStatus: '13',
+//             reassignToUserCode: 'LEVEL3'
+//           } }
+//         )
+//         .then(response => {
+//           if (response.status === 200) {
+//             resolve(response.data);
+//           } else {
+//             reject(response.data.err);
+//           }
+//         });
+//     })
+// }
+
+
+export const getCWFCaseAndCommentsDetails = (action, caseNo, userActionType) =>{
+    return new Promise((resolve, reject)=>{
+        httpService
+        .post(
+          "/api/caseworkflow/getCWFCommentsDetails",
+          {
+            headers: {
+              Authorization: `Bearer ${window.localStorage.getItem(
+                "cognifi_token"
+              )}`
+            }
+          },
+          { params: {
+            caseNo: caseNo,
+            actionCode: action.actionCode
+            
+        } }
         )
         .then(response => {
           if (response.status === 200) {
@@ -233,134 +315,275 @@ export const bonafideOkayByLEVEL1 = (action, data, caseNo) =>{
           }
         });
     })
+}
+
+export const uploadPromise = (action, data, caseNo, userActionType) =>{
+  console.log("User Action Type In Upload Promise:-", userActionType)
+  console.log("Form Data:-", data)
+  return new Promise((resolve, reject)=>{
+      const caseStatus = {
+          INIT: '27',
+          RSLVD: '28',
+          STAB: '29',
+          PARTP: '30', 
+          
+      }
+      // const actionType = {
+      //   Post: 'LEVEL2',
+      //   PostAndClose: 'BRANCHMANAGER1'
+      // }
+      
+     const reassignTo = {
+      Post: 'LEVEL2',
+       PostAndClose: 'LEVEL2'
+     }
+
+      httpService
+      .post(
+        "/api/caseworkflow/saveCWFCaseAndCommentsDetails",
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem(
+              "cognifi_token"
+            )}`
+          }
+        },
+        { params: {
+          caseNo: caseNo,
+          ActionCode: action.actionCode,
+          comments: data.comments,
+          userActionType: userActionType||"defaultAction",
+        //  caseStatus: caseStatus[data.uploadPromise] || "27",
+         caseStatus: userActionType === 'Post' ? '27' : '50',
+        // caseStatus: userActionType === 'POST' ? '1' : caseStatus[data.uploadPromise] || '1',
+        //  reassignToUserCode:actionType[userActionType],
+        reassignToUserCode: reassignTo[userActionType],
+          fromDate: data.promiseFromDate,
+          toDate: data.promiseToDate
+        } }
+      )
+      .then(response => {
+        if (response.status === 200) {
+          resolve(response.data);
+        } else {
+          reject(response.data.err);
+        }
+      });
+  })
+}
+
+  export const parkedCasesByLEVEL1 = (action, data, caseNo, userActionType) =>{
+    return new Promise((resolve, reject)=>{
+      const caseStatus = {
+        Post: '27',
+        PostAndClose: '41' 
+      }
+      const reassignTo={
+        Post: 'LEVEL1',
+        PostAndClose: 'LEVEL1'
+      }
+      httpService
+      .post(
+        "/api/caseworkflow/saveCWFCaseAndCommentsDetails",
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem(
+              "cognifi_token"
+            )}`
+          }
+        },
+        { params: {
+          caseNo: caseNo,
+          ActionCode: action.actionCode,
+          comments: data.comments,
+          userActionType:  userActionType||"defaultAction",
+          caseStatus:  userActionType === 'Post' ? '27' : '41',
+          reassignToUserCode: reassignTo[userActionType]
+        } }
+        )
+        .then(response => {
+          if (response.status === 200) {
+            resolve(response.data);
+          } else {
+            reject(response.data.err);
+          }
+        });
+    })
+}
+
+export const getFileUploadConfig = (action, caseNo, userActionType) =>{
+  return new Promise((resolve, reject)=>{
+      httpService
+      .post(
+        "/api/fileOperation/fileConfig",
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem(
+              "cognifi_token"
+            )}`
+          }
+        },
+        { params: {
+          // caseNo: caseNo,
+          // actionCode: action.actionCode
+          moduleRefId: 'excelFileUpload',
+          moduleUnqNo: caseNo
+          
+      } }
+      )
+      .then(response => {
+        if (response.status === 200) {
+          store.dispatch(setCWFFileResponse(response.data))
+          resolve(response.data);
+        } else {
+          reject(response.data.err);
+        }
+      });
+  })
+}
+
+export const fileUploadConfig = (filesContent,caseNo) =>{
+
+  console.log("File Response Data:-", store.getState().caseWorkflow.cwfBottomFrameData.fileResponse)
+  console.log("Form Data For File",filesContent)
+  filesContent.append("uploadRefId","excelFileUpload")
+  filesContent.append("unqId", store.getState().caseWorkflow.cwfBottomFrameData.fileResponse.UNQID)
+  filesContent.append("seqNo",0)
+  filesContent.append("moduleUnqNo",caseNo)
+  filesContent.append("isExcel",store.getState().caseWorkflow.cwfBottomFrameData.fileResponse.ISEXCEL)
+  
+  return new Promise((resolve, reject)=>{
+      httpService
+      .post(
+        "/api/fileOperation/genericFileUpload", 
+        filesContent, 
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${window.localStorage.getItem(
+              "cognifi_token"
+            )}`
+          }
+        },
+      )
+      .then(response => {
+        if (response.status === 200) {
+
+           if(store.getState().caseWorkflow.cwfBottomFrameData.fileResponse.ISEXCEL === 'N' && store.getState().caseWorkflow.cwfBottomFrameData.fileResponse.READFLAG === 'Y'){
+             console.log("I am where I am supposed to be .....................")
+             genericFileProcess(caseNo)
+           }
+           //else{
+          //   excelFileProcess()
+          // }
+
+          resolve(response.data);
+        } else {
+          reject(response.data.err);
+        }
+      });
+  })
+}
+
+const genericFileProcess = (caseNo) => {
+
+  return new Promise((resolve, reject)=>{
+    httpService
+    .post(
+      "/api/fileOperation/genericFileProcess",
+      {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem(
+            "cognifi_token"
+          )}`
+        }
+      },
+      { params: {
+        uploadRefNo: store.getState().caseWorkflow.cwfBottomFrameData.fileResponse.UNQID,
+        moduleRefId: 'genericFileUpload'
+        
+    } }
+    )
+    .then(response => {
+      if (response.status === 200) {
+        resolve(response.data);
+      } else {
+        reject(response.data.err);
+      }
+    });
+})
+
 
 }
 
-export const searchPendingCasesLEVEL3 = (moduleCode) =>{
+export const closeCasesBYLEVEL1 = (action, data, caseNo, userActionType) =>{
+    return new Promise((resolve, reject)=>{
+      // const caseStatus = {
+      //   Post: '27',
+      //   PostAndClose: '100' 
+      // }
 
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for searchPendingCasesLEVEL3 action button");
-    }
+      // const reassignTo={
+      //   Post: 'BRANCHMANAGER1',
+      //   PostAndClose: 'BRANCHMANAGER1'
+      // }
 
+        httpService
+        .post(
+          "/api/caseworkflow/saveCWFCaseAndCommentsDetails",
+          {
+            headers: {
+              Authorization: `Bearer ${window.localStorage.getItem(
+                "cognifi_token"
+              )}`
+            }
+          },
+          { params: {
+            caseNo: caseNo,
+            ActionCode: action.actionCode,
+            comments: data.comments,
+            userActionType: userActionType||"defaultAction",
+            caseStatus:userActionType === 'Post' ? '27' : '100',
+            reassignToUserCode: 'BRANCHMANAGER1'
+          } }
+          )
+        .then(response => {
+          if (response.status === 200) {
+            resolve(response.data);
+          } else {
+            reject(response.data.err);
+          }
+        });
+    })
 }
 
-export const parkCasesByLEVEL1 = (moduleCode) =>{
+// const excelFileProcess = (caseNo) => {
 
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for parkCasesByLEVEL1 action button");
-    }
+//   return new Promise((resolve, reject)=>{
+//     httpService
+//     .post(
+//       "/api/fileOperation/genericFileProcess",
+//       {
+//         headers: {
+//           Authorization: `Bearer ${window.localStorage.getItem(
+//             "cognifi_token"
+//           )}`
+//         }
+//       },
+//       { params: {
+//         uploadRefNo: store.getState().caseWorkflow.cwfBottomFrameData.fileResponse.UNQID,
+//         moduleRefId: 'excelFileUpload'
+        
+//     } }
+//     )
+//     .then(response => {
+//       if (response.status === 200) {
+//         resolve(response.data);
+//       } else {
+//         reject(response.data.err);
+//       }
+//     });
+// })
 
-}
 
-export const reAllocateCasesByLEVEL1 = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for reAllocateCasesByLEVEL1 action button");
-    }
-
-}
-
-export const viewCommentsLEVEL1 = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for viewCommentsLEVEL1 action button");
-    }
-
-}
-
-export const viewEvidenceLEVEL1 = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for viewEvidenceLEVEL1 action button");
-    }
-
-}
-
-export const searchPendingCasesLEVEL2 = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for searchPendingCasesLEVEL2 action button");
-    }
-
-}
-
-export const searchPendingCasesLEVEL1 = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for searchPendingCasesLEVEL1 action button");
-    }
-
-}
-
-export const searchParkedCasesLEVEL1 = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for searchParkedCasesLEVEL1 action button");
-    }
-
-}
-
-export const search = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for search action button");
-    }
-
-}
-
-export const searchAccountsMaster = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for searchAccountsMaster action button");
-    }
-
-}
-
-export const select = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for select action button");
-    }
-
-}
-
-export const emailExchange = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for emailExchange action button");
-    }
-
-}
-
-export const uploadFile = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for uploadFile action button");
-    }
-
-}
-
-export const searchWorkflowMaster = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for searchWorkflowMaster action button");
-    }
-
-}
-
-export const searchCurrencyMaster = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for searchCurrencyMaster action button");
-    }
-
-}
-
-export const allocateCasesLEVEL3 = (moduleCode) =>{
-
-    if(moduleCode === 'pendingCases'){
-        console.log("In pending Cases Module for allocateCasesLEVEL3 action button");
-    }
-
-}
-
+// }

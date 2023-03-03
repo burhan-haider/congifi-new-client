@@ -145,7 +145,7 @@ export default function CaseWorkflowComponent(props) {
 
   useEffect(() => {
     setCWFCasesData(cwfCases&&cwfCases!=null?cwfCases:null);
-    setBottomAction(cwfCases&&cwfCases!=null?cwfCases.ACTIONBUTTONS:[]);
+    setBottomAction(cwfCases&&cwfCases!=null?cwfCases.ACTIONS:[]);
     if(cwfCasesData !== null){
       setShowResults(true);
       setExpandedPanel(false);

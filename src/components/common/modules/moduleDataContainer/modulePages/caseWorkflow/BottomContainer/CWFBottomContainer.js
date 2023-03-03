@@ -16,7 +16,6 @@ import Formsy from 'formsy-react';
 import { actionMapping } from 'components/common/modules/actionregistry/ActionMapping';
 
 import CommentsContainer from './CommentsContainer';
-import EmailContainer from './EmailContainer';
 
 import { GenericAlert } from '@application';
 
@@ -30,7 +29,6 @@ const CWFBottomContainer = (props) => {
 
     const [modalOpen, setModalOpen] = useState(false)
     const [currentAction, setCurrentAction] = useState(null)
-    const [commAction, setCommAction] = useState("Email")
     const [isFormValid, setIsFormValid] = useState(true)
     const [userActionType, setUserActionType] = useState(null)
     const [tabName, setTabName] = useState('')
@@ -44,8 +42,8 @@ const CWFBottomContainer = (props) => {
     }
 
     const showCommentActions = [
-        'addViewComments',
-        'escalateCasesByBranchManager1'
+        'addViewComments'
+        //'escalateCasesByBranchManager1'
     ]
     
 
@@ -73,6 +71,7 @@ const CWFBottomContainer = (props) => {
                 .then(res=>{
                         var allTabNames = res['TABNAMES']
                         console.log('tabname///////////////////////////',allTabNames)
+                        console.log('res in CWFBottomContainer///////////////////////////',res)
                         setAllTabs(allTabNames)
                         setTabName(allTabNames[0])
                         setTotalRes(res)
@@ -83,7 +82,6 @@ const CWFBottomContainer = (props) => {
             }
             setModalOpen(true)
         }
-        
     }
 
     const handleSubmit = (data) => {
@@ -126,17 +124,22 @@ const CWFBottomContainer = (props) => {
                 {currentAction!=null&&currentAction.actionParams.length>0?(
                     <>
                         {showCommentActions.includes(currentAction.actionCode)?(
-                            <CommentsContainer
-                                handleSubmit={handleSubmit}
-                                setIsFormValid={setIsFormValid}
-                                currentAction={currentAction}
-                                tabName={tabName}
-                                setTabName={setTabName}
-                                allTabs={allTabs}
-                                totalRes={totalRes}
-                                setUserActionType={setUserActionType}
-                                setModalOpen={setModalOpen}
-                            />
+                            <>
+                                {Object.keys(totalRes).length>0&&(
+                                    <CommentsContainer
+                                        handleSubmit={handleSubmit}
+                                        setIsFormValid={setIsFormValid}
+                                        currentAction={currentAction}
+                                        tabName={tabName}
+                                        setTabName={setTabName}
+                                        allTabs={allTabs}
+                                        totalRes={totalRes}
+                                        setUserActionType={setUserActionType}
+                                        setModalOpen={setModalOpen}
+                                    />
+                                )}
+                            </>
+                            
                         ):(
                             <Box className='min-w-[600px]'>
                                 <Formsy
@@ -198,15 +201,17 @@ const CWFBottomContainer = (props) => {
                                                                 label={param.paramName}
                                                                 ampm={false}
                                                                 className={undefined}
+                                                                format="dd/MM/yyyy"
+                                                                inputFormat="dd/MM/yyyy"
+                                                                toolbarFormat="dd/MM/yyyy"
                                                                 dateTime={false}
                                                                 allowKeyboardControl={true}
                                                                 required={true}
-                                                                value={new Date()}
-                                                                disabled={!param.enabled}
                                                             />
                                                         </FormControl>
                                                     </Grid>
                                                 )}
+                                                
                                                 {param.paramDataType === 'select' && param.paramStaticValues !== null ? (
                                                     <Grid item xs={12} key={index}>
                                                     <FormControl className="m-2 w-100 flex flex-nowrap">

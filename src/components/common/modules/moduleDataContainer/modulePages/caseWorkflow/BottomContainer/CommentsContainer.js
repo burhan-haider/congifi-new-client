@@ -1,4 +1,4 @@
-import React, {useRef} from 'react'
+import React, {useEffect, useRef} from 'react'
 import {
     Box,
     Button,
@@ -8,6 +8,7 @@ import {
     Tabs,
     Tab,
 } from '@mui/material'
+
 
 
 import { TextFieldFormsy, DatePickerFormsy, SelectFormsy } from 'components/common/formsyComponents';
@@ -30,6 +31,11 @@ const CommentsContainer = (props) => {
         setModalOpen
     } = props;
 
+    useEffect(()=>{
+        console.log("Total Res in CommentsContainer//////////////////////", totalRes)
+    // //    console.log("Total Res in CommentsContainer//////////////////////", tabName)
+     })
+
     return(
         <Box className='min-w-[600px]'>
             <Formsy
@@ -46,6 +52,7 @@ const CommentsContainer = (props) => {
                             console.log("Tab Value OnChange:-",tabValue)
                             setTabName(tabValue)
                         }}
+                        className="pb-5"
                     >
                         {allTabs.map((tabValue) => {
                             console.log("Tab Value:-", tabValue)
@@ -65,12 +72,10 @@ const CommentsContainer = (props) => {
 
                 {currentAction.actionParams.map((param, index)=>(   
                     <>
-                    {/* {allTabs.map((eachTab)=> (
-
-                    ))} */}
-                    
-                        {param.paramDataType === "textarea" && tabName === "LEVEL1" && (
-                            <Grid item xs={12} >
+                    {allTabs.map((eachTab,index)=> (
+                     <>
+                         {param.paramDataType === "textarea" && tabName === eachTab && (
+                                <Grid item xs={12} >
                                 <FormControl className="m-2 w-100 flex flex-nowrap" >
                                     <TextFieldFormsy
                                         variant="outlined"
@@ -79,7 +84,8 @@ const CommentsContainer = (props) => {
                                         onChange={() => {}}
                                         validationError=""
                                         required={true}
-                                        value= {totalRes[0][0]['app.common.COMMENTS'] || ''}
+                                      //  value= {Object.keys(totalRes).length> 0 ? totalRes[0][0]['app.common.COMMENTS'] : 'null'}
+                                        value= {totalRes[index].length> 0 ? totalRes[index][0]['app.common.COMMENTS'] : ''}
                                         multiline={true}
                                         rows={4}
                                         sx={{
@@ -89,8 +95,10 @@ const CommentsContainer = (props) => {
                                     ></TextFieldFormsy>
                                 </FormControl>
                             </Grid>
-                        )}
-                        {param.paramDataType === "text" &&  tabName === "LEVEL1" && (
+
+                            )}
+                        
+                           {param.paramDataType === "text" && tabName === eachTab && (
                             <Grid item xs={12} >
                                 <FormControl className="m-2 w-100 flex flex-nowrap" >
                                     <TextFieldFormsy
@@ -102,65 +110,18 @@ const CommentsContainer = (props) => {
                                         required={true}
                                         //value={param.paramDefaultValues || ''}
                                         // value={res.COMMENTS}
-                                        value= {totalRes[0][0]['app.common.LASTREVIEWEDDATE'] || ''}
+                                        value= {totalRes[index].length> 0 ? totalRes[index][0]['app.common.LASTREVIEWEDDATE'] : ''}
+                                        // value= {totalRes[0][0][''] || ' '}
                                         disabled={!param.enabled}
                                     ></TextFieldFormsy>
                                 </FormControl>
                             </Grid>
                         )}
-                        
-                        {param.paramDataType === "date" && (
-                            <Grid item xs={12}>
-                                <FormControl className="m-2 w-100 flex flex-nowrap" >
-                                    <DatePickerFormsy
-                                        variant="filled"
-                                        name={param.paramId}
-                                        label={param.paramName}
-                                        ampm={false}
-                                        className={undefined}
-                                        dateTime={false}
-                                        allowKeyboardControl={true}
-                                        required={true}
-                                        value={new Date()}
-                                        disabled={!param.enabled}
-                                    />
-                                </FormControl>
-                            </Grid>
-                        )}
-                        {param.paramDataType === 'select' && param.paramStaticValues !== null ? (
-                            <Grid item xs={12} key={index}>
-                            <FormControl className="m-2 w-100 flex flex-nowrap">
-                                <SelectFormsy
-                                variant="outlined"
-                                name={param.paramId}
-                                label={param.paramName}
-                                value={
-                                    param.paramDefaultValues === null || " "
-                                    ? `NA`
-                                    : param.paramDefaultValues
-                                }
-                                className="w-100"
-                                onChange={() => {}}
-                                validationError=""
-                                disabled={!param.enabled}
-                                //required={true}
-                                >
-                                <MenuItem value="">Select One</MenuItem>
-                                {param.paramStaticValues.split(',').map((option, index) => {
-                                    return (
-                                    <MenuItem value={option} key={index}>
-                                        {option === null || "" ? `NA` : option}
-                                    </MenuItem>
-                                    );
-                                })}
-                                </SelectFormsy>
-                            </FormControl>
-                            </Grid>
-        
-                        ):(<></>)}
-
-                    </>
+                     </>   
+                    ))}
+                 </>
                 ))}
+                
                 <Grid xs={12} className='flex flex-row justify-end align-center w-full' >
                     
                     {currentAction.actionCode !== "addViewComments" && (
