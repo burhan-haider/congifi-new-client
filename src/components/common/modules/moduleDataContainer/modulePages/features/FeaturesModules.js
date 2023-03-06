@@ -353,6 +353,10 @@ export default function FeaturesModules(props) {
     //console.log(combined);
   }, [allModules]);
 
+  useEffect(()=>{
+    console.log("Tree Data:-", treeData)
+  },[treeData])
+
   return (
     <React.Fragment>
       <div className={classes.root}>

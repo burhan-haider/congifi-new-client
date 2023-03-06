@@ -533,6 +533,7 @@ export const closeCasesBYLEVEL1 = (action, data, caseNo, userActionType) =>{
           "/api/caseworkflow/saveCWFCaseAndCommentsDetails",
           {
             headers: {
+              "Content-Type": "multipart/form-data",
               Authorization: `Bearer ${window.localStorage.getItem(
                 "cognifi_token"
               )}`
@@ -555,6 +556,28 @@ export const closeCasesBYLEVEL1 = (action, data, caseNo, userActionType) =>{
           }
         });
     })
+}
+
+export const sendEmailByLEVEL2 = (formData) => {
+  return new Promise((resolve, reject)=>{
+
+    httpService.post("/api/email/sendEmail", formData,
+    {
+      headers: {
+        Authorization: `Bearer ${window.localStorage.getItem(
+          "cognifi_token"
+        )}`
+      }
+    },
+    )
+    .then(response => {
+      if (response.status === 200) {
+        resolve(response.data);
+      } else {
+        reject(response.data.err);
+      }
+    })
+  })
 }
 
 // const excelFileProcess = (caseNo) => {

@@ -13,6 +13,7 @@ export { default as RTSGenericTableHead } from "./rtsdatatable/RTSGenericTableHe
 export { default as RTSGenericTableTopbar } from "./rtsdatatable/RTSGenericTableTopbar";
 
 export { default as GenericDialog } from "./dialog/GenericDialog";
+export { default as GenericAlert } from "./alert/GenericAlert";
 export { default as GenericButton } from "./button/GenericButton";
 export { default as GenericTooltip } from "./tooltip/GenericTooltip";
 
@@ -25,3 +26,5 @@ export { default as DraggableList } from "./draggableList/DraggableList";
 export { default as GenericSwitch } from "./switch/GenericSwitch";
 
 export { default as GenericDatagrid } from "./DataGrid";
+
+export { default as GenericFilePicker } from "./filePicker";

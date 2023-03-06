@@ -28,7 +28,7 @@ function App() {
 
   return (
     <div className="text-center overflow-hidden" style={{transition: 'all 0.1s ease-in-out' }} >
-      {isLoading===true ? (<CircularProgress size sx={{color: '#052a4f', marginTop: '350px'}} />) : (
+      {isLoading===true ? (<CircularProgress size={24} sx={{color: '#052a4f', marginTop: '350px'}} />) : (
         <>
           {newFeatures.map((item)=>( 
             <ComponentHolder 

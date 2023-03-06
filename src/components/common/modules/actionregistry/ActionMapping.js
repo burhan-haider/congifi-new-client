@@ -9,7 +9,8 @@ import {
   parkedCasesByLEVEL1,
   getFileUploadConfig,
   fileUploadConfig,
-  closeCasesBYLEVEL1
+  closeCasesBYLEVEL1,
+  sendEmailByLEVEL2,
 
 } from "./CWFActions";
 
@@ -46,4 +47,7 @@ export const actionMapping = {
 
   closeCasesBYLEVEL1: (action,data,caseNo,userActionType) =>
   closeCasesBYLEVEL1(action,data,caseNo,userActionType),
+
+  sendEmailByLEVEL2: (formData) => 
+  sendEmailByLEVEL2(formData)
 };

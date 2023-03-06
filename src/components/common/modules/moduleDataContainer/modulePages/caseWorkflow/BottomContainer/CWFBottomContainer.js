@@ -17,7 +17,9 @@ import { actionMapping } from 'components/common/modules/actionregistry/ActionMa
 
 import CommentsContainer from './CommentsContainer';
 
-import { GenericAlert } from '@application';
+import { GenericAlert, GenericFilePicker } from '@application';
+import EmailContainer from './CommunicationContainers/EmailContainer';
+import CommunicationContainer from './CommunicationContainers/CommunicationContainer';
 
 const CWFBottomContainer = (props) => {
 
@@ -28,14 +30,26 @@ const CWFBottomContainer = (props) => {
     } = props;
 
     const [modalOpen, setModalOpen] = useState(false)
+    const [uploadModalOpen, setUploadModalOpen] = useState(false)
+    const [commModalOpen, setCommModalOpen] = useState(false)
     const [currentAction, setCurrentAction] = useState(null)
     const [isFormValid, setIsFormValid] = useState(true)
     const [userActionType, setUserActionType] = useState(null)
     const [tabName, setTabName] = useState('')
     const [allTabs, setAllTabs] = useState([])
     const [totalRes, setTotalRes] = useState({})
-
+    const [uploadFileData, setUploadFileData] = useState(null)
+    const [commType, setCommType] = useState('email')
     const [noCaseAlert, setNoCaseAlert] = useState(false);
+
+    const [fileConfig, setFileConfig] = useState({
+        allowedFileTypes: '',
+        blockedFileTypes: '',
+        delimiter: ',',
+        maxSize: 0,
+
+    })
+
 
     const openNoCaseAlert = () => {
         setNoCaseAlert(true);
@@ -45,6 +59,12 @@ const CWFBottomContainer = (props) => {
         'addViewComments'
         //'escalateCasesByBranchManager1'
     ]
+
+    const emailActions = [
+        'sendEmailLEVEL2'
+    ]
+    const callActions = []
+    const smsActions = []
     
 
     const formRef = useRef()
@@ -58,29 +78,69 @@ const CWFBottomContainer = (props) => {
         setModalOpen(false)
     }
 
+    const handleUploadClose = () => {
+        setUploadModalOpen(false)
+    }
+    
+    const handleCommOpen = () => {
+        setCommModalOpen(true)
+    }
+    const handleCommClose = () => {
+        setCommModalOpen(false)
+    }
+
     const handleClick = (action) => {
+
+        console.log("Action Fires:-", action.actionCode)
 
         if(caseNo === "") {
             openNoCaseAlert()
         } else {
             setCurrentAction(action)
 
-            if(showCommentActions.includes(action.actionCode)){
-            
-                actionMapping['getCWFCaseAndCommentsDetails'](action, caseNo, userActionType)
-                .then(res=>{
-                        var allTabNames = res['TABNAMES']
-                        console.log('tabname///////////////////////////',allTabNames)
-                        console.log('res in CWFBottomContainer///////////////////////////',res)
-                        setAllTabs(allTabNames)
-                        setTabName(allTabNames[0])
-                        setTotalRes(res)
+            if (emailActions.includes(action.actionCode)){
+                setCommType('email')
+                setCommModalOpen(true)
+            } else if (smsActions.includes(action.actionCode)){
+                setCommType('sms')
+                setCommModalOpen(true)
+            } else if (callActions.includes(action.actionCode)){
+                setCommType('call')
+                setCommModalOpen(true)
+            } else if(action.actionCode === 'getFileUploadConfig'){
+                actionMapping['getFileUploadConfig'](action, caseNo, userActionType)
+                    .then((res)=>{
+                        console.log("Upload Modal Response:-", res)
+                        setFileConfig({
+                            allowedFileTypes: res.ALLOWFILETYPES,
+                            blockedFileTypes: res.BLOCKFILETYPES,
+                            delimiter: res.DELIMITER,
+                            maxSize: res.FILEMAXSIZE,
+                        })
+                        setUploadModalOpen(true)
                     })
-                .catch(err=>{
-                    console.log(err)
-                })
+                    .catch(err=>{
+                        console.error("Upload API:-", err)
+                    })
             }
-            setModalOpen(true)
+            else{
+                if(showCommentActions.includes(action.actionCode)){
+            
+                    actionMapping['getCWFCaseAndCommentsDetails'](action, caseNo, userActionType)
+                    .then(res=>{
+                            var allTabNames = res['TABNAMES']
+                            console.log('tabname///////////////////////////',allTabNames)
+                            console.log('res in CWFBottomContainer///////////////////////////',res)
+                            setAllTabs(allTabNames)
+                            setTabName(allTabNames[0])
+                            setTotalRes(res)
+                        })
+                    .catch(err=>{
+                        console.log(err)
+                    })
+                }
+                setModalOpen(true)
+            }
         }
     }
 
@@ -99,6 +159,19 @@ const CWFBottomContainer = (props) => {
         }
     }
 
+    const handleUploadSubmit = () => {
+
+        const data = new FormData()
+
+        data.append('file', uploadFileData)
+        
+        actionMapping['fileUploadConfig'](data, caseNo)
+        .then(res=>{
+            console.log("Response:-", res)
+        })
+        handleUploadClose()
+    }
+
     return (
         <Box className="flex flex-row justify-end items-center" >
             {actionButtons.length > 0 && actionButtons.map((action, index)=>(
@@ -108,6 +181,61 @@ const CWFBottomContainer = (props) => {
                         {action.actionName}
                 </Button>
             ))}
+
+            {/* Upload Dialog */}
+
+            <Dialog
+                aria-labelledby="file-upload-modal"
+                open={uploadModalOpen}
+                onClose={handleUploadClose}
+                PaperProps={{
+                    className: 'left-0 right-0 mx-auto top-3 min-w-[50vw] rounded-lg p-10',
+                    sx: {
+                        padding: '30px',
+                        borderRadius: '8px'
+                    }
+                }}
+            >
+                <GenericFilePicker
+                    fileData={uploadFileData}
+                    setFile={setUploadFileData}
+                    fileConfig={fileConfig}
+                />
+                <Box className='flex flex-row justify-end items-center mt-5' >
+                    <Button
+                        onClick={()=>{handleUploadSubmit()}}
+                        className="px-5 py-2 mx-2 my-3 normal-case text-app-primary bg-transparent hover:bg-app-primary hover:text-white  text-sm rounded-[25px] shadow-none border-solid border-[1px] border-[#052a4f]">
+                        Upload
+                    </Button>
+                    <Button
+                        onClick={()=>{setUploadModalOpen(false)}}
+                        className="px-5 py-2 mx-2 my-3 normal-case text-app-primary bg-transparent hover:bg-app-primary hover:text-white  text-sm rounded-[25px] shadow-none border-solid border-[1px] border-[#052a4f]">
+                        Close
+                    </Button>
+                </Box>
+                
+            </Dialog>
+
+            <Dialog
+                aria-labelledby="file-upload-modal"
+                open={commModalOpen}
+                onClose={handleCommClose}
+                PaperProps={{
+                    className: 'left-0 right-0 mx-auto top-3 min-w-[92vw] rounded-lg p-2',
+                    sx: {
+                        padding: '30px',
+                        borderRadius: '8px'
+                    }
+                }}
+            >
+                <CommunicationContainer 
+                    commType={commType}
+                    handleModalOpen={handleCommOpen} 
+                    handleModalClose={handleCommClose}
+                    handleSubmit={handleSubmit}
+                    caseNo={caseNo}
+                />
+            </Dialog>
 
             <Dialog
                 aria-labelledby="custom-modal"
