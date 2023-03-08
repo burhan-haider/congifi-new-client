@@ -7,7 +7,8 @@ import {
    rejectCaseByLEVEL1,
    getCWFCaseAndCommentsDetails,
    getFileUploadConfig,
-   fileUploadConfig
+   fileUploadConfig,
+   closeCaseByLevel3
 } from "./CWFActions";
 
 export const actionMapping = {
@@ -18,5 +19,6 @@ export const actionMapping = {
     rejectCaseByLEVEL1: (action, data, caseNo, userActionType) => rejectCaseByLEVEL1(action, data, caseNo, userActionType),
     getCWFCaseAndCommentsDetails: (action,caseNo, userActionType) => getCWFCaseAndCommentsDetails(action, caseNo, userActionType),
     getFileUploadConfig: (action,caseNo, userActionType) => getFileUploadConfig(action,caseNo, userActionType), 
-    fileUploadConfig: (filesContent,caseNo) => fileUploadConfig(filesContent,caseNo) 
+    fileUploadConfig: (filesContent,caseNo) => fileUploadConfig(filesContent,caseNo),
+    closeCaseByLevel3: (action, data, caseNo, userActionType) => closeCaseByLevel3(action, data, caseNo, userActionType)
 }
