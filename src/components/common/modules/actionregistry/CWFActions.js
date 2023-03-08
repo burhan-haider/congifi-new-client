@@ -610,3 +610,43 @@ export const sendEmailByLEVEL2 = (formData) => {
 
 
 // }
+
+export const closeCaseByLevel3 = (action, data, caseNo, userActionType) =>{
+  return new Promise((resolve, reject)=>{
+      // const caseStatus = {
+      //     Post: '1',
+      //     PostAndClose: '2' 
+      // }
+      // const reassignTo={
+      //     Post: 'BRANCHMANAGER1',
+      //     PostAndClose: 'LEVEL2'
+      // }
+      httpService
+      .post(
+        "/api/caseworkflow/saveCWFCaseAndCommentsDetails",
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem(
+              "cognifi_token"
+            )}`
+          }
+        },
+        { params: {
+          caseNo: caseNo,
+          ActionCode: action.actionCode,
+          comments: data.comments,
+          userActionType: userActionType||"defaultAction",
+          reassignToUserCode: 'LEVEL3',
+          caseStatus: '100',
+
+        } }
+      )
+      .then(response => {
+        if (response.status === 200) {
+          resolve(response.data);
+        } else {
+          reject(response.data.err);
+        }
+      });
+  })
+}
