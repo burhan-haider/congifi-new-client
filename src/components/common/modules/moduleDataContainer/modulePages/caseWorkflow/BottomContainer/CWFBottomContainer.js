@@ -41,6 +41,8 @@ const CWFBottomContainer = (props) => {
     const [uploadFileData, setUploadFileData] = useState(null)
     const [commType, setCommType] = useState('email')
     const [noCaseAlert, setNoCaseAlert] = useState(false);
+    const [alertType, setAlertType] = useState('success');
+    const [alertMessage, setAlertMessage] = useState('Please Select A Case!');
 
     const [fileConfig, setFileConfig] = useState({
         allowedFileTypes: '',
@@ -58,6 +60,10 @@ const CWFBottomContainer = (props) => {
     const showCommentActions = [
         'addViewComments'
         //'escalateCasesByBranchManager1'
+    ]
+
+    const uploadActions = [
+        'closeCasesByLevel3'
     ]
 
     const emailActions = [
@@ -89,11 +95,30 @@ const CWFBottomContainer = (props) => {
         setCommModalOpen(false)
     }
 
+    const handleUploadModal = (action) => {
+        actionMapping['getFileUploadConfig'](action, caseNo, userActionType)
+            .then((res)=>{
+                console.log("Upload Modal Response:-", res)
+                setFileConfig({
+                    allowedFileTypes: res.ALLOWFILETYPES,
+                    blockedFileTypes: res.BLOCKFILETYPES,
+                    delimiter: res.DELIMITER,
+                    maxSize: res.FILEMAXSIZE,
+                })
+                setUploadModalOpen(true)
+            })
+            .catch(err=>{
+                console.error("Upload API:-", err)
+            })
+    }
+
     const handleClick = (action) => {
 
         console.log("Action Fires:-", action.actionCode)
 
         if(caseNo === "") {
+            setAlertMessage('Please Select A Case!')
+            setAlertType('error')
             openNoCaseAlert()
         } else {
             setCurrentAction(action)
@@ -168,6 +193,9 @@ const CWFBottomContainer = (props) => {
         actionMapping['fileUploadConfig'](data, caseNo)
         .then(res=>{
             console.log("Response:-", res)
+            setAlertType('success')
+            setAlertMessage(res);
+            openNoCaseAlert()
         })
         handleUploadClose()
     }
@@ -392,10 +420,14 @@ const CWFBottomContainer = (props) => {
                                                         className="px-5 py-2 mx-2 my-3 normal-case text-app-primary bg-transparent hover:bg-app-primary hover:text-white  text-sm rounded-[25px] shadow-none border-solid border-[1px] border-[#052a4f]">
                                                         Post And Close
                                                     </Button>
-                                                    <Button
-                                                        className="px-5 py-2 mx-2 my-3 normal-case text-app-primary bg-transparent hover:bg-app-primary hover:text-white  text-sm rounded-[25px] shadow-none border-solid border-[1px] border-[#052a4f]">
-                                                        Attach Evidence
-                                                    </Button>
+                                                    {uploadActions.includes(currentAction.actionCode)&&(
+                                                        <Button
+                                                            onClick={()=>{handleUploadModal(currentAction)}}
+                                                            className="px-5 py-2 mx-2 my-3 normal-case text-app-primary bg-transparent hover:bg-app-primary hover:text-white  text-sm rounded-[25px] shadow-none border-solid border-[1px] border-[#052a4f]">
+                                                            Attach Evidence
+                                                        </Button>
+                                                    )}
+                                                    
                                                 </>
                                             )}
                                             <Button
@@ -415,8 +447,8 @@ const CWFBottomContainer = (props) => {
                 ):'Action Not Found'}
             </Dialog>
             <GenericAlert
-                message={"Please Select A Case!"}
-                type={"error"}
+                message={alertMessage}
+                type={alertType}
                 snackbarOpen={noCaseAlert}
                 setSnackbarOpen={setNoCaseAlert}
             />
