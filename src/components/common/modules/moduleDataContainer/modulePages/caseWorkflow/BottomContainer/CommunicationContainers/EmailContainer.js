@@ -16,6 +16,7 @@ import {
     DialogContentText,
     DialogTitle,
 } from '@mui/material'
+import { LoadingButton } from '@mui/lab'
 import {
     BsArrowDownLeftCircle,
     BsReplyAll,
@@ -212,6 +213,7 @@ const EmailContainer = ({ handleModalClose, handleModalOpen, handleSubmit, caseN
     const [snackbarMessage, setSnackbarMessage] = useState('Mail Sent Successfully!')
     const [tempModalOpen, setTempModalOpen] = useState(false);
     const [attachments, setAttachments] = useState([]);
+    const [sending, setSending] = useState(false)
 
     const handleAlertOpen = () => {
         setAlertOpen(true)
@@ -282,6 +284,8 @@ const EmailContainer = ({ handleModalClose, handleModalOpen, handleSubmit, caseN
 
     const handleSend = () => {
 
+        setSending(true);
+
         const formData = new FormData();
 
         formData.append('to', to)
@@ -289,18 +293,35 @@ const EmailContainer = ({ handleModalClose, handleModalOpen, handleSubmit, caseN
         formData.append('bcc', bcc)
         formData.append('subject', subjectValue)
         formData.append('content', content)
-        formData.append('files', attachments)
+        attachments.forEach(attachment=>{
+            formData.append('files', attachment)
+        })
         formData.append('caseNo', caseNo)
 
         actionMapping['sendEmailByLEVEL2'](formData)
         .then(res=>{
-            console.log("Email Response:-",res);
+            console.log("Email Response:-",res);  
+            setSnackbarMessage('Mail Sent Successfully!')
+            setSnackbarType('success')
+            setComposing(false)
+            setSnackbarOpen(true)
+            setSending(false)
+            setContent('')
+            setCc('')
+            setBcc('')
+            setTo('')
+            setAttachments([]);
+            setSubjectValue('');
+        })
+        .catch(error=>{
+            console.error("Email Error",error)
+            setSnackbarMessage('Something Went Wrong!')
+            setSnackbarType('error')
+            setSnackbarOpen(true)
+            setSending(false)
         })
 
-        // setSnackbarMessage('Mail Sent Successfully!')
-        // setSnackbarType('success')
-        // setComposing(false)
-        // setSnackbarOpen(true)
+        
     }
 
     const handleMailClick = (mail) => {
@@ -678,17 +699,16 @@ const EmailContainer = ({ handleModalClose, handleModalOpen, handleSubmit, caseN
                                     onChange={(e)=>handleFileChange(e)}
                                 />
                                 
-                                <Button
+                                <LoadingButton
                                     variant="contained"
+                                    loadingPosition='start'
+                                    startIcon={ <BsFillArrowRightCircleFill size={26} className="ml-1" /> }
                                     className="bg-[#052a4f] text-white normal-case py-2 px-0 pl-2 pr-3 rounded-full text-lg"
                                     onClick={() => handleSend()}
+                                    loading={sending}
                                 >
-                                    <BsFillArrowRightCircleFill
-                                        size={26}
-                                        className="mr-3"
-                                    />{' '}
                                     Send Mail
-                                </Button>
+                                </LoadingButton>
                             </Box>
                         </Box>
                     </Grid>
