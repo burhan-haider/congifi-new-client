@@ -376,7 +376,7 @@ const CWFBottomContainer = (props) => {
                                         ))}
 
                                         
-                                        <Grid xs={12} className='flex flex-row justify-end align-center w-full' >
+                                        <Grid item xs={12} className='flex flex-row justify-end align-center w-full' >
                                 
                                             {currentAction.actionCode !== "addViewComments" && (
                                                 <>
