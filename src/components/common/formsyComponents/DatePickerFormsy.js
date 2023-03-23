@@ -47,22 +47,19 @@ function DatePickerFormsy(props) {
 
   const { errorMessage } = props;
   //console.log("Vivek - date --> " + props.value);
-  const value =
-    props.value && props.value !== null && moment(props.value, "L").isValid()
+  let value = props.value && props.value !== null && moment(props.value, "DD-MM-YYYY").isValid()
       ? //moment(props.value, "DD-MM-YYYY HH:mm:ss")
-        moment(props.value, "L")
-      : null;
+        moment(props.value, "DD-MM-YYYY")
+      : new Date();
 
   function changeValue(event) {
+    console.log("Data Changed!");
     let date = null;
     if (event !== null && props.dateTime) {
       date = new Date(
-        event.getFullYear(),
-        event.getMonth(),
         event.getDate(),
-        event.getHours(),
-        event.getMinutes(),
-        0
+        event.getMonth(),
+        event.getFullYear(),
       );
     } else if (event !== null && !props.dateTime) {
       date = new Date(event.getFullYear(), event.getMonth(), event.getDate());
@@ -70,13 +67,16 @@ function DatePickerFormsy(props) {
 
     //const parsedDate = moment(date).format("DD-MM-YYYY HH:mm:ss");
     //const parsedDate = moment(date).format("YYYY-MM-DDTHH:mm:ssZ");
-    const parsedDate = moment(date).format("L");
-    //console.log(parsedDate);
+    const parsedDate = moment(date).format("DD-MM-YYYY");
+
+    console.log("Parsed Date in DatePicker",parsedDate);
 
     props.setValue(parsedDate);
+    console.log("Set Value:-", props.setValue)
     if (props.onChange) {
       props.onChange(parsedDate);
     }
+    value=moment(parsedDate, "DD-MM-YYYY");
   }
 
   return (
@@ -92,10 +92,12 @@ function DatePickerFormsy(props) {
             onChange={changeValue}
             clearable
             value={value}
-            format="dd/MM/yyyy HH:mm"
-            // format="dd/MM/yyyy"
-            inputFormat="dd/MM/yyyy HH:mm"
-            toolbarFormat="dd/MM/yyyy HH:mm"
+            format="dd/MM/yyyy"
+            // format="yyyy/dd/MM HH:mm"
+            inputFormat="dd/MM/yyyy"
+          // inputFormat="yyyy/dd/MM HH:mm"
+            toolbarFormat="dd/MM/yyyy"
+         // toolbarFormat  ="yyyy/dd/MM HH:mm"
             allowKeyboardControl={props.allowKeyboardControl}
             error={Boolean(errorMessage)}
             helperText={errorMessage}

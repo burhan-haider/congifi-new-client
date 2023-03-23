@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { makeStyles } from "@mui/styles";
+// import { makeStyles } from "@mui/styles";
 import Formsy from "formsy-react";
 import { 
   Button, 
@@ -7,9 +7,9 @@ import {
   Typography,
   CircularProgress 
 } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import commonService from "services/common/commonService";
-import COGNIFI_LOGO_FULL from "assets/icons/cognifi_logo_full.png";
+import { useDispatch} from "react-redux";
+// import commonService from "services/common/commonService";
+// import COGNIFI_LOGO_FULL from "assets/icons/cognifi_logo_full.png";
 import QDE_LOGO from "assets/icons/QDE_LOGO.png";
 import Cognifi_Logo_Animated from "assets/icons/Cognifi_Logo_Animated.gif";
 import LoginImage from 'assets/LoginImage.png';
@@ -178,8 +178,16 @@ function Login(props) {
     const iv = crypto.randomBytes(16);
     const key = crypto.pbkdf2Sync("QDEKEY1234543210", iv, 65536, 16, "sha1");
     var cipher = crypto.createCipheriv("aes-128-gcm", key, iv);
+    
     var encrypted = Buffer.concat([cipher.update(plaintext), cipher.final()]);
     var tag = cipher.getAuthTag();
+
+    console.group("Cipher Data")
+    console.log("Cipher:-", cipher.final())
+    console.log("Encrypted Text:-", encrypted);
+    console.log("Tag Text:-", tag);
+    console.log("Cipher Text:-", Buffer.concat([iv, encrypted, tag]).toString("base64"))
+    console.groupEnd()
     return Buffer.concat([iv, encrypted, tag]).toString("base64");
   }
 

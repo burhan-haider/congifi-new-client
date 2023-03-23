@@ -194,3 +194,17 @@ text.keyText {
 .rdg-cell[role='columnheader'] input[type='checkbox'] {
     margin-left: 12px;
 }
+
+.jodit-toolbar__box,
+.jodit-toolbar__box:not(:empty) {
+    background-color: #f5f6fa !important;
+}
+
+.jodit-container {
+    border-radius: 0px !important;
+	border-bottom: none !important;
+}
+
+.jodit-wysiwyg, .jodit-workplace {
+	border-bottom: none !important;
+}
