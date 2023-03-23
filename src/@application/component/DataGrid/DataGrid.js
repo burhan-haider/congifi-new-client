@@ -254,14 +254,13 @@ const DataGrid = (props) => {
     useEffect(()=>{
         if(utilColumn === 'singleSelect'){
             if(selectedRows.size === 1 ){
-
-                
-                setSelectedCaseStatus(tableData.DATA[selectedRows.values().next().value-1]["app.common.CURRENT_CASESTATUS"])
+                setSelectedCaseStatus(tableData.DATA[selectedRows.values().next().value-1][1])
                 setCaseNo(tableData.DATA[selectedRows.values().next().value-1][0])
                 // setSelectedData([tableData.DATA[selectedRows.values().next().value-1]])
             }
             else{
                 setCaseNo('')
+                setSelectedCaseStatus('')
             }
         }
     },[selectedRows, utilColumn, tableData])

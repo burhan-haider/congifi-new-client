@@ -26,6 +26,7 @@ const CWFBottomContainer = (props) => {
     const { 
         actionButtons, 
         caseNo,
+        selectedCaseStatus,
         
     } = props;
 
@@ -78,6 +79,7 @@ const CWFBottomContainer = (props) => {
     useEffect(()=>{
         console.log("Action Buttons", actionButtons)
         console.log("Case No:-", caseNo)
+        console.log("Case Status:-", selectedCaseStatus);
     })
 
     const handleClickClose = () => {
