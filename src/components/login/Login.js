@@ -76,7 +76,7 @@ const styles = theme => ({
     textAlign: "center",
   },
   formDiv: {
-    width: "35%",
+    width: "32%",
     float: "right",
   },
 
@@ -92,7 +92,7 @@ const styles = theme => ({
 
 const customStyles = {
   root: {
-    width: "60%",
+    width: "80%",
     margin: "4% auto ",
     textAlign: "center",
     display: "flex",
@@ -126,8 +126,8 @@ const customStyles = {
   },
   buttonRoot: {
     borderRadius: "25px",
-    padding: "0.25% 3% 0.25% 3%",
-    marginRight: "21%",
+    padding: "0.25% 5% 0.25% 5%",
+    marginRight: "11%",
     marginTop: "1%",
     marginBottom: '0px',
     fontSize: "14px",
@@ -311,7 +311,7 @@ function Login(props) {
               className="text-gray-700 border-gray-400 mt-2"
               disabled={!isFormValid || isSubmitting}
             >
-              {isSubmitting ? <CircularProgress className="my-2 mx-3" size={12} color={'inherit'} /> : "Login"}
+              {isSubmitting ? <CircularProgress className="my-2 mx-3" size={12} color={'inherit'} /> : "Log in"}
             </Button>
             
           </Formsy>

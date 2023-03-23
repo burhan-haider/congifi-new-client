@@ -36,7 +36,7 @@ function App() {
               index={item.featureCode?item.featureCode:item.featureMapping_Id} 
               value={selectedFeature}
               >
-              <FeatureHolder feature={item} />
+              <FeatureHolder className={'bg-app-primary pb-5 pl-3 pr-3 rounded-lg'} feature={item} />
             </ComponentHolder>
           ))}
         </>

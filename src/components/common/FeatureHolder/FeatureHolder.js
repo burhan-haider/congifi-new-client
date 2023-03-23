@@ -461,7 +461,7 @@ const FeatureHolder = ({feature}) => {
 													<img src={getIconByKey('whitePin')} alt="pin Icon" className="w-5 p-0 h-auto m-0" />
 											</IconButton>
 										)}
-										
+
 										<Breadcrumbs className="text-white text-base font-gSans" >
 											{feature.breadCrumbs.sort((a, b) => a.level > b.level ? 1:-1).map((item)=>(
 												<p 
@@ -522,7 +522,7 @@ const FeatureHolder = ({feature}) => {
 							</Box>
 						):(
 							<>
-								<ComponentHolder  index={feature.featureCode} type={'main'} value={feature.showModule} >
+								<ComponentHolder className={'bg-app-primary pb-9 pl-5 pr-5'}  index={feature.featureCode} type={'main'} value={feature.showModule} >
 									<MainPage 
 											key={feature.featureCode} 
 											feature={feature} 
@@ -571,7 +571,7 @@ const MainPage = ({feature, getModuleChartData, isRefreshing, setIsRefreshing}) 
     }
 
     return(
-      <Grid container direction={'row'} justifyContent={'flex-start'} alignItems={'flex-start'} className="px-5 py-3" >
+      <Grid container direction={'row'} justifyContent={'flex-start'} alignItems={'flex-start'}  className={'rounded-2xl bg-white pl-3 pr-3'} >
 
 				{/* mapping all the modules inside a feature as button */}
         {feature.modules.length>0 && feature.modules.map((item, index)=>{

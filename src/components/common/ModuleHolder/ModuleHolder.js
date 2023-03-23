@@ -55,6 +55,7 @@ const ModuleHolder = ({feature, module, getModuleChartData, isRefreshing, setIsR
                 <>
                     {module.presentationCategory!==null ? (
                         <ModuleDataContainer 
+                            className={'bg-app-primary pb-5 pl-3 pr-3'} 
                             moduleCode={module.moduleCode}
                             moduleURL={module.url}
                             presentationCategory={module.presentationCategory}
@@ -67,6 +68,7 @@ const ModuleHolder = ({feature, module, getModuleChartData, isRefreshing, setIsR
                         <>
                             {module.moduleChartDetails!=null?(
                                 <ModuleChartFrame 
+                                    className={'bg-app-primary pb-5 pl-3 pr-3'}
                                     current={module} 
                                     getModuleChartData={getModuleChartData} 
                                     feature={feature}
