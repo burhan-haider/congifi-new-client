@@ -251,7 +251,6 @@ const DataGrid = (props) => {
                     setIsSelected(false)
                 }
                 setShowSelected(false)
-                setSelectedRows([])
                 setSelectedRowsArray([])
                 setSelectedCaseStatus([])
                 setCaseNo([])
