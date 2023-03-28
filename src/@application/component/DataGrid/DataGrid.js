@@ -50,13 +50,13 @@ const DataGrid = (props) => {
     const [selectedRowsArray, setSelectedRowsArray] = useState([])
     const [isSelected, setIsSelected] = useState(false)
     const [showSelected, setShowSelected] = useState(false)
-    const [selectedCaseStatus, setSelectedCaseStatus] = useState(null)
+    const [selectedCaseStatus, setSelectedCaseStatus] = useState([])
 
     // eslint-disable-next-line no-unused-vars
     const [direction, setDirection] = useState('ltr')
     const [checkedState, setCheckedState] = useState([])
     const [searchString, setSearchString] = useState('')
-    const [caseNo, setCaseNo] = useState('')
+    const [caseNo, setCaseNo] = useState([])
 
     // Pagination States
     const [currentPage, setCurrentPage] = useState(1)
@@ -237,6 +237,15 @@ const DataGrid = (props) => {
                 setSelectedRowsArray(
                     totalRows.filter((e) => selectedRows.has(e.INDEX))
                 )
+                let tempCaseNo = [];
+                let tempCaseStatus = [];
+                totalRows.filter(e=>selectedRows.has(e.INDEX)).forEach(row=>{
+                    tempCaseNo.push(row["app.common.CASENO"])
+                    tempCaseStatus.push(row["app.common.CURRENT_CASESTATUS"])
+                })
+                setCaseNo(tempCaseNo)
+                setSelectedCaseStatus(tempCaseStatus)
+                console.log("Multiple selected row:-", totalRows.filter((e) => selectedRows.has(e.INDEX)))
             } else {
                 if (isSelected === true) {
                     setIsSelected(false)
@@ -335,7 +344,14 @@ const DataGrid = (props) => {
             onChange(e.target.checked, e.nativeEvent.shiftKey)
         }
         function handleClick(e) {
+            console.log("Checked:", e.target.checked)
+            console.log("TabIndex:", e.target.tabIndex)
             if (e.target.tabIndex === 0 && selectedRows.size > 0) {
+                if(e.target.checked === true){
+                    e.target.checked = false
+                    e.target.tabIndex = -1
+                }
+                // e.target.tabIndex = -1
                 e.target.checked = false
                 setCaseNo("")
                 setSelectedCaseStatus(null)
