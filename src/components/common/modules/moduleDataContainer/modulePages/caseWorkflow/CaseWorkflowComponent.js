@@ -173,7 +173,7 @@ export default function CaseWorkflowComponent(props) {
           ></GenericDatatable> */}
           <GenericDatagrid
             tableData={cwfCasesData}
-            utilColumn={'singleSelect'}
+            utilColumn={'select'}
             setSelectedData={handleDataChange}
             selectedData={dataSelected}
             inputParams={inputParams}

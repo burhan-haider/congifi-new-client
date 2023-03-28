@@ -16,7 +16,6 @@ import {
     DialogContentText,
     DialogTitle,
     CircularProgress,
-    Divider,
 } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import {
@@ -37,7 +36,6 @@ import {
     BsFileTextFill,
     BsPencil,
     BsPaperclip,
-    BsFileEarmarkPdf,
     BsFillArrowRightCircleFill,
     BsChevronDown,
     BsChevronUp,
@@ -56,13 +54,11 @@ import { FaArrowLeft, FaTimes } from 'react-icons/fa'
 
 import { GenericAlert } from '@application'
 
-import { useSelector } from 'react-redux'
-import { actionMapping } from 'components/common/modules/actionregistry/ActionMapping'
 import Formsy from 'formsy-react'
-import httpService from 'services/httpservice/httpService'
+// import { useSelector } from 'react-redux'
+import emailService from 'services/email/emailService'
 import { MdDangerous } from 'react-icons/md'
 import parse from 'html-react-parser';
-import moment from 'moment'
 
 const menuOptions = [
     {
@@ -126,7 +122,7 @@ const EmailContainer = ({ handleModalClose, handleModalOpen, handleSubmit, caseN
 
     const editor = useRef(null)
 
-    const userEmail = useSelector(state=>state.auth.user.data.email) || 'burhanhp5158@gmail.com'
+    // const userEmail = useSelector(state=>state.auth.user.data.email) || 'burhanhp5158@gmail.com'
 
     const [content, setContent] = useState('')
     const [subjectValue, setSubjectValue] = useState('')
@@ -144,8 +140,8 @@ const EmailContainer = ({ handleModalClose, handleModalOpen, handleSubmit, caseN
     const [hoveredLogo, setHoveredLogo] = useState('')
     const [snackbarType, setSnackbarType] = useState('success')
     const [snackbarMessage, setSnackbarMessage] = useState('Mail Sent Successfully!')
-    const [tempModalOpen, setTempModalOpen] = useState(false);
-    const [attachments, setAttachments] = useState([]);
+    const [tempModalOpen, setTempModalOpen] = useState(false)
+    const [attachments, setAttachments] = useState([])
     const [sending, setSending] = useState(false)
     const [isFormValid, setIsFormValid] = useState(true)
     const [mailsLoading, setMailsLoading] = useState(false)
@@ -224,62 +220,33 @@ const EmailContainer = ({ handleModalClose, handleModalOpen, handleSubmit, caseN
 
     const fetchMails = async() => {
 
-        setMailsLoading(true)
-        httpService.post('/api/email/refreshEmail',
-            {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                    Authorization: `Bearer ${window.localStorage.getItem(
-                        "cognifi_token"
-                    )}`
+        emailService.refreshEmail()
+        .then(resp=>{
+            
+            console.log("Refresh Response:-", resp)
+
+            emailService.fetchEmails(caseNo)
+            .then(res=>{
+                console.log("Res:-", res)
+                let inboxData = []
+                if(res.status === 200){
+                    res.data.forEach(mail=>{
+                        if(mail.FOLDERTYPE==='INBOX'){
+                            inboxData.push(mail)
+                        }
+                    })
                 }
-            }
-        ).then(res=>{
-            if(res.status===200){
-                httpService.post('/api/email/showAllMessage', 
-                    {
-                        headers: {
-                            "Content-Type": "multipart/form-data",
-                            Authorization: `Bearer ${window.localStorage.getItem(
-                                "cognifi_token"
-                            )}`
-                        }
-                    },
-                    {
-                        params: {
-                            caseNo: caseNo,
-                        }
-                    }
-                )
-                .then(res=>{
-                    console.log("Res:-", res)
-                    let inboxData = []
-                    let sentData = []
-                    let draftData = []
-                    if(res.status === 200){
-                        res.data.forEach(mail=>{
-                            if(mail.FOLDERTYPE==='INBOX'){
-                                inboxData.push(mail)
-                            }
-                            if(mail.FOLDERTYPE==='SENT'){
-                                sentData.push(mail)
-                            }
-                            if(mail.FOLDERTYPE==='DRAFT'){
-                                draftData.push(mail)
-                            }
-                        })
-                    }
+                if(inboxData.length === inboxMails.length){
+                    
+                }
+                else{
                     setInboxMails(inboxData)
-                    setSentMails(sentData)
-                    setDraftMails(draftData);
-                    setMailsLoading(false)
-                    // setMails(res.data)
-                })
-                .catch(err=>{
-                    setMailsLoading(false)
-                    console.error("Error:-", err)
-                })
-            }
+                }
+                // setMails(res.data)
+            })
+            .catch(err=>{
+                console.error("Error:-", err)
+            })
         })
         .catch(err=>{
             setMailsLoading(false)
@@ -305,6 +272,7 @@ const EmailContainer = ({ handleModalClose, handleModalOpen, handleSubmit, caseN
     const handleSend = (data) => {
 
         setSending(true);
+        console.log("Data:-", data);
 
         const formData = new FormData();
 
@@ -319,7 +287,7 @@ const EmailContainer = ({ handleModalClose, handleModalOpen, handleSubmit, caseN
         })
         formData.append('caseNo', caseNo)
 
-        actionMapping['sendEmailByLEVEL2'](formData)
+        emailService.sendEmail(formData)
         .then(res=>{
             console.log("Email Response:-",res);  
             if(res.STATUS !== '0'){
@@ -349,7 +317,20 @@ const EmailContainer = ({ handleModalClose, handleModalOpen, handleSubmit, caseN
     }
 
     const handleMailClick = (mail) => {
-        console.log("Mail Clicked!")
+        console.log("Mail Clicked!", mail)
+        const data = new FormData();
+
+        data.append('caseNo', mail.CASENO)
+        data.append('emailNumber', mail.MESSAGEINTERNALNO)
+        data.append('folder', mail.FOLDERTYPE)
+
+        emailService.showEmail(data)
+        .then(res=>{
+            console.log("Res:-", res)
+        })
+        .catch(err=>{
+            console.error(err)
+        })
         setExpandedMail(mail)
         setMailOpen(true);
     }
@@ -364,77 +345,67 @@ const EmailContainer = ({ handleModalClose, handleModalOpen, handleSubmit, caseN
 
         let files = e.target.files
         console.log("files", files)
-        let tempFileArray = [];
+        let tempFileArray = []
 
         Array.from(files).forEach(file => {
-            tempFileArray.push(file);
+            tempFileArray.push(file)
         })
-        setAttachments([...attachments, ...tempFileArray]);
+        setAttachments([...attachments, ...tempFileArray])
     }
 
     useEffect(() => {
         if(mailReceived === false){
-            fetchMails().then(()=>{
+            emailService.fetchEmails(caseNo)
+            .then(res=>{
+                console.log("Res:-", res)
+                let inboxData = []
+                let sentData = []
+                let draftData = []
+                res.forEach(mail=>{
+                    if(mail.FOLDERTYPE==='INBOX'){
+                        inboxData.push(mail)
+                    }
+                    if(mail.FOLDERTYPE==='SENT'){
+                        sentData.push(mail)
+                    }
+                    if(mail.FOLDERTYPE==='DRAFT'){
+                        draftData.push(mail)
+                    }
+                })
+                setInboxMails(inboxData)
+                setSentMails(sentData)
+                setDraftMails(draftData)
                 setMailReceived(true)
+                setMailsLoading(false)
+                // setMails(res.data)
             })
             .catch(err=>{
-                console.error(err)
+                setMailsLoading(false)
+                console.error("Error:-", err)
             })
             
         }
-    }, [mailReceived])
+    }, [mailReceived, caseNo])
 
 
     const handleMenuChange = (option, index) => {
         setExpandedMail(null)
         setMailOpen(false)
         setSelectedList(index)
-
-        // if(sentMails.length < 1 || inboxMails.length < 1){
-
-        //     setMailsLoading(true)
-        //     httpService.post('/api/email/showAllMessage', 
-        //         {
-        //             headers: {
-        //                 "Content-Type": "multipart/form-data",
-        //                 Authorization: `Bearer ${window.localStorage.getItem(
-        //                     "cognifi_token"
-        //                 )}`
-        //             }
-        //         },
-        //         {
-        //             params: {
-        //                 caseNo: caseNo,
-        //                 folder: option.folder
-        //             }
-        //         }
-        //     )
-        //     .then(res=>{
-        //         console.log(`${option.folder} Res:-`, res)
-        //         if(option.folder === 'SENT'){
-        //             setSentMails(res.data)
-        //         }
-        //         if(option.folder === 'INBOX'){
-        //             setInboxMails(res.data)
-        //         }
-        //     })
-        //     .catch(err=>{
-        //         console.error("Error:-", err)
-        //     })
-        // }
-        
     }
 
     const MailCard = ({mail, index}) => {
+        const fromId = mail.FROMID!==null?mail.FROMID.replaceAll(/(<([^>]+)>)/ig, ''):''
+        const seen = mail.SEENFLAG === 'N'?false:true
         return (
             <MenuItem
                 onClick={() => handleMailClick(mail)}
-                className="bg-white hover:bg-[#ddd] p-0 py-2 mb-4 flex flex-col justify-center items-start"
+                className={`${seen?'bg-[#eee]':'bg-white'} hover:bg-[#ddd] p-0 py-1 border-b border-solid border-gray-300 flex flex-col justify-center items-start`}
                 key={index}
             >
                 {/* <Box> */}
                 <Box
-                    className="pl-10 pr-3 py-3 mt-3 mb-3 flex flex-row justify-between items-center"
+                    className={`pl-10 pr-3 py-3 ${composing?'flex flex-col justify-center items-start':'flex flex-row justify-start items-center'}`}
                     sx={{
                         // borderLeftColor: mail.color,
                         // borderLeftStyle: 'solid',
@@ -442,23 +413,24 @@ const EmailContainer = ({ handleModalClose, handleModalOpen, handleSubmit, caseN
                         width: composing ? '80%' : '90%',
                     }}
                 >
-                    <Box className=" w-full">
-                        <Typography className="text-xl font-bold">
-                            {mail.RECIPIENTSTO}
+                    <Box className='min-w-[25%]' >
+                        <Typography className={`${!seen&&'font-bold'} mb-1`}>
+                            {mail.FROMID!==null?fromId.substr(0,fromId.length-1)+', me':'me'}
                         </Typography>
-                        <Typography className="text-sm text-gray-400" >
+                        <Typography className="text-xs text-gray-400" >
                             {mail.SENTDATE}
                         </Typography>
                     </Box>
+                    <Box className={`${composing?'mt-2':'pl-11'} pr-5 w-[70%]`}>
+                        <Typography className="mb-1 text-sm">
+                            {mail.SUBJECT}
+                        </Typography>
+                        <Typography className="truncate text-xs">
+                            {mail.MESSAGECONTENT.replaceAll(/<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/ig, "")}
+                        </Typography>
+                    </Box>
                 </Box>
-                <Box className="pl-11 w-[80%] pr-5 pb-3">
-                    <Typography className="mb-1">
-                        {mail.SUBJECT}
-                    </Typography>
-                    <Typography className="truncate text-sm">
-                        {mail.MESSAGECONTENT.replaceAll(/<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/ig, "")}
-                    </Typography>
-                </Box>
+                
                 {/* {mail.attachments && mail.attachments.length && (
                     <Box className="flex flex-row justify-start items-center px-10 my-2">
                         <BsPaperclip size={24} />
@@ -492,7 +464,8 @@ const EmailContainer = ({ handleModalClose, handleModalOpen, handleSubmit, caseN
                     
                     <IconButton onClick={()=>{
                         setExpandedMail(null)
-                        setMailOpen(false);
+                        setMailOpen(false)
+                        setMailReceived(false)
                     }} >
                         <FaArrowLeft size={'20px'} />
                     </IconButton>
@@ -509,9 +482,9 @@ const EmailContainer = ({ handleModalClose, handleModalOpen, handleSubmit, caseN
                     </Box>
                     <Box className="border-none border-b-[0.5px solid rgb(156 163 175)] w-full" />
                     <Box className="pl-5 w-[80%] pr-5 pb-3">
-                        <Typography>
+                        <Box>
                             {parse(mail.MESSAGECONTENT)}
-                        </Typography>
+                        </Box>
                     </Box>
                     
                 </Box>
@@ -624,7 +597,7 @@ const EmailContainer = ({ handleModalClose, handleModalOpen, handleSubmit, caseN
                                                 {inboxMails.length > 0?(
                                                     <MenuList className="max-h-[70vh] overflow-auto px-2">
                                                         {inboxMails.map((mail, index)=>(
-                                                            <MailCard mail={mail} index={index} />
+                                                            <MailCard mail={mail} key={index} index={index} />
                                                         ))}
                                                     </MenuList>
                                                 ):(
@@ -640,7 +613,7 @@ const EmailContainer = ({ handleModalClose, handleModalOpen, handleSubmit, caseN
                                                 {draftMails.length > 0?(
                                                     <MenuList className="max-h-[70vh] overflow-auto px-2">
                                                         {draftMails.map((mail, index)=>(
-                                                            <MailCard mail={mail} index={index} />
+                                                            <MailCard mail={mail} key={index} index={index} />
                                                         ))}
                                                     </MenuList>
                                                 ):(
@@ -656,7 +629,7 @@ const EmailContainer = ({ handleModalClose, handleModalOpen, handleSubmit, caseN
                                                 {sentMails.length > 0?(
                                                     <MenuList className="max-h-[70vh] overflow-auto px-2">
                                                         {sentMails.map((mail, index)=>(
-                                                            <MailCard mail={mail} index={index} />
+                                                            <MailCard mail={mail} key={index} index={index} />
                                                         ))}
                                                     </MenuList>
                                                 ):(
@@ -866,7 +839,10 @@ const EmailContainer = ({ handleModalClose, handleModalOpen, handleSubmit, caseN
                                 />
                                 <Box className={`max-h-[80px] overflow-auto border-solid border-[0.5px] border-gray-300 border-b-0 border-t-0 py-2 px-4 ${attachments.length<1&&'hidden'}`} >
                                     {attachments.map((file, index)=>(
-                                        <Box className="flex flex-row justify-between items-center min-w-[180px] mr-5 bg-gray-200 pl-2 mb-2" >
+                                        <Box
+                                            key={index} 
+                                            className="flex flex-row justify-between items-center min-w-[180px] mr-5 bg-gray-200 pl-2 mb-2" 
+                                        >
                                             <Typography className="text-ellipsis truncate"  >
                                                 {file.name}
                                             </Typography>

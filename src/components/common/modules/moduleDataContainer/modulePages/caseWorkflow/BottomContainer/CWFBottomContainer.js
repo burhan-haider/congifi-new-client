@@ -98,7 +98,7 @@ const CWFBottomContainer = (props) => {
     }
 
     const handleUploadModal = (action) => {
-        actionMapping['getFileUploadConfig'](action, caseNo, userActionType)
+        actionMapping['getFileUploadConfig'](action, caseNo[0], userActionType)
             .then((res)=>{
                 console.log("Upload Modal Response:-", res)
                 setFileConfig({
@@ -118,7 +118,7 @@ const CWFBottomContainer = (props) => {
 
         console.log("Action Fires:-", action.actionCode)
 
-        if(caseNo === "") {
+        if(caseNo.length<1) {
             setAlertMessage('Please Select A Case!')
             setAlertType('error')
             openNoCaseAlert()
@@ -135,7 +135,7 @@ const CWFBottomContainer = (props) => {
                 setCommType('call')
                 setCommModalOpen(true)
             } else if(action.actionCode === 'getFileUploadConfig'){
-                actionMapping['getFileUploadConfig'](action, caseNo, userActionType)
+                actionMapping['getFileUploadConfig'](action, caseNo[0], userActionType)
                     .then((res)=>{
                         console.log("Upload Modal Response:-", res)
                         setFileConfig({
@@ -153,7 +153,7 @@ const CWFBottomContainer = (props) => {
             else{
                 if(showCommentActions.includes(action.actionCode)){
             
-                    actionMapping['getCWFCaseAndCommentsDetails'](action, caseNo, userActionType)
+                    actionMapping['getCWFCaseAndCommentsDetails'](action, caseNo[0], userActionType)
                     .then(res=>{
                             var allTabNames = res['TABNAMES']
                             console.log('tabname///////////////////////////',allTabNames)
@@ -174,7 +174,7 @@ const CWFBottomContainer = (props) => {
     const handleSubmit = (data) => {
         if(userActionType !== null){
             console.log("Form Data", data)
-            actionMapping[currentAction.actionCode](currentAction, data, caseNo, userActionType)
+            actionMapping[currentAction.actionCode](currentAction, data, caseNo[0], userActionType)
                 .then(res=>{
                     setModalOpen(false)
                     console.log(res)
@@ -185,6 +185,7 @@ const CWFBottomContainer = (props) => {
 
         }
     }
+    
 
     const handleUploadSubmit = () => {
 
@@ -192,7 +193,7 @@ const CWFBottomContainer = (props) => {
 
         data.append('file', uploadFileData)
         
-        actionMapping['fileUploadConfig'](data, caseNo)
+        actionMapping['fileUploadConfig'](data, caseNo[0])
         .then(res=>{
             console.log("Response:-", res)
             setAlertType('success')
@@ -263,7 +264,7 @@ const CWFBottomContainer = (props) => {
                     handleModalOpen={handleCommOpen} 
                     handleModalClose={handleCommClose}
                     handleSubmit={handleSubmit}
-                    caseNo={caseNo}
+                    caseNo={caseNo[0]}
                 />
             </Dialog>
 
