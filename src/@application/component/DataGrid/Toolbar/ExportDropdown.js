@@ -6,6 +6,7 @@ import {
     Typography,
     Divider,
     ListItem,
+    Tooltip,
 } from '@mui/material'
 import {
     BsFileEarmarkExcel,
@@ -14,6 +15,8 @@ import {
 } from 'react-icons/bs'
 import { FaAngleDown, FaUpload } from 'react-icons/fa'
 import { exportToCsv, exportToPdf, exportToXlsx } from '../utils/exportUtils'
+import IconButton from '@mui/material/IconButton';
+
 
 const ExportDropdown = (props) => {
     const { gridElement, selectedGridElement, isSelected, title, btnText } =
@@ -34,20 +37,23 @@ const ExportDropdown = (props) => {
 
     return (
         <div>
-            <Button
+        <Tooltip title='Export' placement="top">
+            <IconButton
                 id="export-dropdown-button"
                 aria-controls={exportOpen ? 'export-dropdown-menu' : undefined}
                 aria-haspopup="true"
                 aria-expanded={exportOpen ? 'true' : undefined}
-                className="px-5 py-2 mx-2 my-3 normal-case text-app-primary bg-transparent hover:bg-app-primary hover:text-white  text-sm rounded-[25px] shadow-none border-solid border-[1px] border-[#052a4f]"
+                className="text-app-primary mr-4 ml-4"
                 variant="contained"
                 size="small"
                 onClick={handleOpenExport}
                 endIcon={<FaAngleDown size={12} />}
             >
-                <FaUpload size={16} className="mr-3" />
-                {exporting ? 'Exporting' : btnText}
-            </Button>
+                <FaUpload size={16} />
+                {/* {exporting ? 'Exporting' : btnText} */}
+            </IconButton>
+        </Tooltip>
+            
 
             <Menu
                 id="export-dropdown-menu"

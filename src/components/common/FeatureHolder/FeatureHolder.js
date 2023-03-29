@@ -516,13 +516,13 @@ const FeatureHolder = ({feature}) => {
 					<>
 						{isModuleLoading?(
 							<Box
-								className={'bg-white m-5 mt-4 mb-2 pb-2 pt-2 rounded-md h-[80vh]'}
+								className={'bg-white m-5 mt-4 mb-2 pb-2 pt-2 h-[80vh]'}
 							>
 								<CircularProgress color='primary' />     
 							</Box>
 						):(
 							<>
-								<ComponentHolder className={'bg-app-primary pb-9 pl-5 pr-5'}  index={feature.featureCode} type={'main'} value={feature.showModule} >
+								<ComponentHolder index={feature.featureCode} type={'main'} value={feature.showModule} >
 									<MainPage 
 											key={feature.featureCode} 
 											feature={feature} 
@@ -571,7 +571,7 @@ const MainPage = ({feature, getModuleChartData, isRefreshing, setIsRefreshing}) 
     }
 
     return(
-      <Grid container direction={'row'} justifyContent={'flex-start'} alignItems={'flex-start'}  className={'rounded-2xl bg-white pl-3 pr-3'} >
+      <Grid container direction={'row'} justifyContent={'flex-start'} alignItems={'flex-start'}  className={'rounded-2xl bg-white pl-[15px] pr-[15px]'} >
 
 				{/* mapping all the modules inside a feature as button */}
         {feature.modules.length>0 && feature.modules.map((item, index)=>{
@@ -600,7 +600,7 @@ const MainPage = ({feature, getModuleChartData, isRefreshing, setIsRefreshing}) 
                           elevation={2} 
                           key={item.uniqueNo} 
                           onClick={()=>handleClick(item)} 
-                          className='hover:bg-[#eee] cursor-pointer m-3 pt-10'
+                          className='hover:bg-[#eee] cursor-pointer mt-3 mb-3 ml-[7px] pt-10'
                           sx={{
                               height: '100%',
                               minHeight: '300px',

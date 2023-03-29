@@ -190,7 +190,7 @@ export default function CaseWorkflowComponent(props) {
   );
 
   return (
-    <Paper style={{ padding: "35px" }}>
+    <Paper style={{ padding: "20px" }}>
       <div id="topFrame" className={classes.root}>
         <Accordion
           expanded={expandedPanel === "searchExpansionPanel"}
