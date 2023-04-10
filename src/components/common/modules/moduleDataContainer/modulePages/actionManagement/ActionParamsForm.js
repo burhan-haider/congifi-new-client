@@ -26,7 +26,7 @@ import { GenericButton } from "@application";
 import { GenericDatatable, GenericDatagrid } from "@application";
 import { ActionsBottomContainer } from "../common/bottomPages";
 import { store } from "redux/store";
-import { useClasses } from "@application";
+import { useClasses,  } from "@application";
 
 const styles = theme => ({
   root: {
@@ -518,10 +518,11 @@ function ActionParamsForm(props) {
                     container
                     alignItems="flex-start"
                     spacing={2}
-                    className={classes.rowDesign}
+                    className={classes.root}
                   >
-                    <Grid item xs={4}>
-                      <FormControl className={classes.formControl}>
+                    <Grid className="flex items-center" item xs={4}>
+                      {/* <Typography>Action Code</Typography> */}
+                      <FormControl className={classes.formControl} fullWidth>
                         {/* <TextFieldFormsy
                           variant="outlined"
                           name="actionCode"
@@ -572,8 +573,8 @@ function ActionParamsForm(props) {
                         </SelectFormsy>
                       </FormControl>
                     </Grid>
-                    <Grid item xs={4}>
-                      <FormControl className={classes.formControl}>
+                    <Grid className="flex items-center" item xs={4}>
+                      <FormControl className={classes.formControl} fullWidth>
                         <SelectFormsy
                           variant="outlined"
                           name="actionParamDatatype"
@@ -613,8 +614,8 @@ function ActionParamsForm(props) {
                         </SelectFormsy>
                       </FormControl>
                     </Grid>
-                    <Grid item xs={4}>
-                      <FormControl className={classes.formControl}>
+                    <Grid className="flex items-center" item xs={4}>
+                      <FormControl className={classes.formControl} fullWidth>
                         <SelectFormsy
                           variant="outlined"
                           name="actionParamIsEnabled"
@@ -639,7 +640,7 @@ function ActionParamsForm(props) {
                         </SelectFormsy>
                       </FormControl>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid className="flex items-center" item xs={4}>
                       <FormControl className={classes.formControl}>
                         <TextFieldFormsy
                           variant="outlined"
@@ -661,7 +662,7 @@ function ActionParamsForm(props) {
                         ></TextFieldFormsy>
                       </FormControl>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid className="flex items-center" item xs={4}>
                       <FormControl className={classes.formControl}>
                         <TextFieldFormsy
                           variant="outlined"
@@ -728,7 +729,7 @@ function ActionParamsForm(props) {
                       </FormControl>
                     </Grid> */}
                     {showStaticValuesField ? (
-                      <Grid item xs={4}>
+                      <Grid className="flex items-center" item xs={4}>
                         <FormControl className={classes.formControl}>
                           <TextFieldFormsy
                             variant="outlined"
@@ -751,7 +752,7 @@ function ActionParamsForm(props) {
                         </FormControl>
                       </Grid>
                     ) : null}
-                    <Grid item xs={4}>
+                    <Grid className="flex items-center" item xs={4}>
                       <FormControl className={classes.formControl}>
                         <TextFieldFormsy
                           variant="outlined"
@@ -773,7 +774,7 @@ function ActionParamsForm(props) {
                         ></TextFieldFormsy>
                       </FormControl>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid className="flex items-center" item xs={4}>
                       <FormControl className={classes.formControl}>
                         <TextFieldFormsy
                           variant="outlined"
@@ -795,7 +796,7 @@ function ActionParamsForm(props) {
                         ></TextFieldFormsy>
                       </FormControl>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid className="flex items-center" item xs={4}>
                       <FormControl className={classes.formControl}>
                         <TextFieldFormsy
                           variant="outlined"

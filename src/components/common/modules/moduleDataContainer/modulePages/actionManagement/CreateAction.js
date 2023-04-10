@@ -203,10 +203,7 @@ export default function CreateAction(props) {
               {props.isCreate === true ? (
                 <Grid
                   container
-                  alignItems="flex-start"
-                  justify="flex-end"
-                  direction="row"
-                  style={{ marginRight: 15, marginBottom: 10 }}
+                  className="mr-[15px] mb-[10px] flex justify-end flex-row"
                 >
                   <GenericButton
                     type="submit"
@@ -238,10 +235,7 @@ export default function CreateAction(props) {
               ) : (
                 <Grid
                   container
-                  alignItems="flex-start"
-                  justify="flex-end"
-                  direction="row"
-                  style={{ marginRight: 15, marginBottom: 10 }}
+                  className="mr-[15px] mb-[10px] flex justify-end flex-row"
                 >
                   <GenericButton
                     type="submit"

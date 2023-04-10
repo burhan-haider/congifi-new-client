@@ -7,6 +7,7 @@ import {
     FormControl,
     Tabs,
     Tab,
+    Typography
 } from '@mui/material'
 
 
@@ -76,6 +77,7 @@ const CommentsContainer = (props) => {
                      <>
                          {param.paramDataType === "textarea" && tabName === eachTab && (
                                 <Grid item xs={12} >
+                                {/* <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">{param.paramName}</Typography> */}
                                 <FormControl className="m-2 w-100 flex flex-nowrap" >
                                     <TextFieldFormsy
                                         variant="outlined"

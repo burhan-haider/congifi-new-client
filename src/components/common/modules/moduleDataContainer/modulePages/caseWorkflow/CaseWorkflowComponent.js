@@ -18,7 +18,9 @@ import {
   RadioGroup,
   Accordion,
   AccordionDetails,
-  AccordionSummary
+  AccordionSummary,
+  Box,
+  Divider
 } from "@mui/material";
 // import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
@@ -33,19 +35,30 @@ import { useDispatch, useSelector } from "react-redux";
 import * as CWFActions from "redux/caseWorkflow/cwfbottomframedata/cwfbottomframedata.actions";
 import { GenericButton, useClasses, GenericDatagrid } from "@application";
 import CWFBottomContainer from "./BottomContainer/CWFBottomContainer";
+import { stringify } from "postcss";
 // import { CWFDetailsBottomContainer } from "../common/bottomPages";
 
 const styles = theme => ({
   root: {
     width: "100%",
+    fontSize: '14px',
+    "& .MuiOutlinedInput-root": {
+      borderRadius: "70px",
+      height: 'auto',
+      backgroundColor: '#fff',
+    },
 
     "& .MuiExpansionPanelSummary-content": {
       margin: "2px 0"
     },
 
     " & .MuiExpansionPanelSummary-root": {
-      backgroundColor: "#f4f5fa"
-    }
+      backgroundColor: "#f4f5fa",
+      margin: '0px'
+    },  
+    "& .MuiOutlinedInput-input": {
+      padding: '5px 20px'
+    },
   },
   formControl: {
     margin: 1,
@@ -54,12 +67,13 @@ const styles = theme => ({
     wrap: "nowrap"
   },
   expandedPanel: {
-    backgroundColor: "#f4f5fa"
+    backgroundColor: "#f4f5fa",
+    margin: '0px'
   },
   heading: {
     color: "#052a4f",
     fontSize: 18,
-    fontWeight: "500"
+    fontWeight: "700"
   },
   rowDesign: {
     paddingTop: 15
@@ -198,19 +212,25 @@ export default function CaseWorkflowComponent(props) {
           id="searchExpansionPanel"
         >
           <AccordionSummary
+            sx={{'& .Mui-expanded': {
+              margin: '0px'}
+            }}
             expandIcon={<ExpandMoreIcon />}
             aria-controls="searchPanelcontent"
             id="searchPanelHeader"
+            className="max-h-[30px]"
             classes={{
               root: classes.root,
               expanded: classes.expandedPanel
             }}
           >
-            <Typography className={classes.heading} id="searchHeader">
+            <Typography className={`${classes.heading} text-[14px] font-bold`} id="searchHeader">
               {moduleHeader[0]}
             </Typography>
           </AccordionSummary>
+          <Divider />
           <AccordionDetails
+            className='bg-[#F4F5FA]'
             align="left"
             id="searchExpansionPanelDetails"
             style={{ padding: 5 }}
@@ -231,14 +251,16 @@ export default function CaseWorkflowComponent(props) {
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "date" ? (
-                        <Grid item xs={3} key={index}>
-                          <FormControl className={classes.formControl}>
+                        <Grid className="flex items-center" item xs={4} key={index}>
+                          <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
+                          <FormControl className={`${classes.formControl} w-full`}>
                             <DatePickerFormsy
+                              sx={{backgroundColor: 'white'}}
                               variant="outlined"
                               name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
-                              label={`${eachParam.MODULEPARAMIDNAME}`}
+                              // label={`${eachParam.MODULEPARAMIDNAME}`}
                               ampm={false} // 24Hr / 12hr clock settings
-                              className={undefined} // optional, if you need for styling
+                              className={'rounded-lg bg-[#fff] z-20'} // optional, if you need for styling
                               dateTime={false} // true, if need the Date and Time Picker. false if you need only Date Picker
                               allowKeyboardControl={true} // optional, this will allow keybord to control the picker.
                               value={new Date()}
@@ -252,18 +274,19 @@ export default function CaseWorkflowComponent(props) {
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "view" ? (
-                        <Grid item xs={3} key={index}>
+                        <Grid className="flex items-center" item xs={4} key={index}>
+                          <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
                           <FormControl
                             className={
-                              (clsx(classes.margin, classes.textField),
-                              classes.formControl)
+                              `$(clsx(classes.margin, classes.textField),
+                              classes.formControl) w-full`
                             }
                             variant="outlined"
                           >
                             <ViewFieldFormsy
                               className={undefined}
                               name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
-                              label={`${eachParam.MODULEPARAMIDNAME}`}
+                              // label={`${eachParam.MODULEPARAMIDNAME}`}
                               onChange={() => {}}
                               validationError=""
                               //required={true}
@@ -280,12 +303,13 @@ export default function CaseWorkflowComponent(props) {
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "text" ? (
-                        <Grid item xs={3} key={index}>
-                          <FormControl className={classes.formControl}>
+                        <Grid className="flex items-center" item xs={4} key={index}>
+                        <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
+                          <FormControl className={`${classes.formControl} w-full`}>
                             <TextFieldFormsy
                               variant="outlined"
                               name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
-                              label={`${eachParam.MODULEPARAMIDNAME}`}
+                              // label={`${eachParam.MODULEPARAMIDNAME}`}
                               className={undefined} // optional, if you need for styling
                               onChange={() => {}} // optional, a callback if you need to do any logic on the value change
                               validationError="" // optional, to show error if validation fails
@@ -301,16 +325,17 @@ export default function CaseWorkflowComponent(props) {
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "select" ? (
-                        <Grid item xs={3} key={index}>
-                          <FormControl className={classes.formControl}>
+                        <Grid className="flex items-center" item xs={4} key={index}>
+                          <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
+                          <FormControl className={`${classes.formControl} w-full`}>
                             <SelectFormsy
                               variant="outlined"
                               name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
                               //label={`${eachParam.MODULEPARAMIDNAME}`}
-                              label={commonService.getLabel(
-                                eachParam.MODULEPARAMNAME,
-                                eachParam.MODULEPARAMIDNAME
-                              )}
+                              // label={commonService.getLabel(
+                              //   eachParam.MODULEPARAMNAME,
+                              //   eachParam.MODULEPARAMIDNAME
+                              // )}
                               value={`${eachParam.MODULEPARAMDEFAULTVALUE}`} // mandatory, value of the selected element
                               className={undefined} // optional, if you need for styling
                               onChange={() => {}} // optional, a callback if you need to do any logic on the value change
@@ -337,7 +362,7 @@ export default function CaseWorkflowComponent(props) {
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "radio" ? (
-                        <Grid item xs={3} key={index}>
+                        <Grid item xs={4} key={index}>
                           <FormControl className={classes.formControl}>
                             <RadioGroup
                               row
@@ -366,7 +391,7 @@ export default function CaseWorkflowComponent(props) {
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "checkbox" ? (
-                        <Grid item xs={3} key={index}>
+                        <Grid item xs={4} key={index}>
                           <FormControl className={classes.formControl}>
                             <FormControlLabel
                               className={undefined} // optional, if you need for styling
@@ -398,6 +423,7 @@ export default function CaseWorkflowComponent(props) {
                           direction="row"
                           style={{ marginRight: 15, marginBottom: 10 }}
                           key={index}
+                          className="justify-end"
                         >
                           {eachParam.ACTIONS.map(eachAction => (
                                 <GenericButton

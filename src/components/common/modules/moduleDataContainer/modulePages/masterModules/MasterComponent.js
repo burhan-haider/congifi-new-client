@@ -18,7 +18,8 @@ import {
   Grid,
   FormControlLabel,
   Radio,
-  RadioGroup
+  RadioGroup,
+  Divider
 } from "@mui/material";
 import clsx from "clsx";
 // import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -36,13 +37,25 @@ import { useClasses } from "@application";
 const styles = theme => ({
   root: {
     width: "100%",
+    fontSize: '14px',
+    "& .MuiOutlinedInput-root": {
+      borderRadius: "70px",
+      height: 'auto',
+      backgroundColor: '#fff',
+
+      // fontSize: "14px",
+    },
 
     "& .MuiExpansionPanelSummary-content": {
       margin: "2px 0"
     },
+    "& .MuiOutlinedInput-input": {
+      padding: '5px 20px'
+    },
 
     " & .MuiExpansionPanelSummary-root": {
-      backgroundColor: "#f4f5fa"
+      backgroundColor: "#f4f5fa",
+      margin: '0px'
     }
   },
   formControl: {
@@ -52,7 +65,7 @@ const styles = theme => ({
     wrap: "nowrap"
   },
   expandedPanel: {
-    // backgroundColor: "#f4f5fa"
+    backgroundColor: "#f4f5fa"
   },
   heading: {
     color: "#052a4f",
@@ -153,11 +166,13 @@ export default function MasterComponent(props) {
               expanded: classes.expandedPanel
             }}
           >
-            <Typography className={classes.heading} id="searchHeader">
+            <Typography className={`${classes.heading} text-[14px] font-bold`} id="searchHeader">
               {moduleHeader[0]}
             </Typography>
           </AccordionSummary>
+          <Divider />
           <AccordionDetails
+            className='bg-[#F4F5FA]'
             align="left"
             id="searchExpansionPanelDetails"
             style={{ padding: 5 }}
@@ -168,6 +183,7 @@ export default function MasterComponent(props) {
               onInvalid={() => setIsFormValid(false)}
               ref={formRef}
               className="flex flex-col justify-center w-full"
+              
             >
               <Grid
                 container
@@ -178,12 +194,13 @@ export default function MasterComponent(props) {
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "date" ? (
-                        <Grid item xs={3} key={index}>
-                          <FormControl className={classes.formControl}>
+                        <Grid className="flex items-center" item xs={4} key={index}>
+                          <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">{`${eachParam.MODULEPARAMIDNAME}`}</Typography>
+                          <FormControl className={`${classes.formControl} w-full`}>
                             <DatePickerFormsy
                               variant="outlined"
                               name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
-                              label={`${eachParam.MODULEPARAMIDNAME}`}
+                              // label={`${eachParam.MODULEPARAMIDNAME}`}
                               ampm={false} // 24Hr / 12hr clock settings
                               className={undefined} // optional, if you need for styling
                               dateTime={false} // true, if need the Date and Time Picker. false if you need only Date Picker
@@ -199,7 +216,8 @@ export default function MasterComponent(props) {
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "view" ? (
-                        <Grid item xs={3} key={index}>
+                        <Grid className="flex items-center" item xs={4} key={index}>
+                          <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
                           <FormControl
                             className={
                               (clsx(classes.margin, classes.textField),
@@ -210,7 +228,7 @@ export default function MasterComponent(props) {
                             <ViewFieldFormsy
                               className={undefined}
                               name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
-                              label={`${eachParam.MODULEPARAMIDNAME}`}
+                              // label={`${eachParam.MODULEPARAMIDNAME}`}
                               onChange={() => {}}
                               validationError=""
                               //required={true}
@@ -227,12 +245,13 @@ export default function MasterComponent(props) {
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "text" ? (
-                        <Grid item xs={3} key={index}>
-                          <FormControl className={classes.formControl}>
+                        <Grid className="flex items-center" item xs={4} key={index}>
+                          <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
+                          <FormControl className={`${classes.formControl} w-full`}>
                             <TextFieldFormsy
                               variant="outlined"
                               name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
-                              label={`${eachParam.MODULEPARAMIDNAME}`}
+                              // label={`${eachParam.MODULEPARAMIDNAME}`}
                               className={undefined} // optional, if you need for styling
                               onChange={() => {}} // optional, a callback if you need to do any logic on the value change
                               validationError="" // optional, to show error if validation fails
@@ -248,15 +267,17 @@ export default function MasterComponent(props) {
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "select" ? (
-                        <Grid item xs={3} key={index}>
-                          <FormControl className={classes.formControl} variant={'outlined'} >
+                        <Grid className="flex items-center" item xs={4} key={index}>
+                          <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
+                          <FormControl className={`${classes.formControl} w-full`} variant={'outlined'} >
                             <SelectFormsy
+                              variant="outlined"
                               name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
                               //label={`${eachParam.MODULEPARAMIDNAME}`}
-                              label={commonService.getLabel(
-                                eachParam.MODULEPARAMNAME,
-                                eachParam.MODULEPARAMIDNAME
-                              )}
+                              // label={commonService.getLabel(
+                              //   eachParam.MODULEPARAMNAME,
+                              //   eachParam.MODULEPARAMIDNAME
+                              // )}
                               value="" // mandatory, value of the selected element
                               className={undefined} // optional, if you need for styling
                               onChange={() => {}} // optional, a callback if you need to do any logic on the value change
@@ -283,8 +304,9 @@ export default function MasterComponent(props) {
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "radio" ? (
-                        <Grid item xs={3} key={index}>
-                          <FormControl className={classes.formControl}>
+                        <Grid className="flex items-center" item xs={4} key={index}>
+                          <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
+                          <FormControl className={`${classes.formControl} w-full`}>
                             <RadioGroup
                               row
                               aria-label={`${eachParam.MODULEPARAMIDNAME}_${eachParam.MODULEPARAMINDEX}`}
@@ -312,8 +334,9 @@ export default function MasterComponent(props) {
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "checkbox" ? (
-                        <Grid item xs={3} key={index}>
-                          <FormControl className={classes.formControl}>
+                        <Grid className="flex items-center" item xs={4} key={index}>
+                          <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
+                          <FormControl className={`${classes.formControl} w-full`}>
                             <FormControlLabel
                               className={undefined} // optional, if you need for styling
                               control={

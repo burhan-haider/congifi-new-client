@@ -4,18 +4,22 @@ import {
   TextFieldFormsy,
   SelectFormsy
 } from "components/common/formsyComponents";
-import { MenuItem, FormControl, Grid } from "@mui/material";
+import { MenuItem, FormControl, Grid, Typography } from "@mui/material";
 import { useClasses } from "@application";
 
 const styles = theme => ({
   root: {
-    width: "100%"
+    width: "100%",
+    "& .MuiOutlinedInput-input": {
+      padding: '5px 20px',
+
+    },
   },
   formControl: {
-    margin: 1,
     fullWidth: true,
     display: "flex",
-    wrap: "nowrap"
+    wrap: "nowrap",
+    margin: '10px'
   },
   rowDesign: {
     paddingTop: 15
@@ -132,14 +136,15 @@ export default function ActionDetailsForm(props) {
       container
       alignItems="flex-start"
       spacing={2}
-      className={classes.rowDesign}
+      className={classes.root}
     >
-      <Grid item xs={4}>
-        <FormControl className={classes.formControl}>
+      <Grid className="flex items-center" item xs={4}>
+        <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">Workflow</Typography>
+        <FormControl className={`${classes.formControl}`} fullWidth>
           <SelectFormsy
             variant="outlined"
             name="workflowCode"
-            label="Workflow"
+            // label="Workflow"
             value={workflow}
             className={undefined}
             onChange={() => enableNextField("workflowCode", "assignedTray")}
@@ -163,12 +168,13 @@ export default function ActionDetailsForm(props) {
           </SelectFormsy>
         </FormControl>
       </Grid>
-      <Grid item xs={4}>
-        <FormControl className={classes.formControl}>
+      <Grid className="flex items-center" item xs={4}>
+        <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">Assigned Tray</Typography>
+        <FormControl className={`${classes.formControl} w-full m-2 w-100 flex flex-nowrap`}>
           <SelectFormsy
             variant="outlined"
             name="assignedTray"
-            label="Assigned Tray"
+            // label="Assigned Tray"
             value={workflowAssignedTray}
             className={undefined}
             onChange={() => enableNextField("assignedTray", "assignedModule")}
@@ -194,12 +200,13 @@ export default function ActionDetailsForm(props) {
           </SelectFormsy>
         </FormControl>
       </Grid>
-      <Grid item xs={4}>
-        <FormControl className={classes.formControl}>
+      <Grid className="flex items-center" item xs={4}>
+        <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">Assigned Module</Typography>
+        <FormControl className={`${classes.formControl} w-full m-2 w-100 flex flex-nowrap`}>
           <SelectFormsy
             variant="outlined"
             name="assignedModule"
-            label="Assigned Module"
+            // label="Assigned Module"
             className={undefined}
             onChange={() => enableNextField("assignedModule", "actionName")}
             validationError=""
@@ -225,12 +232,13 @@ export default function ActionDetailsForm(props) {
           </SelectFormsy>
         </FormControl>
       </Grid>
-      <Grid item xs={4}>
-        <FormControl className={classes.formControl}>
+      <Grid className="flex items-center" item xs={4}>
+        <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">Action Name</Typography>
+        <FormControl className={`${classes.formControl} w-full m-2 w-100 flex flex-nowrap`}>
           <TextFieldFormsy
             variant="outlined"
             name="actionName"
-            label="Action Name"
+            // label="Action Name"
             className={undefined}
             onChange={() => enableNextField("actionName", "actionCode")}
             validationError=""
@@ -241,12 +249,13 @@ export default function ActionDetailsForm(props) {
           ></TextFieldFormsy>
         </FormControl>
       </Grid>
-      <Grid item xs={4}>
-        <FormControl className={classes.formControl}>
+      <Grid className="flex items-center" item xs={4}>
+        <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">Action Code</Typography>
+        <FormControl className={`${classes.formControl} w-full m-2 w-100 flex flex-nowrap`}>
           <TextFieldFormsy
             variant="outlined"
             name="actionCode"
-            label="Action Code"
+            // label="Action Code"
             className={undefined}
             onChange={() => enableNextField("actionCode", "applicableRole")}
             validationError=""
@@ -256,12 +265,13 @@ export default function ActionDetailsForm(props) {
           ></TextFieldFormsy>
         </FormControl>
       </Grid>
-      <Grid item xs={4}>
-        <FormControl className={classes.formControl}>
+      <Grid className="flex items-center" item xs={4}>
+        <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">Applicable Role</Typography>
+        <FormControl className={`${classes.formControl} w-full m-2 w-100 flex flex-nowrap`}>
           <SelectFormsy
             variant="outlined"
             name="applicableRole"
-            label="Applicable Role"
+            // label="Applicable Role"
             value={applicableRole}
             className={undefined}
             onChange={() =>
@@ -303,12 +313,13 @@ export default function ActionDetailsForm(props) {
           ></TextFieldFormsy>
         </FormControl>
       </Grid> */}
-      <Grid item xs={4}>
-        <FormControl className={classes.formControl}>
+      <Grid className="flex items-center" item xs={4}>
+        <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">Previous Actions</Typography>
+        <FormControl className={`${classes.formControl} w-full m-2 w-100 flex flex-nowrap`}>
           <SelectFormsy
             variant="outlined"
             name="previousActions"
-            label="Previous Actions"
+            // label="Previous Actions"
             value={workflowPreviousActionCode}
             className={undefined}
             onChange={() => enableNextField("previousActions", "actionResult")}
@@ -337,12 +348,13 @@ export default function ActionDetailsForm(props) {
           </SelectFormsy>
         </FormControl>
       </Grid>
-      <Grid item xs={4}>
-        <FormControl className={classes.formControl}>
+      <Grid className="flex items-center" item xs={4}>
+        <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">Action Result</Typography>
+        <FormControl className={`${classes.formControl} w-full m-2 w-100 flex flex-nowrap`}>
           <SelectFormsy
             variant="outlined"
             name="actionResult"
-            label="Action Result"
+            // label="Action Result"
             className={undefined}
             onChange={() => enableNextField("actionResult", "escalatableRoles")}
             validationError=""
@@ -358,12 +370,13 @@ export default function ActionDetailsForm(props) {
           </SelectFormsy>
         </FormControl>
       </Grid>
-      <Grid item xs={4}>
-        <FormControl className={classes.formControl}>
+      <Grid className="flex items-center" item xs={4}>
+        <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">Escalatable Role</Typography>
+        <FormControl className={`${classes.formControl} w-full m-2 w-100 flex flex-nowrap`}>
           <SelectFormsy
             variant="outlined"
             name="escalatableRoles"
-            label="Escalatable Role"
+            // label="Escalatable Role"
             value={workflowEscalatableRoles}
             className={undefined}
             onChange={() => enableNextField("escalatableRoles", "position")}
@@ -393,12 +406,13 @@ export default function ActionDetailsForm(props) {
           </SelectFormsy>
         </FormControl>
       </Grid>
-      <Grid item xs={4}>
-        <FormControl className={classes.formControl}>
+      <Grid className="flex items-center" item xs={4}>
+        <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">Position</Typography>
+        <FormControl className={`${classes.formControl} w-full m-2 w-100 flex flex-nowrap`}>
           <SelectFormsy
             variant="outlined"
             name="position"
-            label="Position"
+            // label="Position"
             className={undefined}
             onChange={() => enableNextField("position", "isEnabled")}
             validationError=""
@@ -413,12 +427,13 @@ export default function ActionDetailsForm(props) {
           </SelectFormsy>
         </FormControl>
       </Grid>
-      <Grid item xs={4}>
-        <FormControl className={classes.formControl}>
+      <Grid className="flex items-center" item xs={4}>
+        <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">Is Enabled</Typography>
+        <FormControl className={`${classes.formControl} w-full m-2 w-100 flex flex-nowrap`}>
           <SelectFormsy
             variant="outlined"
             name="isEnabled"
-            label="Is Enabled"
+            // label="Is Enabled"
             className={undefined}
             onChange={() => enableNextField("isEnabled", "actionType")}
             validationError=""
@@ -433,12 +448,13 @@ export default function ActionDetailsForm(props) {
           </SelectFormsy>
         </FormControl>
       </Grid>
-      <Grid item xs={4}>
-        <FormControl className={classes.formControl}>
+      <Grid className="flex items-center" item xs={4}>
+      <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">Action Type</Typography>
+        <FormControl className={`${classes.formControl} w-full m-2 w-100 flex flex-nowrap`}>
           <SelectFormsy
             variant="outlined"
             name="actionType"
-            label="Action Type"
+            // label="Action Type"
             className={undefined}
             //onChange={e => handleActionRoleTrayMapping(e)}
             validationError=""

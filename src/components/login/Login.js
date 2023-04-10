@@ -97,15 +97,15 @@ const customStyles = {
     textAlign: "center",
     display: "flex",
     "& .MuiOutlinedInput-root": {
-      height: "46px",
-      borderRadius: "50px",
+      height: 'auto',
+      borderRadius: "70px",
       fontSize: "14px",
       "& fieldset": {
         borderColor: "default",
       },
     },
     "& .MuiOutlinedInput-input": {
-      padding: "14px 14px",
+      padding: "auto 20px",
       fontFamily: "GoogleSans-Regular",
       // "& fieldset": {
       //   borderColor: "default"
