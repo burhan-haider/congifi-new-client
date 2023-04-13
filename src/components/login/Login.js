@@ -55,7 +55,8 @@ const styles = theme => ({
       fontFamily: "GoogleSans-Regular",
     },
     "& .MuiInputLabel-outlined": {
-      transform: "translate(14px, 16px) scale(1)",
+      // transform: "translate(14px, 16px) scale(1)",
+      lineHeight: '1'
     },
     "& .MuiInputLabel-shrink": {
       transform: " translate(14px, -6px) scale(0.75)",
@@ -105,7 +106,7 @@ const customStyles = {
       },
     },
     "& .MuiOutlinedInput-input": {
-      padding: "auto 20px",
+      padding: "12px",
       fontFamily: "GoogleSans-Regular",
       // "& fieldset": {
       //   borderColor: "default"
@@ -113,6 +114,7 @@ const customStyles = {
     },
     "& .MuiInputLabel-outlined": {
       transform: "translate(14px, 16px) scale(1)",
+      lineHeight: '1'
     },
     "& .MuiInputLabel-shrink": {
       transform: " translate(14px, -6px) scale(0.75)",
@@ -244,7 +246,7 @@ function Login(props) {
             <img src={Cognifi_Logo_Animated} className="w-1/2" alt="Cognifi" />
           </div>
         </div>
-        <div className="text-center mb-0 pb-0">
+        <div className={`${classes.root}text-center mb-0 pb-0`}>
           <Formsy
             onValidSubmit={(data, resetForm, invalidateForm) =>
               handleSubmit(data, resetForm, invalidateForm)
@@ -266,7 +268,7 @@ function Login(props) {
                 validations="isAlphanumeric"
                 validationError="Invalid input"
                 InputProps={{
-                  className: classes.MuiOutlinedInput,
+                  // className: classes.MuiOutlinedInput,
                   shrink: "true",
                   sx: {fontFamily: 'GoogleSans-Regular'}
                 }}
@@ -281,7 +283,7 @@ function Login(props) {
                 type="password"
                 label="Password"
                 InputProps={{
-                  className: classes.MuiOutlinedInput,
+                  // className: classes.MuiOutlinedInput,
                   shrink: "true",
                   classes: {
                     root: classes.textFieldRoot,
@@ -302,7 +304,7 @@ function Login(props) {
                   native: true,
                 }}
                 InputProps={{
-                  className: classes.MuiOutlinedInput,
+                  // className: classes.MuiOutlinedInput,
                   shrink: "true",
                 }}
               >

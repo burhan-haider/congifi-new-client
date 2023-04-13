@@ -26,36 +26,36 @@ import { GenericButton } from "@application";
 import { GenericDatatable, GenericDatagrid } from "@application";
 import { ActionsBottomContainer } from "../common/bottomPages";
 import { store } from "redux/store";
-import { useClasses,  } from "@application";
+import { useClasses, styles } from "@application";
 
-const styles = theme => ({
-  root: {
-    width: "100%"
-  },
-  formControl: {
-    margin: 1,
-    fullWidth: true,
-    display: "flex",
-    wrap: "nowrap"
-  },
-  rowDesign: {
-    paddingTop: 15
-  },
-  expandedPanel: {
-    backgroundColor: "#f4f5fa"
-  },
-  heading: {
-    color: "#052a4f",
-    fontSize: 18,
-    fontWeight: "500"
-  },
-  margin: {
-    borderRadius: "25px",
-    color: '#052a4f',
-    borderColor: '#052a4f',
-    textTransform: "none",
-  }
-});
+// const styles = theme => ({
+//   root: {
+//     width: "100%"
+//   },
+//   formControl: {
+//     margin: 1,
+//     fullWidth: true,
+//     display: "flex",
+//     wrap: "nowrap"
+//   },
+//   rowDesign: {
+//     paddingTop: 15
+//   },
+//   expandedPanel: {
+//     backgroundColor: "#f4f5fa"
+//   },
+//   heading: {
+//     color: "#052a4f",
+//     fontSize: 18,
+//     fontWeight: "500"
+//   },
+//   margin: {
+//     borderRadius: "25px",
+//     color: '#052a4f',
+//     borderColor: '#052a4f',
+//     textTransform: "none",
+//   }
+// });
 
 function ActionParamsForm(props) {
   const classes = useClasses(styles);
@@ -323,25 +323,28 @@ function ActionParamsForm(props) {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="actionParamPanelcontent"
             id="actionParamPanelHeader"
+            className={classes.root}
             classes={{
-              root: classes.root,
-              expanded: classes.expandedPanel
-            }}styles={{display: 'flex', justifyContent: "flex-end", flexDirection: 'row', alignItems: 'center'}}
+              root: "w-full",
+              expanded: "bg-[#f4f5fa]",
+            }}
+            styles={{display: 'flex', justifyContent: "flex-end", flexDirection: 'row', alignItems: 'center'}}
           >
             <Typography sx={{display: 'flex', alignItems: 'center'}} className={classes.heading} id="actionParamHeader" >
               Action Parameter Master
             </Typography>
            
           </ExpansionPanelSummary>
+          <Divider/>
           <ExpansionPanelDetails
             align="left"
             id="actionParamExpansionPanelDetails"
-            style={{ padding: 10 }}
+            // style={{ padding: 10 }}
           >
              <Button
               type="button"
               aria-label="remove"
-              className={classes.margin}
+              className='float-right mb-[10px]'
               color="primary"
               variant="outlined"
               onClick={() => handleAddFields()}
@@ -507,13 +510,13 @@ function ActionParamsForm(props) {
               ))} */}
               {inputFields.map((inputField, index) => (
                 <React.Fragment key={`${inputField}~${index}`}>
-                  <Divider
+                  {/* <Divider
                     variant="middle"
                     style={{
                       margin: "10px 8px 0 8px",
                       backgroundColor: "#052a4f"
                     }}
-                  />
+                  /> */}
                   <Grid
                     container
                     alignItems="flex-start"
@@ -521,8 +524,8 @@ function ActionParamsForm(props) {
                     className={classes.root}
                   >
                     <Grid className="flex items-center" item xs={4}>
-                      {/* <Typography>Action Code</Typography> */}
-                      <FormControl className={classes.formControl} fullWidth>
+                      <Typography>Action Code</Typography>
+                      <FormControl fullWidth>
                         {/* <TextFieldFormsy
                           variant="outlined"
                           name="actionCode"
@@ -539,7 +542,7 @@ function ActionParamsForm(props) {
                           variant="outlined"
                           name="actionCode"
                           id="actionCode"
-                          label="Action Code"
+                          // label="Action Code"
                           className={undefined}
                           value={inputField.actionCode}
                           onChange={event => {
@@ -573,13 +576,14 @@ function ActionParamsForm(props) {
                         </SelectFormsy>
                       </FormControl>
                     </Grid>
-                    <Grid className="flex items-center" item xs={4}>
-                      <FormControl className={classes.formControl} fullWidth>
+                    <Grid className={`${classes.root} flex items-center`} item xs={4}>
+                      <Typography>Parameter Datatype</Typography>
+                      <FormControl fullWidth>
                         <SelectFormsy
                           variant="outlined"
                           name="actionParamDatatype"
                           id="actionParamDatatype"
-                          label="Parameter Datatype"
+                          // label="Parameter Datatype"
                           className={undefined}
                           value={inputField.actionParamDatatype}
                           onChange={event =>
@@ -615,11 +619,12 @@ function ActionParamsForm(props) {
                       </FormControl>
                     </Grid>
                     <Grid className="flex items-center" item xs={4}>
-                      <FormControl className={classes.formControl} fullWidth>
+                      <Typography>Parameter Is Enabled</Typography>
+                      <FormControl fullWidth>
                         <SelectFormsy
                           variant="outlined"
                           name="actionParamIsEnabled"
-                          label="Parameter Is Enabled"
+                          // label="Parameter Is Enabled"
                           className={undefined}
                           validationError=""
                           required={true}
@@ -641,11 +646,12 @@ function ActionParamsForm(props) {
                       </FormControl>
                     </Grid>
                     <Grid className="flex items-center" item xs={4}>
-                      <FormControl className={classes.formControl}>
+                      <Typography>Parameter Name</Typography>
+                      <FormControl fullWidth className={classes.formControl}>
                         <TextFieldFormsy
                           variant="outlined"
                           name="actionParamName"
-                          label="Parameter Name"
+                          // label="Parameter Name"
                           className={undefined}
                           validationError=""
                           required={true}
@@ -663,11 +669,12 @@ function ActionParamsForm(props) {
                       </FormControl>
                     </Grid>
                     <Grid className="flex items-center" item xs={4}>
-                      <FormControl className={classes.formControl}>
+                      <Typography>Parameter Id</Typography>
+                      <FormControl fullWidth >
                         <TextFieldFormsy
                           variant="outlined"
                           name="actionParamId"
-                          label="Parameter Id"
+                          // label="Parameter Id"
                           className={undefined}
                           validationError=""
                           required={true}
@@ -730,11 +737,12 @@ function ActionParamsForm(props) {
                     </Grid> */}
                     {showStaticValuesField ? (
                       <Grid className="flex items-center" item xs={4}>
-                        <FormControl className={classes.formControl}>
+                        <Typography>Parameter Static Values</Typography>
+                        <FormControl fullWidth>
                           <TextFieldFormsy
                             variant="outlined"
                             name="actionParamStaticValues"
-                            label="Parameter Static Values"
+                            // label="Parameter Static Values"
                             className={undefined}
                             validationError=""
                             required={true}
@@ -753,11 +761,12 @@ function ActionParamsForm(props) {
                       </Grid>
                     ) : null}
                     <Grid className="flex items-center" item xs={4}>
-                      <FormControl className={classes.formControl}>
+                      <Typography>Parameter Default Value</Typography>
+                      <FormControl fullWidth>
                         <TextFieldFormsy
                           variant="outlined"
                           name="actionParamDefaultValue"
-                          label="Parameter Default Value"
+                          // label="Parameter Default Value"
                           className={undefined}
                           validationError=""
                           required={true}
@@ -775,11 +784,12 @@ function ActionParamsForm(props) {
                       </FormControl>
                     </Grid>
                     <Grid className="flex items-center" item xs={4}>
-                      <FormControl className={classes.formControl}>
+                      <Typography>Parameter Validation Type</Typography>
+                      <FormControl fullWidth>
                         <TextFieldFormsy
                           variant="outlined"
                           name="actionParamValidationType"
-                          label="Parameter Validation Type"
+                          // label="Parameter Validation Type"
                           className={undefined}
                           validationError=""
                           required={true}
@@ -797,11 +807,12 @@ function ActionParamsForm(props) {
                       </FormControl>
                     </Grid>
                     <Grid className="flex items-center" item xs={4}>
-                      <FormControl className={classes.formControl}>
+                      <Typography>Parameter Validation Field</Typography>
+                      <FormControl fullWidth>
                         <TextFieldFormsy
                           variant="outlined"
                           name="actionParamValidationField"
-                          label="Parameter Validation Field"
+                          // label="Parameter Validation Field"
                           className={undefined}
                           validationError=""
                           required={true}

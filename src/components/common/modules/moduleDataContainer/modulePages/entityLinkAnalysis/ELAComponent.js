@@ -21,7 +21,7 @@ import {
     GenericDatagrid,
 } from "@application";
 import { TextFieldFormsy, DatePickerFormsy } from "components/common/formsyComponents";
-import { useClasses } from '@application'
+import { useClasses, styles } from '@application'
 import { 
     MdExpandMore as ExpandMoreIcon, 
     // MdOutlineSearch as SearchButtonIcon,
@@ -30,38 +30,38 @@ import {
 import moment from 'moment';
 import { tableData, graphDataTree } from './dummyData';
 
-const styles = theme => ({
-    root: {
-      width: "100%",
+// const styles = theme => ({
+//     root: {
+//       width: "100%",
   
-      "& .MuiExpansionPanelSummary-content": {
-        margin: "2px 0"
-      },
+//       "& .MuiExpansionPanelSummary-content": {
+//         margin: "2px 0"
+//       },
   
-      " & .MuiExpansionPanelSummary-root": {
-        backgroundColor: "#f4f5fa"
-      }
-    },
-    formControl: {
-      // margin: 1,
-      fullWidth: true,
-      display: "flex",
-      wrap: "nowrap"
-    },
-    expandedPanel: {
-      backgroundColor: "#f4f5fa"
-    },
-    heading: {
-      color: "#052a4f",
-      fontSize: 18,
-      fontWeight: "500"
-    },
-    rowDesign: {
-      paddingTop: 15,
-      paddingRight: 20,
-      paddingLeft: 20,
-    }
-  });
+//       " & .MuiExpansionPanelSummary-root": {
+//         backgroundColor: "#f4f5fa"
+//       }
+//     },
+//     formControl: {
+//       // margin: 1,
+//       fullWidth: true,
+//       display: "flex",
+//       wrap: "nowrap"
+//     },
+//     expandedPanel: {
+//       backgroundColor: "#f4f5fa"
+//     },
+//     heading: {
+//       color: "#052a4f",
+//       fontSize: 18,
+//       fontWeight: "500"
+//     },
+//     rowDesign: {
+//       paddingTop: 15,
+//       paddingRight: 20,
+//       paddingLeft: 20,
+//     }
+//   });
 
 const ELAComponent = () => {
 
@@ -216,7 +216,7 @@ const ELAComponent = () => {
                             container
                             alignItems="flex-start"
                             spacing={2}
-                            className={classes.rowDesign}
+                            className={classes.root}
                         >
                             <Grid item sm={4} className="w-[100%]">
                                 <DatePickerFormsy

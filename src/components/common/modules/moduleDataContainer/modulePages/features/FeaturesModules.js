@@ -13,7 +13,7 @@ import SortableTree from "react-sortable-tree";
 import "react-sortable-tree/style.css";
 import * as TDU from "@application/util/TreeDataUtils";
 import * as MessageActions from "redux/message/message.actions";
-import { useClasses } from "@application";
+import { useClasses, } from "@application";
 
 const styles = theme => ({
   root: {

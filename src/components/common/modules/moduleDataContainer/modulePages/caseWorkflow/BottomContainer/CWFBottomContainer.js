@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, {useState, useEffect, useRef, Fragment} from 'react'
 import {
     Box,
     Button,
@@ -6,7 +6,7 @@ import {
     MenuItem,
     FormControl,
     Dialog,
-    Typography
+    Typography,
 } from '@mui/material'
 
 
@@ -18,7 +18,7 @@ import { actionMapping } from 'components/common/modules/actionregistry/ActionMa
 
 import CommentsContainer from './CommentsContainer';
 
-import { GenericAlert, GenericFilePicker, useClasses } from '@application';
+import { GenericAlert, GenericFilePicker, useClasses, styles } from '@application';
 import EmailContainer from './CommunicationContainers/EmailContainer';
 import CommunicationContainer from './CommunicationContainers/CommunicationContainer';
 
@@ -33,27 +33,27 @@ const CWFBottomContainer = (props) => {
         
     } = props;
 
-    const styles = theme => ({
-        root: {
-            "& .MuiOutlinedInput-input": {
-                padding: '5px 20px',
+    // const styles = theme => ({
+    //     root: {
+    //         "& .MuiOutlinedInput-input": {
+    //             padding: '5px 20px',
 
-              },
-            "& .MuiOutlinedInput-root": {
-            borderRadius: "70px",
-            height: 'auto',
-            backgroundColor: '#fff',
-            },
+    //           },
+    //         "& .MuiOutlinedInput-root": {
+    //         borderRadius: "70px",
+    //         height: 'auto',
+    //         backgroundColor: '#fff',
+    //         },
           
-        },
-        formControl: {
-            margin: 1,
-            fullWidth: true,
-            display: "flex",
-            wrap: "nowrap",
-            padding: '5px'
-          },
-    })
+    //     },
+    //     formControl: {
+    //         margin: 1,
+    //         fullWidth: true,
+    //         display: "flex",
+    //         wrap: "nowrap",
+    //         padding: '5px'
+    //       },
+    // })
 
     const [modalOpen, setModalOpen] = useState(false)
     const [uploadModalOpen, setUploadModalOpen] = useState(false)
@@ -69,6 +69,7 @@ const CWFBottomContainer = (props) => {
     const [noCaseAlert, setNoCaseAlert] = useState(false);
     const [alertType, setAlertType] = useState('success');
     const [alertMessage, setAlertMessage] = useState('Please Select A Case!');
+    const [modalAction, setModalAction]= useState()
     const classes = useClasses(styles);
 
 
@@ -152,6 +153,7 @@ const CWFBottomContainer = (props) => {
             openNoCaseAlert()
         } else {
             setCurrentAction(action)
+            setModalAction(action.actionName)
 
             if (emailActions.includes(action.actionCode)){
                 setCommType('email')
@@ -257,9 +259,9 @@ const CWFBottomContainer = (props) => {
             }  
         }
     }
-
+console.log('currentAction is:', currentAction)
     return (
-        <Box className="flex flex-row justify-end items-center" >
+        <Box className={`${classes.root} flex flex-row justify-end items-center`} >
             {actionButtons.length > 0 && actionButtons.map((action, index)=>(
                 <Button
                     onClick={()=>handleClick(action)}
@@ -328,14 +330,17 @@ const CWFBottomContainer = (props) => {
                 aria-labelledby="custom-modal"
                 open={modalOpen}
                 onClose={handleClickClose}
-                PaperProps={{
-                    className: 'left-0 right-0 mx-auto top-3 min-w-[70vw] rounded-lg p-3',
-                    sx: {
-                        padding: '30px',
-                        borderRadius: '8px'
-                    }
-                }}
+                className={`${classes.root}`}
+                // className='mx-auto rounded-lg p-3' 
+                // PaperProps={{
+                //     className: 'left-0 right-0 mx-auto top-3 min-w-[70vw] rounded-lg p-3',
+                //     sx: {
+                //         padding: '30px',
+                //         borderRadius: '8px'
+                //     }
+                // }}
             >
+                <Typography>{modalAction}</Typography>
                 {currentAction!=null&&currentAction.actionParams.length>0?(
                     <>
                         {showCommentActions.includes(currentAction.actionCode)?(
@@ -356,7 +361,7 @@ const CWFBottomContainer = (props) => {
                             </>
                             
                         ):(
-                            <Box className= {`${classes.root} min-w-[600px]`}>
+                            <Box className={`${classes.root} bg-[#f4f5fa] p-[10px] m-[10px] rounded-[8px]`}>
                                 <Formsy
                                     onValidSubmit={data => handleSubmit(data)}
                                     onValid={() => setIsFormValid(true)}
@@ -365,111 +370,114 @@ const CWFBottomContainer = (props) => {
                                     className="flex flex-col justify-center w-full"
                                 >    
                                     <Grid
-                                        className={classes.root}
+                                        className='p-[20px] pb-0'
                                         container>
-                                        {currentAction.actionParams.map((param, index)=>( 
-                                            <>
-                                                {param.paramDataType === "textarea" && (
-                                                    <Grid  className="flex items-center" item xs={12} >
-                                                        <Typography className="text-[12px] text-right min-w-[50px] mr-[10px]">{param.paramName}</Typography>
-                                                        <FormControl className={`${classes.formControl} w-full m-2 w-100 flex flex-nowrap`}>
-                                                            <TextFieldFormsy
+                                        <Box className='modal_shadow_container'>
+                                            <Grid container>
+                                            {currentAction.actionParams.map((param, index)=>( 
+                                                <>
+                                                    {param.paramDataType === "text" && (
+                                                        <Grid className="inputContainer" item xs={4} >
+                                                            <Typography>{param.paramName}</Typography>
+                                                            <FormControl fullWidth >
+                                                                <TextFieldFormsy
+                                                                    variant="outlined"
+                                                                    name={param.paramId}
+                                                                    // label={param.paramName}
+                                                                    className="w-[100%]"
+                                                                    validationError=""
+                                                                    required={true}
+                                                                    //value={param.paramDefaultValues || ''}
+                                                                    // value={res.COMMENTS}
+                                                                //    value= {accountReviewDate || ''}
+                                                                    disabled={!param.enabled}
+                                                                ></TextFieldFormsy>
+                                                            </FormControl>
+                                                        </Grid>
+                                                    )}
+                                                
+                                                    {param.paramDataType === "date" && (
+                                                        <Grid className="inputContainer" item xs={4}>
+                                                            <Typography>{param.paramName}</Typography>
+                                                            <FormControl fullWidth>
+                                                                <DatePickerFormsy
+                                                                    variant="filled"
+                                                                    name={param.paramId}
+                                                                    // label={param.paramName}
+                                                                    ampm={false}
+                                                                    className={undefined}
+                                                                    format="dd/MM/yyyy"
+                                                                    inputFormat="dd/MM/yyyy"
+                                                                    toolbarFormat="dd/MM/yyyy"
+                                                                    dateTime={false}
+                                                                    allowKeyboardControl={true}
+                                                                    required={true}
+                                                                />
+                                                            </FormControl>
+                                                        </Grid>
+                                                    )}
+                                                    
+                                                    {param.paramDataType === 'select' && param.paramStaticValues !== null ? (
+                                                        <Grid  className="inputContainer" item xs={4} key={index}>
+                                                            <Typography>{param.paramName}</Typography>
+                                                            <FormControl fullWidth>
+                                                                <SelectFormsy
                                                                 variant="outlined"
                                                                 name={param.paramId}
                                                                 // label={param.paramName}
+                                                                value={
+                                                                    param.paramDefaultValues === null || " "
+                                                                    ? `NA`
+                                                                    : param.paramDefaultValues
+                                                                }
+                                                                className={classes.root}
                                                                 onChange={() => {}}
                                                                 validationError=""
-                                                                required={true}
-                                                                //  value= {previousComments || ''}
-                                                                multiline={true}
-                                                                rows={4}
-                                                                sx={{
-                                                                    width: '100%'
-                                                                }}
                                                                 disabled={!param.enabled}
-                                                            ></TextFieldFormsy>
-                                                        </FormControl>
-                                                    </Grid>
-                                                )}
-                                                {param.paramDataType === "text" && (
-                                                    <Grid  className="flex items-center" item xs={4} >
-                                                        <Typography className="text-[12px] text-right min-w-[50px] mr-[10px]">{param.paramName}</Typography>
-                                                        <FormControl className="m-2 w-100 flex flex-nowrap w-full p-1" >
-                                                            <TextFieldFormsy
-                                                                variant="outlined"
-                                                                name={param.paramId}
-                                                                // label={param.paramName}
-                                                                className="w-[100%]"
-                                                                validationError=""
-                                                                required={true}
-                                                                //value={param.paramDefaultValues || ''}
-                                                                // value={res.COMMENTS}
-                                                            //    value= {accountReviewDate || ''}
-                                                                disabled={!param.enabled}
-                                                            ></TextFieldFormsy>
-                                                        </FormControl>
-                                                    </Grid>
-                                                )}
+                                                                //required={true}
+                                                                >
+                                                                <MenuItem value="">Select One</MenuItem>
+                                                                {param.paramStaticValues.split(',').map((option, index) => {
+                                                                    return (
+                                                                    <MenuItem value={option} key={index}>
+                                                                        {option === null || "" ? `NA` : option}
+                                                                    </MenuItem>
+                                                                    );
+                                                                })}
+                                                                </SelectFormsy>
+                                                            </FormControl>
+                                                        </Grid>
+                                    
+                                                    ):(<></>)}
+
+                                                    {param.paramDataType === "textarea" && (
+                                                        <Grid  className="inputContainer" item xs={12} >
+                                                            <Typography>{param.paramName}</Typography>
+                                                            <FormControl fullWidth>
+                                                                <TextFieldFormsy
+                                                                    variant="outlined"
+                                                                    name={param.paramId}
+                                                                    // label={param.paramName}
+                                                                    onChange={() => {}}
+                                                                    validationError=""
+                                                                    required={true}
+                                                                    //  value= {previousComments || ''}
+                                                                    multiline={true}
+                                                                    rows={4}
+                                                                    sx={{
+                                                                        width: '100%'
+                                                                    }}
+                                                                    disabled={!param.enabled}
+                                                                ></TextFieldFormsy>
+                                                            </FormControl>
+                                                        </Grid>
+                                                    )}
+
+                                                </>
+                                            ))}
+                                            </Grid>
                                             
-                                                {param.paramDataType === "date" && (
-                                                    <Grid  className="flex items-center" item xs={4}>
-                                                        <Typography className="text-[12px] text-right min-w-[50px] mr-[10px]">{param.paramName}</Typography>
-                                                        <FormControl className="m-2 w-100 flex flex-nowrap w-full" >
-                                                            <DatePickerFormsy
-                                                                variant="filled"
-                                                                name={param.paramId}
-                                                                // label={param.paramName}
-                                                                ampm={false}
-                                                                className={undefined}
-                                                                format="dd/MM/yyyy"
-                                                                inputFormat="dd/MM/yyyy"
-                                                                toolbarFormat="dd/MM/yyyy"
-                                                                dateTime={false}
-                                                                allowKeyboardControl={true}
-                                                                required={true}
-                                                            />
-                                                        </FormControl>
-                                                    </Grid>
-                                                )}
-                                                
-                                                {param.paramDataType === 'select' && param.paramStaticValues !== null ? (
-                                                    <Grid  className="flex items-center" item xs={4} key={index}>
-                                                        <Typography className="text-[12px] text-right min-w-[50px] mr-[10px]">{param.paramName}</Typography>
-                                                        <FormControl className="m-2 w-100 flex flex-nowrap w-full">
-                                                            <SelectFormsy
-                                                            variant="outlined"
-                                                            name={param.paramId}
-                                                            // label={param.paramName}
-                                                            value={
-                                                                param.paramDefaultValues === null || " "
-                                                                ? `NA`
-                                                                : param.paramDefaultValues
-                                                            }
-                                                            className={classes.root}
-                                                            onChange={() => {}}
-                                                            validationError=""
-                                                            disabled={!param.enabled}
-                                                            //required={true}
-                                                            >
-                                                            <MenuItem value="">Select One</MenuItem>
-                                                            {param.paramStaticValues.split(',').map((option, index) => {
-                                                                return (
-                                                                <MenuItem value={option} key={index}>
-                                                                    {option === null || "" ? `NA` : option}
-                                                                </MenuItem>
-                                                                );
-                                                            })}
-                                                            </SelectFormsy>
-                                                        </FormControl>
-                                                    </Grid>
-                                
-                                                ):(<></>)}
-
-
-                                            </>
-                                        ))}
-
-
+                                        </Box>
                                         
                                         <Grid item xs={12} className='flex flex-row justify-end align-center w-full' >
                                 

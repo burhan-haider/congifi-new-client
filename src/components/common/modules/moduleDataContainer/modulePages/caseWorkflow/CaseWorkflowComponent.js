@@ -33,55 +33,55 @@ import {
 import commonService from "services/common/commonService";
 import { useDispatch, useSelector } from "react-redux";
 import * as CWFActions from "redux/caseWorkflow/cwfbottomframedata/cwfbottomframedata.actions";
-import { GenericButton, useClasses, GenericDatagrid } from "@application";
+import { GenericButton, useClasses, GenericDatagrid, styles } from "@application";
 import CWFBottomContainer from "./BottomContainer/CWFBottomContainer";
 import { stringify } from "postcss";
 // import { CWFDetailsBottomContainer } from "../common/bottomPages";
 
-const styles = theme => ({
-  root: {
-    width: "100%",
-    fontSize: '14px',
-    "& .MuiOutlinedInput-root": {
-      borderRadius: "70px",
-      height: 'auto',
-      backgroundColor: '#fff',
-    },
+// const styles = theme => ({
+//   root: {
+//     width: "100%",
+//     fontSize: '14px',
+//     "& .MuiOutlinedInput-root": {
+//       borderRadius: "70px",
+//       height: 'auto',
+//       backgroundColor: '#fff',
+//     },
 
-    "& .MuiExpansionPanelSummary-content": {
-      margin: "2px 0"
-    },
+//     "& .MuiExpansionPanelSummary-content": {
+//       margin: "2px 0"
+//     },
 
-    " & .MuiExpansionPanelSummary-root": {
-      backgroundColor: "#f4f5fa",
-      margin: '0px'
-    },  
-    "& .MuiOutlinedInput-input": {
-      padding: '5px 20px'
-    },
-  },
-  formControl: {
-    margin: 1,
-    fullWidth: true,
-    display: "flex",
-    wrap: "nowrap"
-  },
-  expandedPanel: {
-    backgroundColor: "#f4f5fa",
-    margin: '0px'
-  },
-  heading: {
-    color: "#052a4f",
-    fontSize: 18,
-    fontWeight: "700"
-  },
-  rowDesign: {
-    paddingTop: 15
-  },
-  button: {
-    marginLeft: 10
-  }
-});
+//     " & .MuiExpansionPanelSummary-root": {
+//       backgroundColor: "#f4f5fa",
+//       margin: '0px'
+//     },  
+//     "& .MuiOutlinedInput-input": {
+//       padding: '5px 20px'
+//     },
+//   },
+//   formControl: {
+//     margin: 1,
+//     fullWidth: true,
+//     display: "flex",
+//     wrap: "nowrap"
+//   },
+//   expandedPanel: {
+//     backgroundColor: "#f4f5fa",
+//     margin: '0px'
+//   },
+//   heading: {
+//     color: "#052a4f",
+//     fontSize: 18,
+//     fontWeight: "700"
+//   },
+//   rowDesign: {
+//     paddingTop: 15
+//   },
+//   button: {
+//     marginLeft: 10
+//   }
+// });
 
 export default function CaseWorkflowComponent(props) {
   const classes = useClasses(styles);
@@ -221,7 +221,7 @@ export default function CaseWorkflowComponent(props) {
             className="max-h-[30px]"
             classes={{
               root: classes.root,
-              expanded: classes.expandedPanel
+              expanded: "bg-[#f4f5fa]"
             }}
           >
             <Typography className={`${classes.heading} text-[14px] font-bold`} id="searchHeader">
@@ -233,7 +233,7 @@ export default function CaseWorkflowComponent(props) {
             className='bg-[#F4F5FA]'
             align="left"
             id="searchExpansionPanelDetails"
-            style={{ padding: 5 }}
+            // style={{ padding: 5 }}
           >
             <Formsy
               onValidSubmit={data => handleSubmit(data)}
@@ -246,13 +246,13 @@ export default function CaseWorkflowComponent(props) {
                 container
                 alignItems="flex-start"
                 spacing={2}
-                className={classes.rowDesign}
+                className={classes.root}
               >
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "date" ? (
-                        <Grid className="flex items-center" item xs={4} key={index}>
-                          <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
+                        <Grid className="inputContainer" item xs={4} key={index}>
+                          <Typography>{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
                           <FormControl className={`${classes.formControl} w-full`}>
                             <DatePickerFormsy
                               sx={{backgroundColor: 'white'}}
@@ -274,8 +274,8 @@ export default function CaseWorkflowComponent(props) {
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "view" ? (
-                        <Grid className="flex items-center" item xs={4} key={index}>
-                          <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
+                        <Grid className="inputContainer" item xs={4} key={index}>
+                          <Typography>{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
                           <FormControl
                             className={
                               `$(clsx(classes.margin, classes.textField),
@@ -303,8 +303,8 @@ export default function CaseWorkflowComponent(props) {
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "text" ? (
-                        <Grid className="flex items-center" item xs={4} key={index}>
-                        <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
+                        <Grid className="inputContainer" item xs={4} key={index}>
+                        <Typography>{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
                           <FormControl className={`${classes.formControl} w-full`}>
                             <TextFieldFormsy
                               variant="outlined"
@@ -325,8 +325,8 @@ export default function CaseWorkflowComponent(props) {
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "select" ? (
-                        <Grid className="flex items-center" item xs={4} key={index}>
-                          <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
+                        <Grid className="inputContainer" item xs={4} key={index}>
+                          <Typography>{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
                           <FormControl className={`${classes.formControl} w-full`}>
                             <SelectFormsy
                               variant="outlined"
@@ -362,7 +362,7 @@ export default function CaseWorkflowComponent(props) {
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "radio" ? (
-                        <Grid item xs={4} key={index}>
+                        <Grid className="inputContainer" item xs={4} key={index}>
                           <FormControl className={classes.formControl}>
                             <RadioGroup
                               row
@@ -391,7 +391,7 @@ export default function CaseWorkflowComponent(props) {
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "checkbox" ? (
-                        <Grid item xs={4} key={index}>
+                        <Grid className="inputContainer" item xs={4} key={index}>
                           <FormControl className={classes.formControl}>
                             <FormControlLabel
                               className={undefined} // optional, if you need for styling

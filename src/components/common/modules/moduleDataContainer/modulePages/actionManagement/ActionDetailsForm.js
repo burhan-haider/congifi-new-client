@@ -5,26 +5,26 @@ import {
   SelectFormsy
 } from "components/common/formsyComponents";
 import { MenuItem, FormControl, Grid, Typography } from "@mui/material";
-import { useClasses } from "@application";
+import { useClasses, styles } from "@application";
 
-const styles = theme => ({
-  root: {
-    width: "100%",
-    "& .MuiOutlinedInput-input": {
-      padding: '5px 20px',
+// const styles = theme => ({
+  // root: {
+  //   width: "100%",
+  //   "& .MuiOutlinedInput-input": {
+  //     padding: '5px 20px',
 
-    },
-  },
-  formControl: {
-    fullWidth: true,
-    display: "flex",
-    wrap: "nowrap",
-    margin: '10px'
-  },
-  rowDesign: {
-    paddingTop: 15
-  }
-});
+  //   },
+  // },
+  // formControl: {
+  //   fullWidth: true,
+  //   display: "flex",
+  //   wrap: "nowrap",
+  //   margin: '10px',
+  // },
+  // rowDesign: {
+  //   paddingTop: 15
+  // }
+// });
 
 export default function ActionDetailsForm(props) {
   const classes = useClasses(styles);
@@ -139,8 +139,8 @@ export default function ActionDetailsForm(props) {
       className={classes.root}
     >
       <Grid className="flex items-center" item xs={4}>
-        <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">Workflow</Typography>
-        <FormControl className={`${classes.formControl}`} fullWidth>
+        <Typography>Workflow</Typography>
+        <FormControl fullWidth>
           <SelectFormsy
             variant="outlined"
             name="workflowCode"
@@ -169,8 +169,8 @@ export default function ActionDetailsForm(props) {
         </FormControl>
       </Grid>
       <Grid className="flex items-center" item xs={4}>
-        <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">Assigned Tray</Typography>
-        <FormControl className={`${classes.formControl} w-full m-2 w-100 flex flex-nowrap`}>
+        <Typography>Assigned Tray</Typography>
+        <FormControl fullWidth>
           <SelectFormsy
             variant="outlined"
             name="assignedTray"
@@ -201,8 +201,8 @@ export default function ActionDetailsForm(props) {
         </FormControl>
       </Grid>
       <Grid className="flex items-center" item xs={4}>
-        <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">Assigned Module</Typography>
-        <FormControl className={`${classes.formControl} w-full m-2 w-100 flex flex-nowrap`}>
+        <Typography>Assigned Module</Typography>
+        <FormControl fullWidth>
           <SelectFormsy
             variant="outlined"
             name="assignedModule"
@@ -233,8 +233,8 @@ export default function ActionDetailsForm(props) {
         </FormControl>
       </Grid>
       <Grid className="flex items-center" item xs={4}>
-        <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">Action Name</Typography>
-        <FormControl className={`${classes.formControl} w-full m-2 w-100 flex flex-nowrap`}>
+        <Typography>Action Name</Typography>
+        <FormControl fullWidth>
           <TextFieldFormsy
             variant="outlined"
             name="actionName"
@@ -250,8 +250,8 @@ export default function ActionDetailsForm(props) {
         </FormControl>
       </Grid>
       <Grid className="flex items-center" item xs={4}>
-        <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">Action Code</Typography>
-        <FormControl className={`${classes.formControl} w-full m-2 w-100 flex flex-nowrap`}>
+        <Typography>Action Code</Typography>
+        <FormControl fullWidth>
           <TextFieldFormsy
             variant="outlined"
             name="actionCode"
@@ -266,8 +266,8 @@ export default function ActionDetailsForm(props) {
         </FormControl>
       </Grid>
       <Grid className="flex items-center" item xs={4}>
-        <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">Applicable Role</Typography>
-        <FormControl className={`${classes.formControl} w-full m-2 w-100 flex flex-nowrap`}>
+        <Typography>Applicable Role</Typography>
+        <FormControl fullWidth>
           <SelectFormsy
             variant="outlined"
             name="applicableRole"
@@ -314,8 +314,8 @@ export default function ActionDetailsForm(props) {
         </FormControl>
       </Grid> */}
       <Grid className="flex items-center" item xs={4}>
-        <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">Previous Actions</Typography>
-        <FormControl className={`${classes.formControl} w-full m-2 w-100 flex flex-nowrap`}>
+        <Typography>Previous Actions</Typography>
+        <FormControl fullWidth>
           <SelectFormsy
             variant="outlined"
             name="previousActions"
@@ -349,8 +349,8 @@ export default function ActionDetailsForm(props) {
         </FormControl>
       </Grid>
       <Grid className="flex items-center" item xs={4}>
-        <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">Action Result</Typography>
-        <FormControl className={`${classes.formControl} w-full m-2 w-100 flex flex-nowrap`}>
+        <Typography>Action Result</Typography>
+        <FormControl fullWidth>
           <SelectFormsy
             variant="outlined"
             name="actionResult"
@@ -371,8 +371,8 @@ export default function ActionDetailsForm(props) {
         </FormControl>
       </Grid>
       <Grid className="flex items-center" item xs={4}>
-        <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">Escalatable Role</Typography>
-        <FormControl className={`${classes.formControl} w-full m-2 w-100 flex flex-nowrap`}>
+        <Typography>Escalatable Role</Typography>
+        <FormControl fullWidth>
           <SelectFormsy
             variant="outlined"
             name="escalatableRoles"
@@ -407,8 +407,8 @@ export default function ActionDetailsForm(props) {
         </FormControl>
       </Grid>
       <Grid className="flex items-center" item xs={4}>
-        <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">Position</Typography>
-        <FormControl className={`${classes.formControl} w-full m-2 w-100 flex flex-nowrap`}>
+        <Typography>Position</Typography>
+        <FormControl fullWidth>
           <SelectFormsy
             variant="outlined"
             name="position"
@@ -428,8 +428,8 @@ export default function ActionDetailsForm(props) {
         </FormControl>
       </Grid>
       <Grid className="flex items-center" item xs={4}>
-        <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">Is Enabled</Typography>
-        <FormControl className={`${classes.formControl} w-full m-2 w-100 flex flex-nowrap`}>
+        <Typography>Is Enabled</Typography>
+        <FormControl fullWidth>
           <SelectFormsy
             variant="outlined"
             name="isEnabled"
@@ -449,8 +449,8 @@ export default function ActionDetailsForm(props) {
         </FormControl>
       </Grid>
       <Grid className="flex items-center" item xs={4}>
-      <Typography className="text-[12px] text-right min-w-[100px] mr-[10px]">Action Type</Typography>
-        <FormControl className={`${classes.formControl} w-full m-2 w-100 flex flex-nowrap`}>
+      <Typography>Action Type</Typography>
+        <FormControl fullWidth>
           <SelectFormsy
             variant="outlined"
             name="actionType"

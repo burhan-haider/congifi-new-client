@@ -75,7 +75,7 @@ const styles = theme =>({
   root: {
     flexGrow: 1,
     width: "100%",
-    backgroundColor: "#f4f5fa"
+    // backgroundColor: "#f4f5fa"
     //borderRadius: 20
   },
   textFieldRoot: {
@@ -100,7 +100,7 @@ const styles = theme =>({
   tabPanelBox: {
     // maxHeight: "400px",
     // overflowY: "auto",
-    backgroundColor: "#f4f5fa"
+    // backgroundColor: "#f4f5fa"
   },
   tabPanelGridItems: {
     display: "flex",
