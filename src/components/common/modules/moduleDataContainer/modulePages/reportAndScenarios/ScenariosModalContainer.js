@@ -22,7 +22,7 @@ import {
   RadioGroup
 } from "@mui/material";
 // import { makeStyles } from "@mui/styles";
-import { useClasses } from "@application";
+import { useClasses, styles } from "@application";
 import clsx from "clsx";
 // import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { MdExpandMore as ExpandMoreIcon } from 'react-icons/md'
@@ -31,28 +31,28 @@ import scenariosService from "services/scenarios/scenariosService";
 import { GenericButton } from "@application";
 import * as MessageActions from "redux/message/message.actions";
 
-const styles = theme => ({
-  root: {
-    width: "100%"
-  },
-  formControl: {
-    margin: 1,
-    fullWidth: true,
-    display: "flex",
-    wrap: "nowrap"
-  },
-  expandedPanel: {
-    backgroundColor: "#f4f5fa"
-  },
-  heading: {
-    color: "#052a4f",
-    fontSize: theme.typography.pxToRem(15),
-    fontWeight: "500"
-  },
-  rowDesign: {
-    paddingTop: 15
-  }
-});
+// const styles = theme => ({
+//   root: {
+//     width: "100%"
+//   },
+//   formControl: {
+//     margin: 1,
+//     fullWidth: true,
+//     display: "flex",
+//     wrap: "nowrap"
+//   },
+//   expandedPanel: {
+//     backgroundColor: "#f4f5fa"
+//   },
+//   heading: {
+//     color: "#052a4f",
+//     fontSize: theme.typography.pxToRem(15),
+//     fontWeight: "500"
+//   },
+//   rowDesign: {
+//     paddingTop: 15
+//   }
+// });
 
 export default function ScenariosModalContainer(props) {
   //console.log(props);
@@ -212,13 +212,13 @@ export default function ScenariosModalContainer(props) {
                 container
                 alignItems="flex-start"
                 spacing={2}
-                className={classes.rowDesign}
+                className={classes.root}
               >
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "date" ? (
-                        <Grid item xs={3} key={index}>
-                          <FormControl className={classes.formControl}>
+                        <Grid className="inputContainer" item xs={3} key={index}>
+                          <FormControl fullWidth>
                             <DatePickerFormsy
                               variant="outlined"
                               name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
@@ -241,12 +241,13 @@ export default function ScenariosModalContainer(props) {
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "search" ? (
-                        <Grid item xs={3} key={index}>
+                        <Grid className="inputContainer" item xs={3} key={index}>
                           <FormControl
-                            className={
-                              (clsx(classes.margin, classes.textField),
-                              classes.formControl)
-                            }
+                          fullWidth
+                            // className={
+                            //   (clsx(classes.margin, classes.textField),
+                            //   classes.formControl)
+                            // }
                             variant="outlined"
                           >
                             <ViewFieldFormsy
@@ -272,8 +273,8 @@ export default function ScenariosModalContainer(props) {
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "string" ? (
-                        <Grid item xs={3} key={index}>
-                          <FormControl className={classes.formControl}>
+                        <Grid className="inputContainer" item xs={3} key={index}>
+                          <FormControl fullWidth>
                             <TextFieldFormsy
                               variant="outlined"
                               name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
@@ -296,8 +297,8 @@ export default function ScenariosModalContainer(props) {
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "numeric" ? (
-                        <Grid item xs={3} key={index}>
-                          <FormControl className={classes.formControl}>
+                        <Grid className="inputContainer" item xs={3} key={index}>
+                          <FormControl fullWidth>
                             <TextFieldFormsy
                               variant="outlined"
                               name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
@@ -320,8 +321,8 @@ export default function ScenariosModalContainer(props) {
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "select" ? (
-                        <Grid item xs={3} key={index}>
-                          <FormControl className={classes.formControl}>
+                        <Grid className="inputContainer" item xs={3} key={index}>
+                          <FormControl fullWidth>
                             <SelectFormsy
                               variant="outlined"
                               name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
@@ -357,8 +358,8 @@ export default function ScenariosModalContainer(props) {
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "radio" ? (
-                        <Grid item xs={3} key={index}>
-                          <FormControl className={classes.formControl}>
+                        <Grid className="inputContainer" item xs={3} key={index}>
+                          <FormControl fullWidth>
                             <RadioGroup
                               row
                               aria-label={`${eachParam.MODULEPARAMIDNAME}_${eachParam.MODULEPARAMINDEX}`}
@@ -386,7 +387,7 @@ export default function ScenariosModalContainer(props) {
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "checkbox" ? (
-                        <Grid item xs={3} key={index}>
+                        <Grid className="inputContainer" item xs={3} key={index}>
                           <FormControl className={classes.formControl}>
                             <FormControlLabel
                               className={undefined} // optional, if you need for styling

@@ -15,7 +15,7 @@ const ComponentHolder = (props) => {
             role="componentHolder"
             id={`componentHolder-${index}`}
             hidden={value !== index}
-            className={  type === 'main' && feature && ( 'bg-white pt-2 transform-gpu'+' '+
+            className={  type === 'main' && feature && ( 'bg-white transform-gpu'+' '+
                     (feature.openTabs.length > 0 ? 'min-h-[100%]' : ' min-h-[100%]')
                 )
             }

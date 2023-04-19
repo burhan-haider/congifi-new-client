@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Line, getElementAtEvent } from "react-chartjs-2";
 import { Chart as ChartJS, registerables } from "chart.js";
 import ReactEcharts from "echarts-for-react";
@@ -20,10 +20,10 @@ function LineChart(props) {
 
   const legend = ["0+%", "30+%", "60+%", "90+%"];
 
-  const [option, setOption] = useState({
-    // backgroundColor: "#052a4f",
+  const options = {// backgroundColor: "#052a4f",
     // color: '#eee',
     title: {
+      show: window.innerWidth < "992" ? false :true,
       text: props.moduleChartDetail.chartName,
       textStyle: {
         // color: '#eee'
@@ -38,6 +38,9 @@ function LineChart(props) {
     legend: {
       data: legend,
       icon: "roundRect",
+      type: window.innerWidth < "992" ? 'scroll' :false,
+      left: window.innerWidth < "992" ? '0': '130',
+      width: window.innerWidth < "992" ? '200': '100%',
     },
     toolbox: {
       show: true,
@@ -45,6 +48,9 @@ function LineChart(props) {
         magicType: { show: true, type: ["stack", "tiled"] },
         saveAsImage: { show: true },
       },
+      grid: {
+        top: window.innerWidth < '992' ? '15%' :'0%',
+      }
     },
     xAxis: {
       type: "category",
@@ -100,7 +106,10 @@ function LineChart(props) {
         },
       };
     }),
-  });
+  }
+
+
+  const [option, setOption] = useState(options);
 
   let {
     moduleCode,
@@ -112,6 +121,21 @@ function LineChart(props) {
     parentModule_Id,
     uniqueNo,
   } = props;
+
+  useEffect(() => {
+    // Handler to call on window resize
+    function handleResize() {
+      // Set window width/height to state
+        setOption(options);
+        console.log("Inner Width:-", window.innerWidth)
+    }
+    // Add event listener
+    window.addEventListener("resize", handleResize);
+    // Call handler right away so state gets updated with initial window size
+    handleResize();
+    // Remove event listener on cleanup
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const isClickable = !hasChildren && !presentationCategory ? false : true;
 
@@ -250,7 +274,10 @@ function LineChart(props) {
       // onMouseLeave={()=>onEvents.mouseout()}
       style={{ position: "relative", padding: "10px" }}
     >
-      <ReactEcharts option={option} onEvents={onEvents} />
+      <ReactEcharts 
+        // style={{minHeight: window.innerWidth < '720' ? '300px' : '350px', width: window.innerWidth < '720' ? '250px' : 'auto', cursor: 'pointer'}} 
+        option={option} 
+        onEvents={onEvents} />
       
     </div>
   );

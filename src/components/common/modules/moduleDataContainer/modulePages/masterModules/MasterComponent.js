@@ -18,7 +18,9 @@ import {
   Grid,
   FormControlLabel,
   Radio,
-  RadioGroup
+  RadioGroup,
+  Divider,
+  Box
 } from "@mui/material";
 import clsx from "clsx";
 // import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -31,42 +33,55 @@ import commonService from "services/common/commonService";
 // import { useDispatch, useSelector } from "react-redux";
 import { GenericDatatable, GenericButton } from "@application";
 import { GenericDetailsBottomContainer } from "components/common/modules/moduleDataContainer/modulePages/common/bottomPages";
-import { useClasses } from "@application";
+import { useClasses, styles } from "@application";
 
-const styles = theme => ({
-  root: {
-    width: "100%",
+// const styles = theme => ({
+//   root: {
+//     width: "100%",
+//     fontSize: '14px',
+//     "& .MuiOutlinedInput-root": {
+//       borderRadius: "70px",
+//       height: 'auto',
+//       backgroundColor: '#fff',
 
-    "& .MuiExpansionPanelSummary-content": {
-      margin: "2px 0"
-    },
+//       // fontSize: "14px",
+//     },
 
-    " & .MuiExpansionPanelSummary-root": {
-      backgroundColor: "#f4f5fa"
-    }
-  },
-  formControl: {
-    // margin: 1,
-    fullWidth: true,
-    display: "flex",
-    wrap: "nowrap"
-  },
-  expandedPanel: {
-    // backgroundColor: "#f4f5fa"
-  },
-  heading: {
-    color: "#052a4f",
-    fontSize: 18,
-    fontWeight: "500"
-  },
-  rowDesign: {
-    paddingTop: 15
-  }
-});
+//     "& .MuiExpansionPanelSummary-content": {
+//       margin: "2px 0"
+//     },
+//     "& .MuiOutlinedInput-input": {
+//       padding: '5px 20px'
+//     },
+
+//     " & .MuiExpansionPanelSummary-root": {
+//       backgroundColor: "#f4f5fa",
+//       margin: '0px'
+//     }
+//   },
+//   formControl: {
+//     // margin: 1,
+//     fullWidth: true,
+//     display: "flex",
+//     wrap: "nowrap"
+//   },
+//   expandedPanel: {
+//     backgroundColor: "#f4f5fa"
+//   },
+//   heading: {
+//     color: "#052a4f",
+//     fontSize: 18,
+//     fontWeight: "500"
+//   },
+//   rowDesign: {
+//     paddingTop: 15
+//   }
+// });
 
 let searchFormData = {};
 
 export default function MasterComponent(props) {
+  const feature = props.feature
   const classes = useClasses(styles);
   const [moduleHeader, setModuleHeader] = useState([]);
 
@@ -137,9 +152,12 @@ export default function MasterComponent(props) {
   );
 
   return (
-    <Paper style={{ padding: "4px" }}>
-      <div id="topFrame" className={classes.root}>
+    <Paper>
+      <div id="topFrame" className={`${classes.root}`}>
+        <Box className="moduleName">{feature.breadCrumbs[feature.breadCrumbs.length - 1].label}</Box>
+        <Divider className="mb-[10px] border-[#C1C9D3]"></Divider>
         <Accordion
+        className="px-5"
           expanded={expandedPanel === "searchExpansionPanel"}
           onChange={handlePanelExpansion("searchExpansionPanel")}
           id="searchExpansionPanel"
@@ -150,17 +168,19 @@ export default function MasterComponent(props) {
             id="searchPanelHeader"
             classes={{
               root: classes.root,
-              expanded: classes.expandedPanel
+              // expanded: 'bg-[#F4F5FA]'
             }}
           >
-            <Typography className={classes.heading} id="searchHeader">
+            <Typography className={`${classes.heading} text-[14px] font-bold`} id="searchHeader">
               {moduleHeader[0]}
             </Typography>
           </AccordionSummary>
+          <Divider />
           <AccordionDetails
+            // className='bg-[#F4F5FA]'
             align="left"
             id="searchExpansionPanelDetails"
-            style={{ padding: 5 }}
+            // style={{ padding: 5 }}
           >
             <Formsy
               onValidSubmit={data => handleSubmit(data)}
@@ -168,22 +188,24 @@ export default function MasterComponent(props) {
               onInvalid={() => setIsFormValid(false)}
               ref={formRef}
               className="flex flex-col justify-center w-full"
+              
             >
               <Grid
                 container
                 alignItems="flex-start"
                 spacing={2}
-                className={classes.rowDesign}
+                className={`${classes.root} main_input_container`}
               >
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "date" ? (
-                        <Grid item xs={3} key={index}>
-                          <FormControl className={classes.formControl}>
+                        <Grid className="inputContainer" item xs={4} key={index}>
+                          <Typography>{`${eachParam.MODULEPARAMIDNAME}`}</Typography>
+                          <FormControl fullWidth>
                             <DatePickerFormsy
                               variant="outlined"
                               name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
-                              label={`${eachParam.MODULEPARAMIDNAME}`}
+                              // label={`${eachParam.MODULEPARAMIDNAME}`}
                               ampm={false} // 24Hr / 12hr clock settings
                               className={undefined} // optional, if you need for styling
                               dateTime={false} // true, if need the Date and Time Picker. false if you need only Date Picker
@@ -199,18 +221,20 @@ export default function MasterComponent(props) {
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "view" ? (
-                        <Grid item xs={3} key={index}>
+                        <Grid className="inputContainer" item xs={4} key={index}>
+                          <Typography>{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
                           <FormControl
                             className={
                               (clsx(classes.margin, classes.textField),
                               classes.formControl)
                             }
+                            fullWidth
                             variant="outlined"
                           >
                             <ViewFieldFormsy
                               className={undefined}
                               name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
-                              label={`${eachParam.MODULEPARAMIDNAME}`}
+                              // label={`${eachParam.MODULEPARAMIDNAME}`}
                               onChange={() => {}}
                               validationError=""
                               //required={true}
@@ -227,12 +251,13 @@ export default function MasterComponent(props) {
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "text" ? (
-                        <Grid item xs={3} key={index}>
-                          <FormControl className={classes.formControl}>
+                        <Grid className="inputContainer" item xs={4} key={index}>
+                          <Typography>{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
+                          <FormControl fullWidth>
                             <TextFieldFormsy
                               variant="outlined"
                               name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
-                              label={`${eachParam.MODULEPARAMIDNAME}`}
+                              // label={`${eachParam.MODULEPARAMIDNAME}`}
                               className={undefined} // optional, if you need for styling
                               onChange={() => {}} // optional, a callback if you need to do any logic on the value change
                               validationError="" // optional, to show error if validation fails
@@ -248,15 +273,17 @@ export default function MasterComponent(props) {
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "select" ? (
-                        <Grid item xs={3} key={index}>
-                          <FormControl className={classes.formControl} variant={'outlined'} >
+                        <Grid className="inputContainer" item xs={4} key={index}>
+                          <Typography>{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
+                          <FormControl fullWidth variant={'outlined'} >
                             <SelectFormsy
+                              variant="outlined"
                               name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
                               //label={`${eachParam.MODULEPARAMIDNAME}`}
-                              label={commonService.getLabel(
-                                eachParam.MODULEPARAMNAME,
-                                eachParam.MODULEPARAMIDNAME
-                              )}
+                              // label={commonService.getLabel(
+                              //   eachParam.MODULEPARAMNAME,
+                              //   eachParam.MODULEPARAMIDNAME
+                              // )}
                               value="" // mandatory, value of the selected element
                               className={undefined} // optional, if you need for styling
                               onChange={() => {}} // optional, a callback if you need to do any logic on the value change
@@ -283,8 +310,9 @@ export default function MasterComponent(props) {
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "radio" ? (
-                        <Grid item xs={3} key={index}>
-                          <FormControl className={classes.formControl}>
+                        <Grid className="inputContainer" item xs={4} key={index}>
+                          <Typography>{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
+                          <FormControl fullWidth>
                             <RadioGroup
                               row
                               aria-label={`${eachParam.MODULEPARAMIDNAME}_${eachParam.MODULEPARAMINDEX}`}
@@ -312,8 +340,9 @@ export default function MasterComponent(props) {
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "checkbox" ? (
-                        <Grid item xs={3} key={index}>
-                          <FormControl className={classes.formControl}>
+                        <Grid className="inputContainer" item xs={4} key={index}>
+                          <Typography>{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
+                          <FormControl fullWidth>
                             <FormControlLabel
                               className={undefined} // optional, if you need for styling
                               control={
@@ -332,7 +361,7 @@ export default function MasterComponent(props) {
                     )
                   : null}
 
-                <Grid item xs={12}></Grid>
+              </Grid>
                 <Grid
                   container
                   className="mx-4 my-3 flex flex-row justify-end w-100"
@@ -390,7 +419,7 @@ export default function MasterComponent(props) {
                       ) : null
                     )
                   : null} */}
-              </Grid>
+              {/* </Grid> */}
             </Formsy>
           </AccordionDetails>
         </Accordion>

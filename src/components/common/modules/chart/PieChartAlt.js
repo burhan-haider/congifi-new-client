@@ -33,9 +33,13 @@ export default function PieChart(props) {
     'emptyCircle', 
     'arrow'
   ];
+const pieChartCenter = {
+    left: 'calc(50% - 100px)', 
+  }
 
+  
   const myChart = useRef(null);
-
+  
   const option = {
     tooltip: {
       trigger: 'item',
@@ -46,12 +50,18 @@ export default function PieChart(props) {
     legend: {
         top: '5%',
         left: '2%',
-        orient: 'vertical',
+        orient: window.innerWidth < '1024' ?'horizontal': 'vertical',
+        // type: window.innerWidth < '1024' ? 'scroll' :false,
+        // left: window.innerWidth < '1024' ? '0': '30',
+        // width: window.innerWidth < '1024' ? '170': '100%',
+        // type: 'scroll',
+        // width: '170',
+        // orient: 'vertical',
         itemHeight: 20,
         itemWidth: 20,
         itemGap: 15,
         textStyle: {
-            fontSize: 14,
+            fontSize: window.innerWidth < '992' ? 12 : 14,
         },
         formatter: name=>{
             const index = props.moduleChartDetail.xaxis.indexOf(name);
@@ -65,6 +75,9 @@ export default function PieChart(props) {
             type: 'pie',
             radius: ['40%', '80%'],
             center: ['55%', '50%'],
+            // left: 'calc(70% - 175px)',
+            left: window.innerWidth < '768' ? 'center' :'25%',
+            top: window.innerWidth > '768' ? '10%' : window.innerWidth < '768' ? '20%' : '0%',
             avoidLabelOverlap: false,
             itemStyle: {
                 borderRadius: 5,
@@ -201,7 +214,7 @@ export default function PieChart(props) {
     >
       <ReactEcharts 
         option={option} 
-        style={{minHeight: '350px', cursor: 'pointer'}} 
+        style={{minWidth: window.innerWidth < '768' ? '250px' : '350px', width: window.innerWidth < '720' ? '250px' : 'auto', cursor: 'pointer'}} 
         className="pl-2 pr-3 py-1" 
         onEvents={onEvents}
       />

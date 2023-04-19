@@ -20,7 +20,8 @@ import {
     GenericButton,
     GenericDatagrid,
     // GenericDatatable,
-    useClasses
+    useClasses,
+    styles
 } from "@application";
 
 import { 
@@ -42,38 +43,38 @@ import commonService from 'services/common/commonService'
 import clsx from 'clsx'
 // import httpService from 'services/httpservice/httpService';
 
-const styles = theme => ({
-    root: {
-      width: "100%",
+// const styles = theme => ({
+//     root: {
+//       width: "100%",
   
-      "& .MuiExpansionPanelSummary-content": {
-        margin: "2px 0"
-      },
+//       "& .MuiExpansionPanelSummary-content": {
+//         margin: "2px 0"
+//       },
   
-      " & .MuiExpansionPanelSummary-root": {
-        backgroundColor: "#f4f5fa"
-      }
-    },
-    formControl: {
-      // margin: 1,
-      fullWidth: true,
-      display: "flex",
-      wrap: "nowrap"
-    },
-    expandedPanel: {
-      backgroundColor: "#f4f5fa"
-    },
-    heading: {
-      color: "#052a4f",
-      fontSize: 18,
-      fontWeight: "500"
-    },
-    rowDesign: {
-      paddingTop: 15,
-      paddingRight: 20,
-      paddingLeft: 20,
-    }
-  });
+//       " & .MuiExpansionPanelSummary-root": {
+//         backgroundColor: "#f4f5fa"
+//       }
+//     },
+//     formControl: {
+//       // margin: 1,
+//       fullWidth: true,
+//       display: "flex",
+//       wrap: "nowrap"
+//     },
+//     expandedPanel: {
+//       backgroundColor: "#f4f5fa"
+//     },
+//     heading: {
+//       color: "#052a4f",
+//       fontSize: 18,
+//       fontWeight: "500"
+//     },
+//     rowDesign: {
+//       paddingTop: 15,
+//       paddingRight: 20,
+//       paddingLeft: 20,
+//     }
+//   });
 
 const AuditLogComponent = (props) => {
 
@@ -81,6 +82,7 @@ const AuditLogComponent = (props) => {
         indexPageData,
         // moduleCode, 
     } = props;
+    const feature = props.feature
 
     const moduleType = props.moduleCode;
     // let searchFormData = [];
@@ -149,8 +151,11 @@ const AuditLogComponent = (props) => {
 
 
     return(
-        <Box className='p-5' >
+        <Box className={classes.root} >
+            <Box className="moduleName">{feature.breadCrumbs[feature.breadCrumbs.length - 1].label}</Box>
+            <Divider className="mb-[10px] border-[#C1C9D3]"></Divider>
             <Accordion
+                className='px-5'
                 expanded={expandedPanel}
                 onChange={()=>setExpandedPanel(!expandedPanel)}
                 id="searchExpansionPanel"
@@ -184,13 +189,13 @@ const AuditLogComponent = (props) => {
                         container
                         alignItems="flex-start"
                         spacing={2}
-                        className={classes.rowDesign}
+                        className={classes.root}
                     >
                         {paramObj
                         ? paramObj.map((eachParam, index) =>
                             eachParam.MODULEPARAMDATATYPE === "date" ? (
-                                <Grid item xs={3} key={index}>
-                                <FormControl className={classes.formControl}>
+                                <Grid className='inputContainer' item xs={3} key={index}>
+                                <FormControl fullWidth>
                                     <DatePickerFormsy
                                     variant="outlined"
                                     name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
@@ -210,12 +215,13 @@ const AuditLogComponent = (props) => {
                         {paramObj
                         ? paramObj.map((eachParam, index) =>
                             eachParam.MODULEPARAMDATATYPE === "view" ? (
-                                <Grid item xs={3} key={index}>
+                                <Grid className='inputContainer' item xs={3} key={index}>
                                 <FormControl
-                                    className={
-                                    (clsx(classes.margin, classes.textField),
-                                    classes.formControl)
-                                    }
+                                fullWidth
+                                    // className={
+                                    // (clsx(classes.margin, classes.textField),
+                                    // classes.formControl)
+                                    // }
                                     variant="outlined"
                                 >
                                     <ViewFieldFormsy
@@ -238,8 +244,8 @@ const AuditLogComponent = (props) => {
                         {paramObj
                         ? paramObj.map((eachParam, index) =>
                             eachParam.MODULEPARAMDATATYPE === "text" ? (
-                                <Grid item xs={3} key={index}>
-                                <FormControl className={classes.formControl}>
+                                <Grid className='inputContainer' item xs={3} key={index}>
+                                <FormControl fullWidth>
                                     <TextFieldFormsy
                                     variant="outlined"
                                     name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
@@ -259,9 +265,10 @@ const AuditLogComponent = (props) => {
                         {paramObj
                         ? paramObj.map((eachParam, index) =>
                             eachParam.MODULEPARAMDATATYPE === "select" ? (
-                                <Grid item xs={3} key={index}>
-                                <FormControl className={classes.formControl} variant={'outlined'} >
+                                <Grid className='inputContainer' item xs={3} key={index}>
+                                <FormControl fullWidth >
                                     <SelectFormsy
+                                    variant='outlined'
                                     name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
                                     //label={`${eachParam.MODULEPARAMIDNAME}`}
                                     label={commonService.getLabel(
@@ -294,8 +301,8 @@ const AuditLogComponent = (props) => {
                         {paramObj
                         ? paramObj.map((eachParam, index) =>
                             eachParam.MODULEPARAMDATATYPE === "radio" ? (
-                                <Grid item xs={3} key={index}>
-                                <FormControl className={classes.formControl}>
+                                <Grid className='inputContainer' item xs={3} key={index}>
+                                <FormControl fullWidth>
                                     <RadioGroup
                                     row
                                     aria-label={`${eachParam.MODULEPARAMIDNAME}_${eachParam.MODULEPARAMINDEX}`}
@@ -323,8 +330,8 @@ const AuditLogComponent = (props) => {
                         {paramObj
                         ? paramObj.map((eachParam, index) =>
                             eachParam.MODULEPARAMDATATYPE === "checkbox" ? (
-                                <Grid item xs={3} key={index}>
-                                <FormControl className={classes.formControl}>
+                                <Grid className='inputContainer' item xs={3} key={index}>
+                                <FormControl fullWidth>
                                     <FormControlLabel
                                     className={undefined} // optional, if you need for styling
                                     control={

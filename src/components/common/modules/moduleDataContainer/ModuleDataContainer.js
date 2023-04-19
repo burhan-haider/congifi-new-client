@@ -5,6 +5,8 @@ import ModuleComponentConfig from "components/common/modules/moduleDataContainer
 import CommonService from "services/common/commonService";
 import LinearLoading from "components/common/dataLoading/LinearLoading";
 import Error from "components/common/errorPages/Error";
+import {   CircularProgress, Typography } from "@mui/material";
+
 
 import { removerFromRefreshModule } from "redux/features/features.actions";
 
@@ -115,12 +117,15 @@ export default function ModuleDataContainer(props) {
   return (
     <div>
       {dataLoading ? (
-        <LinearLoading />
+        /* <LinearLoading /> */
+        <CircularProgress size={70} color={'inherit'} />
+
       ) : indexPageData ? (
         <PageComponent
           moduleCode={moduleCode}
           indexPageData={indexPageData}
           refreshCurrentModule={refreshCurrentModule}
+          feature={feature}
         ></PageComponent>
       ) : (
         <Error error={error}></Error>

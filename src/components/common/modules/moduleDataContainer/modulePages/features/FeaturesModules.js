@@ -13,18 +13,12 @@ import SortableTree from "react-sortable-tree";
 import "react-sortable-tree/style.css";
 import * as TDU from "@application/util/TreeDataUtils";
 import * as MessageActions from "redux/message/message.actions";
-import { useClasses } from "@application";
+import { useClasses, } from "@application";
 
 const styles = theme => ({
   root: {
     paddingLeft: "20px",
     paddingRight: "20px"
-  },
-  treeview: {
-    flexGrow: 1,
-    maxHeight: "450px",
-    //maxWidth: "400px",
-    overflowY: "auto"
   },
   // VIVEK - CHECKBOX
   checkboxRoot: {

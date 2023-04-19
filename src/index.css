@@ -208,3 +208,5 @@ text.keyText {
 .jodit-wysiwyg, .jodit-workplace {
 	border-bottom: none !important;
 }
+
+/* #root .action-btn.disabled {color: #892c2c;} */
