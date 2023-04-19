@@ -82,6 +82,7 @@ const AuditLogComponent = (props) => {
     const { 
         indexPageData,
         moduleCode, 
+        feature
     } = props;
 
     const moduleType = props.moduleCode;
@@ -151,8 +152,11 @@ const AuditLogComponent = (props) => {
 
 
     return(
-        <Box className={`${classes.root} p-5`} >
+        <Box className={`${classes.root}`} >
+            <Box className="moduleName">{feature.breadCrumbs[feature.breadCrumbs.length - 1].label}</Box>
+            <Divider className="mb-[10px] border-[#C1C9D3]"></Divider>
             <Accordion
+                className='px-5'
                 expanded={expandedPanel}
                 onChange={()=>setExpandedPanel(!expandedPanel)}
                 id="searchExpansionPanel"
@@ -163,7 +167,7 @@ const AuditLogComponent = (props) => {
                     id="searchPanelHeader"
                     classes={{
                         root: classes.root,
-                        expanded: "bg-[#f4f5fa]"
+                        // expanded: "rounded-none"
                     }}
                 >
                     <Typography id="searchHeader">
@@ -187,7 +191,7 @@ const AuditLogComponent = (props) => {
                         container
                         alignItems="flex-start"
                         spacing={2}
-                        className={classes.rowDesign}
+                        className='main_input_container'
                     >
                         {paramObj
                         ? paramObj.map((eachParam, index) =>
@@ -350,6 +354,8 @@ const AuditLogComponent = (props) => {
                             )
                         : null}
 
+                        </Grid>
+
                         <Grid
                             container
                             className="mx-4 my-3 flex flex-row justify-end w-100"
@@ -366,7 +372,7 @@ const AuditLogComponent = (props) => {
                             </GenericButton>
                         </Grid>
                         
-                    </Grid>
+                    
                     </Formsy>
                 </AccordionDetails>
             </Accordion>

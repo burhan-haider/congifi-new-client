@@ -136,9 +136,9 @@ export default function ActionDetailsForm(props) {
       container
       alignItems="flex-start"
       spacing={2}
-      className={classes.root}
+      className={`${classes.root} main_input_container`}
     >
-      <Grid className="flex items-center" item xs={4}>
+      <Grid className="inputContainer" item xs={4}>
         <Typography>Workflow</Typography>
         <FormControl fullWidth>
           <SelectFormsy
@@ -168,7 +168,7 @@ export default function ActionDetailsForm(props) {
           </SelectFormsy>
         </FormControl>
       </Grid>
-      <Grid className="flex items-center" item xs={4}>
+      <Grid className="inputContainer" item xs={4}>
         <Typography>Assigned Tray</Typography>
         <FormControl fullWidth>
           <SelectFormsy
@@ -200,7 +200,7 @@ export default function ActionDetailsForm(props) {
           </SelectFormsy>
         </FormControl>
       </Grid>
-      <Grid className="flex items-center" item xs={4}>
+      <Grid className="inputContainer" item xs={4}>
         <Typography>Assigned Module</Typography>
         <FormControl fullWidth>
           <SelectFormsy
@@ -232,7 +232,7 @@ export default function ActionDetailsForm(props) {
           </SelectFormsy>
         </FormControl>
       </Grid>
-      <Grid className="flex items-center" item xs={4}>
+      <Grid className="inputContainer" item xs={4}>
         <Typography>Action Name</Typography>
         <FormControl fullWidth>
           <TextFieldFormsy
@@ -249,7 +249,7 @@ export default function ActionDetailsForm(props) {
           ></TextFieldFormsy>
         </FormControl>
       </Grid>
-      <Grid className="flex items-center" item xs={4}>
+      <Grid className="inputContainer" item xs={4}>
         <Typography>Action Code</Typography>
         <FormControl fullWidth>
           <TextFieldFormsy
@@ -265,7 +265,7 @@ export default function ActionDetailsForm(props) {
           ></TextFieldFormsy>
         </FormControl>
       </Grid>
-      <Grid className="flex items-center" item xs={4}>
+      <Grid className="inputContainer" item xs={4}>
         <Typography>Applicable Role</Typography>
         <FormControl fullWidth>
           <SelectFormsy
@@ -313,7 +313,7 @@ export default function ActionDetailsForm(props) {
           ></TextFieldFormsy>
         </FormControl>
       </Grid> */}
-      <Grid className="flex items-center" item xs={4}>
+      <Grid className="inputContainer" item xs={4}>
         <Typography>Previous Actions</Typography>
         <FormControl fullWidth>
           <SelectFormsy
@@ -348,7 +348,7 @@ export default function ActionDetailsForm(props) {
           </SelectFormsy>
         </FormControl>
       </Grid>
-      <Grid className="flex items-center" item xs={4}>
+      <Grid className="inputContainer" item xs={4}>
         <Typography>Action Result</Typography>
         <FormControl fullWidth>
           <SelectFormsy
@@ -370,7 +370,7 @@ export default function ActionDetailsForm(props) {
           </SelectFormsy>
         </FormControl>
       </Grid>
-      <Grid className="flex items-center" item xs={4}>
+      <Grid className="inputContainer" item xs={4}>
         <Typography>Escalatable Role</Typography>
         <FormControl fullWidth>
           <SelectFormsy
@@ -406,7 +406,7 @@ export default function ActionDetailsForm(props) {
           </SelectFormsy>
         </FormControl>
       </Grid>
-      <Grid className="flex items-center" item xs={4}>
+      <Grid className="inputContainer" item xs={4}>
         <Typography>Position</Typography>
         <FormControl fullWidth>
           <SelectFormsy
@@ -427,7 +427,7 @@ export default function ActionDetailsForm(props) {
           </SelectFormsy>
         </FormControl>
       </Grid>
-      <Grid className="flex items-center" item xs={4}>
+      <Grid className="inputContainer" item xs={4}>
         <Typography>Is Enabled</Typography>
         <FormControl fullWidth>
           <SelectFormsy
@@ -448,7 +448,7 @@ export default function ActionDetailsForm(props) {
           </SelectFormsy>
         </FormControl>
       </Grid>
-      <Grid className="flex items-center" item xs={4}>
+      <Grid className="inputContainer" item xs={4}>
       <Typography>Action Type</Typography>
         <FormControl fullWidth>
           <SelectFormsy

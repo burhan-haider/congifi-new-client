@@ -82,6 +82,7 @@ const AuditLogComponent = (props) => {
         indexPageData,
         // moduleCode, 
     } = props;
+    const feature = props.feature
 
     const moduleType = props.moduleCode;
     // let searchFormData = [];
@@ -150,8 +151,11 @@ const AuditLogComponent = (props) => {
 
 
     return(
-        <Box className='p-5' >
+        <Box className={classes.root} >
+            <Box className="moduleName">{feature.breadCrumbs[feature.breadCrumbs.length - 1].label}</Box>
+            <Divider className="mb-[10px] border-[#C1C9D3]"></Divider>
             <Accordion
+                className='px-5'
                 expanded={expandedPanel}
                 onChange={()=>setExpandedPanel(!expandedPanel)}
                 id="searchExpansionPanel"

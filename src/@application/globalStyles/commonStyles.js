@@ -2,6 +2,20 @@
 
 const styles = theme => ({
     root: {
+      '& .moduleName':{
+        width: '100%',
+        background: '#EDEEF2',
+        padding: '10px',
+        color: '#052A4F',
+        fontWeight: '700',
+        textAlign: 'left',
+        fontSize: '14px',
+        // marginBottom: '10px'
+      },
+      '& .MuiAccordion-root': {
+        borderRadius: '10px',
+        boxShadow: 'none'
+      },
       
       "& .MuiOutlinedInput-input": {
         padding: '5px 20px',
@@ -20,34 +34,37 @@ const styles = theme => ({
         minWidth: '110px',
         marginRight: '10px' 
       },
-      '& .MuiAccordionDetails-root':{
-        padding: '10px'
+      '& .main_input_container': {
+        borderRadius: '0px 0px 10px 10px',
+        width: '100%',
+        margin:'0px 0px 40px',
+        padding: '10px 10px 20px',
+        background: '#EDEEF2'
       },
-      '& .MuiCollapse-root': {
-        background: '#f4f5fa'
+      '& .MuiAccordionDetails-root':{
+        padding: '0px',
       },
       '& .MuiAccordionSummary-content > .MuiTypography-root': {
         fontWeight: '700',
         fontSize: '14px',
         textAlign: 'left'
       },
-      '& .MuiBox-root': {
-        background: '#fff'
-      },
       '& .MuiBox-root button': {
-        float: 'right'
+        float: 'right',
       },
       '& .inputContainer': {
         display: 'flex',
         alignItems: 'center',
         paddingLeft: '16px',
-        paddingTop: '16px'
+        // marginTop: '16px'
       },
       '& .MuiAccordionSummary-root': {
-        boxShadow: ''
+        background: '#EDEEF2',
+        borderRadius: '10px',
       },
       '& .MuiAccordionSummary-root.Mui-expanded': {
-        minHeight: '50px'
+        minHeight: '50px',
+        borderRadius: '10px  10px 0px 0px'
       },
       '& .MuiDialog-paper': {
         left: '0',
@@ -58,7 +75,6 @@ const styles = theme => ({
         maxWidth: '83vw'
       },
       '& .MuiDialog-paper > .MuiTypography-root': {
-        background: '#f4f5fa',
         padding: '10px',
         fontWeight: '700',
         fontSize: '16px',

@@ -371,6 +371,8 @@ const FeatureHolder = ({feature}) => {
   }
 
   const handleClickBreadcrumb = (item) => {
+
+    
       dispatch(setSelectedModule(feature.featureCode, item.id));
       if(item.id!==feature.featureCode && feature.openTabs.filter(e=>e.label===item.label).length<1){
           dispatch(addToOpenTabs(feature.featureCode, item));

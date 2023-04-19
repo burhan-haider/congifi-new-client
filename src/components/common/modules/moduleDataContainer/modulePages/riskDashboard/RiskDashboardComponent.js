@@ -10,8 +10,7 @@ import {
     AccordionSummary,
     MenuItem,
     Box,
-    Tabs,
-    Tab,
+    Divider,
     Typography
 } from "@mui/material";
 import { GenericButton, GenericDatatable, useClasses, styles } from "@application";
@@ -25,7 +24,9 @@ import moment from 'moment';
 import httpService from 'services/httpservice/httpService'
 import RiskDashboardBottomContainer from './RiskDashboardBottomContainer'
 
-const RiskDashboardComponent = () => {
+const RiskDashboardComponent = (props) => {
+
+    const feature = props.feature
 
     const [value, setValue] = useState(0);
     const [tableData, setTableData] = useState({});
@@ -117,9 +118,11 @@ const RiskDashboardComponent = () => {
       }
 
     return(
-        <div className='p-5' >
+        <div className={classes.root} >
+            <Box className="moduleName">{feature.breadCrumbs[feature.breadCrumbs.length - 1].label}</Box>
+            <Divider className="mb-[10px] border-[#C1C9D3]"></Divider>
             <Formsy onValidSubmit={data=>handleSubmit(data)} >
-                <Grid container className={`${classes.root} py-5 container`} alignItems={'center'}>
+                <Grid container className={`py-5 container`} alignItems={'center'}>
                     <Grid className='inputContainer pr-3' item sm={3}>
                         <DatePickerFormsy
                             fullWidth

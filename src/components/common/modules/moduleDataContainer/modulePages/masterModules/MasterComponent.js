@@ -19,7 +19,8 @@ import {
   FormControlLabel,
   Radio,
   RadioGroup,
-  Divider
+  Divider,
+  Box
 } from "@mui/material";
 import clsx from "clsx";
 // import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -80,6 +81,7 @@ import { useClasses, styles } from "@application";
 let searchFormData = {};
 
 export default function MasterComponent(props) {
+  const feature = props.feature
   const classes = useClasses(styles);
   const [moduleHeader, setModuleHeader] = useState([]);
 
@@ -150,9 +152,12 @@ export default function MasterComponent(props) {
   );
 
   return (
-    <Paper className="p-[20px]">
-      <div id="topFrame" className={classes.root}>
+    <Paper>
+      <div id="topFrame" className={`${classes.root}`}>
+        <Box className="moduleName">{feature.breadCrumbs[feature.breadCrumbs.length - 1].label}</Box>
+        <Divider className="mb-[10px] border-[#C1C9D3]"></Divider>
         <Accordion
+        className="px-5"
           expanded={expandedPanel === "searchExpansionPanel"}
           onChange={handlePanelExpansion("searchExpansionPanel")}
           id="searchExpansionPanel"
@@ -163,7 +168,7 @@ export default function MasterComponent(props) {
             id="searchPanelHeader"
             classes={{
               root: classes.root,
-              expanded: 'bg-[#F4F5FA]'
+              // expanded: 'bg-[#F4F5FA]'
             }}
           >
             <Typography className={`${classes.heading} text-[14px] font-bold`} id="searchHeader">
@@ -172,7 +177,7 @@ export default function MasterComponent(props) {
           </AccordionSummary>
           <Divider />
           <AccordionDetails
-            className='bg-[#F4F5FA]'
+            // className='bg-[#F4F5FA]'
             align="left"
             id="searchExpansionPanelDetails"
             // style={{ padding: 5 }}
@@ -189,7 +194,7 @@ export default function MasterComponent(props) {
                 container
                 alignItems="flex-start"
                 spacing={2}
-                className={classes.root}
+                className={`${classes.root} main_input_container`}
               >
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
@@ -356,7 +361,7 @@ export default function MasterComponent(props) {
                     )
                   : null}
 
-                <Grid item xs={12}></Grid>
+              </Grid>
                 <Grid
                   container
                   className="mx-4 my-3 flex flex-row justify-end w-100"
@@ -414,7 +419,7 @@ export default function MasterComponent(props) {
                       ) : null
                     )
                   : null} */}
-              </Grid>
+              {/* </Grid> */}
             </Formsy>
           </AccordionDetails>
         </Accordion>

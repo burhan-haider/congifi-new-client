@@ -15,7 +15,8 @@ import {
   Typography,
   IconButton,
   Divider,
-  Button
+  Button,
+  Box
 } from "@mui/material";
 // import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 // import DeleteIcon from "@mui/icons-material/Delete";
@@ -326,7 +327,7 @@ function ActionParamsForm(props) {
             className={classes.root}
             classes={{
               root: "w-full",
-              expanded: "bg-[#f4f5fa]",
+              // expanded: "bg-[#f4f5fa]",
             }}
             styles={{display: 'flex', justifyContent: "flex-end", flexDirection: 'row', alignItems: 'center'}}
           >
@@ -341,16 +342,19 @@ function ActionParamsForm(props) {
             id="actionParamExpansionPanelDetails"
             // style={{ padding: 10 }}
           >
-             <Button
-              type="button"
-              aria-label="remove"
-              className='float-right mb-[10px]'
-              color="primary"
-              variant="outlined"
-              onClick={() => handleAddFields()}
-            >
-              Add Field
-            </Button>
+            <Box className='bg-[#EDEEF2] flex justify-end'>
+              <Button
+                type="button"
+                aria-label="remove"
+                className='float-right m-[10px] '
+                color="primary"
+                variant="outlined"
+                onClick={() => handleAddFields()}
+              >
+                Add Field
+              </Button>
+            </Box>
+             
             
             <Formsy
               onValid={() => setIsFormValid(true)}
@@ -521,9 +525,9 @@ function ActionParamsForm(props) {
                     container
                     alignItems="flex-start"
                     spacing={2}
-                    className={classes.root}
+                    className={`${classes.root} main_input_container`}
                   >
-                    <Grid className="flex items-center" item xs={4}>
+                    <Grid className="inputContainer" item xs={4}>
                       <Typography>Action Code</Typography>
                       <FormControl fullWidth>
                         {/* <TextFieldFormsy
@@ -576,7 +580,7 @@ function ActionParamsForm(props) {
                         </SelectFormsy>
                       </FormControl>
                     </Grid>
-                    <Grid className={`${classes.root} flex items-center`} item xs={4}>
+                    <Grid className={`inputContainer`} item xs={4}>
                       <Typography>Parameter Datatype</Typography>
                       <FormControl fullWidth>
                         <SelectFormsy
@@ -618,7 +622,7 @@ function ActionParamsForm(props) {
                         </SelectFormsy>
                       </FormControl>
                     </Grid>
-                    <Grid className="flex items-center" item xs={4}>
+                    <Grid className="inputContainer" item xs={4}>
                       <Typography>Parameter Is Enabled</Typography>
                       <FormControl fullWidth>
                         <SelectFormsy
@@ -645,7 +649,7 @@ function ActionParamsForm(props) {
                         </SelectFormsy>
                       </FormControl>
                     </Grid>
-                    <Grid className="flex items-center" item xs={4}>
+                    <Grid className="inputContainer" item xs={4}>
                       <Typography>Parameter Name</Typography>
                       <FormControl fullWidth className={classes.formControl}>
                         <TextFieldFormsy
@@ -668,7 +672,7 @@ function ActionParamsForm(props) {
                         ></TextFieldFormsy>
                       </FormControl>
                     </Grid>
-                    <Grid className="flex items-center" item xs={4}>
+                    <Grid className="inputContainer" item xs={4}>
                       <Typography>Parameter Id</Typography>
                       <FormControl fullWidth >
                         <TextFieldFormsy
@@ -736,7 +740,7 @@ function ActionParamsForm(props) {
                       </FormControl>
                     </Grid> */}
                     {showStaticValuesField ? (
-                      <Grid className="flex items-center" item xs={4}>
+                      <Grid className="inputContainer" item xs={4}>
                         <Typography>Parameter Static Values</Typography>
                         <FormControl fullWidth>
                           <TextFieldFormsy
@@ -760,7 +764,7 @@ function ActionParamsForm(props) {
                         </FormControl>
                       </Grid>
                     ) : null}
-                    <Grid className="flex items-center" item xs={4}>
+                    <Grid className="inputContainer" item xs={4}>
                       <Typography>Parameter Default Value</Typography>
                       <FormControl fullWidth>
                         <TextFieldFormsy
@@ -783,7 +787,7 @@ function ActionParamsForm(props) {
                         ></TextFieldFormsy>
                       </FormControl>
                     </Grid>
-                    <Grid className="flex items-center" item xs={4}>
+                    <Grid className="inputContainer" item xs={4}>
                       <Typography>Parameter Validation Type</Typography>
                       <FormControl fullWidth>
                         <TextFieldFormsy
@@ -806,7 +810,7 @@ function ActionParamsForm(props) {
                         ></TextFieldFormsy>
                       </FormControl>
                     </Grid>
-                    <Grid className="flex items-center" item xs={4}>
+                    <Grid className="inputContainer" item xs={4}>
                       <Typography>Parameter Validation Field</Typography>
                       <FormControl fullWidth>
                         <TextFieldFormsy

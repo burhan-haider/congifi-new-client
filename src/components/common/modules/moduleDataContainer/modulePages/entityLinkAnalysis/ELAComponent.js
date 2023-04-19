@@ -10,6 +10,7 @@ import {
     Typography,
     Button,
     Menu,
+    Divider,
 } from '@mui/material'
 import ReactEcharts from 'echarts-for-react';
 import { FaAngleDown, FaTable } from 'react-icons/fa';
@@ -63,8 +64,9 @@ import { tableData, graphDataTree } from './dummyData';
 //     }
 //   });
 
-const ELAComponent = () => {
+const ELAComponent = (props) => {
 
+    const feature = props.feature
     const horParentRef = useRef();
     const horChartRef = useRef();
     
@@ -189,8 +191,11 @@ const ELAComponent = () => {
     }
 
     return(
-        <div className='p-5' >
+        <div className={classes.root} >
+            <Box className="moduleName">{feature.breadCrumbs[feature.breadCrumbs.length - 1].label}</Box>
+            <Divider className="mb-[10px] border-[#C1C9D3]"></Divider>
             <Accordion 
+                className='px-5'
                 expanded={expandedPanel}
                 onChange={()=>setExpandedPanel(!expandedPanel)}
             >
@@ -209,20 +214,21 @@ const ELAComponent = () => {
                 <AccordionDetails
                     align="left"
                     id="searchExpansionPanelDetails"
-                    style={{ padding: 5 }}
+                    
                 >
                     <Formsy onValidSubmit={data=>handleSubmit(data)} >
                         <Grid
                             container
                             alignItems="flex-start"
                             spacing={2}
-                            className={classes.root}
+                            className='main_input_container'
                         >
-                            <Grid item sm={4} className="w-[100%]">
-                                <DatePickerFormsy
+                            <Grid item sm={4} className="inputContainer">
+                                <Typography>From</Typography>
+                                <DatePickerFormsy fullWidth
                                     variant="outlined"
                                     name={`FromDate`}
-                                    label={`From`}
+                                    // label={`From`}
                                     ampm={false}
                                     dateTime={false}
                                     allowKeyboardControl={true}
@@ -233,11 +239,12 @@ const ELAComponent = () => {
                                     }}
                                 />
                             </Grid>
-                            <Grid item sm={4}>
-                                <DatePickerFormsy
+                            <Grid className='inputContainer' item sm={4}>
+                                <Typography>To</Typography>
+                                <DatePickerFormsy fullWidth
                                     variant="outlined"
                                     name={`ToDate`}
-                                    label={`To`}
+                                    // label={`To`}
                                     ampm={false}
                                     className={undefined}
                                     dateTime={false}
@@ -255,11 +262,12 @@ const ELAComponent = () => {
                                 ></TextFieldFormsy>
                             </Grid> */}
 
-                            <Grid item xs={4} className="" >
-                                <TextFieldFormsy
+                            <Grid className='inputContainer' item xs={4}  >
+                                <Typography>Account Number</Typography>
+                                <TextFieldFormsy fullWidth
                                     variant="outlined"
                                     name={`AccountNumber`}
-                                    label={`Account Number`}
+                                    // label={`Account Number`}
                                     required={true}
                                     value=""
                                 ></TextFieldFormsy>

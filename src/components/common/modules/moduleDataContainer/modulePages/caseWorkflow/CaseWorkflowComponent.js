@@ -36,6 +36,7 @@ import * as CWFActions from "redux/caseWorkflow/cwfbottomframedata/cwfbottomfram
 import { GenericButton, useClasses, GenericDatagrid, styles } from "@application";
 import CWFBottomContainer from "./BottomContainer/CWFBottomContainer";
 import { stringify } from "postcss";
+
 // import { CWFDetailsBottomContainer } from "../common/bottomPages";
 
 // const styles = theme => ({
@@ -83,7 +84,16 @@ import { stringify } from "postcss";
 //   }
 // });
 
+
+
+
 export default function CaseWorkflowComponent(props) {
+
+  const feature = props.feature;
+
+  // const heading = feature.breadCrumbs[feature.breadCrumbs.length - 1]
+
+
   const classes = useClasses(styles);
 
   const paramObj = props.indexPageData;
@@ -144,8 +154,6 @@ export default function CaseWorkflowComponent(props) {
   const [cwfCasesData, setCWFCasesData] = useState(null);
   const [bottomAction, setBottomAction] = useState([]);
 
-  
-
   const dispatch = useDispatch();
 
   const handleSubmit = data => {
@@ -166,6 +174,7 @@ export default function CaseWorkflowComponent(props) {
     }
     
   }, [cwfCases]);
+
 
 
   const ResultFrame = () => (
@@ -204,13 +213,16 @@ export default function CaseWorkflowComponent(props) {
   );
 
   return (
-    <Paper style={{ padding: "20px" }}>
-      <div id="topFrame" className={classes.root}>
+    <Paper className={`${classes.root} shadow-none`}>
+      <Box className="moduleName">{feature.breadCrumbs[feature.breadCrumbs.length - 1].label}</Box>
+      <Divider className="mb-[10px] border-[#C1C9D3]"></Divider>
+      <div id="topFrame" >
         <Accordion
+          className="px-5"
           expanded={expandedPanel === "searchExpansionPanel"}
           onChange={handlePanelExpansion("searchExpansionPanel")}
           id="searchExpansionPanel"
-        >
+        > 
           <AccordionSummary
             sx={{'& .Mui-expanded': {
               margin: '0px'}
@@ -221,7 +233,7 @@ export default function CaseWorkflowComponent(props) {
             className="max-h-[30px]"
             classes={{
               root: classes.root,
-              expanded: "bg-[#f4f5fa]"
+              // expanded: "bg-[#f4f5fa]"
             }}
           >
             <Typography className={`${classes.heading} text-[14px] font-bold`} id="searchHeader">
@@ -230,7 +242,7 @@ export default function CaseWorkflowComponent(props) {
           </AccordionSummary>
           <Divider />
           <AccordionDetails
-            className='bg-[#F4F5FA]'
+            // className='bg-[#F4F5FA]'
             align="left"
             id="searchExpansionPanelDetails"
             // style={{ padding: 5 }}
@@ -242,11 +254,12 @@ export default function CaseWorkflowComponent(props) {
               ref={formRef}
               className="flex flex-col justify-center w-full"
             >
+            
               <Grid
                 container
                 alignItems="flex-start"
                 spacing={2}
-                className={classes.root}
+                className={`${classes.root} main_input_container`}
               >
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
@@ -410,9 +423,8 @@ export default function CaseWorkflowComponent(props) {
                       ) : null
                     )
                   : null}
-
-                <Grid item xs={12}></Grid>
-
+              </Grid>
+                <Grid  item xs={12}>
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.ACTIONS != null ? (
@@ -421,9 +433,9 @@ export default function CaseWorkflowComponent(props) {
                           alignItems="flex-end"
                           justify="flex-end"
                           direction="row"
-                          style={{ marginRight: 15, marginBottom: 10 }}
+                          // style={{ marginRight: 15, marginBottom: 10 }}
                           key={index}
-                          className="justify-end"
+                          className="justify-end bg-white"
                         >
                           {eachParam.ACTIONS.map(eachAction => (
                                 <GenericButton
@@ -453,7 +465,9 @@ export default function CaseWorkflowComponent(props) {
                       ) : null
                     )
                   : null}
-              </Grid>
+                </Grid>
+                
+              
             </Formsy>
           </AccordionDetails>
         </Accordion>

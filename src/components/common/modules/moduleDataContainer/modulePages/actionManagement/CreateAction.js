@@ -173,7 +173,7 @@ export default function CreateAction(props) {
             id="actionPanelHeader"
             classes={{
               root: "w-full",
-              expanded: "bg-[#f4f5fa]",
+              // expanded: "bg-[#f4f5fa]",
             }}
           >
             <Typography
@@ -186,7 +186,7 @@ export default function CreateAction(props) {
           </AccordionSummary>
           <Divider/>
           <AccordionDetails
-            className='bg-[#f4f5fa] pt-4'
+            // className=' pt-4'
             align="left"
             id="actionExpansionPanelDetails"
             // style={{ padding: 0 }}
@@ -210,7 +210,7 @@ export default function CreateAction(props) {
               {props.isCreate === true ? (
                 <Grid
                   container
-                  className="mr-[15px] mb-[10px] flex justify-end flex-row"
+                  className="mr-[15px] mb-[10px] flex justify-end flex-row bg-[#fff]"
                 >
                   <GenericButton
                     type="submit"
