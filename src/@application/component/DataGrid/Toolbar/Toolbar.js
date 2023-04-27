@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Box, Switch, Stack, Typography, InputBase, Button } from '@mui/material'
+import { Box, Switch, Stack, Typography, InputBase, Button, Tooltip, Divider } from '@mui/material'
 import { styled } from '@mui/material/styles'
-
+import IconButton from '@mui/material/IconButton';
 import ExportDropdown from './ExportDropdown'
 import FreezeDropdown from './FreezeDropdown'
 import ReorderDropdown from './ReorderDropdown'
@@ -78,7 +78,7 @@ const Toolbar = (props) => {
                 </Typography>
             </Box>
             
-            <Box className="flex flex-row-reverse justify-start ">
+            <Box className="flex flex-row-reverse justify-evenly items-center">
                 <Box className="ml-5 bg-white border-solid border-[1px] border-app-dark px-4 rounded-full flex flex-row justify-between items-center my-[11px]">
                     <InputBase
                         sx={{ ml: 1, flex: 1 }}
@@ -133,6 +133,8 @@ const Toolbar = (props) => {
                     isSelected={isSelected}
                     selectedGridElement={selectedGridElement}
                 />
+                <Divider orientation="vertical" variant="middle"  flexItem />
+
                 <FreezeDropdown
                     checkedState={checkedState}
                     setCheckedState={setCheckedState}
@@ -140,6 +142,8 @@ const Toolbar = (props) => {
                     setColumns={setColumns}
                     utilColumn={utilColumn}
                 />
+                <Divider orientation="vertical" variant="middle"  flexItem />
+
                 <ReorderDropdown
                     checkedState={checkedState}
                     setCheckedState={setCheckedState}
@@ -147,16 +151,23 @@ const Toolbar = (props) => {
                     setColumns={setColumns}
                     utilColumn={utilColumn}
                 />
+                <Divider orientation="vertical" variant="middle"  flexItem />
 
-                <Button
-                    className="px-5 py-2 mx-2 my-3 normal-case text-app-primary bg-transparent hover:bg-app-primary hover:text-white  text-sm rounded-[25px] shadow-none border-solid border-[1px] border-[#052a4f]"
-                    variant="contained"
-                    size="small"
-                    onClick={()=>setFilterActive(!filterActive)}
-                >
-                    {filterActive ? <MdNotInterested size={16} className="mr-3" /> : <FaFilter size={14} className="mr-3" /> }
-                    {filterActive ? 'Remove Filters' : 'Add Filters'}
-                </Button>
+
+                <Tooltip title='Add Filters' placement='top'>
+                    <IconButton
+                        className="text-app-primary mr-4 ml-4"
+                        // className="px-5 py-2 mx-2 my-3 normal-case text-app-primary bg-transparent hover:bg-app-primary hover:text-white  text-sm rounded-[25px] shadow-none border-solid border-[1px] border-[#052a4f]"
+                        variant="contained"
+                        size="small"
+                        onClick={()=>setFilterActive(!filterActive)}
+                    >
+                        {filterActive ? <MdNotInterested size={16} /> : <FaFilter size={14} /> }
+                        {/* {filterActive ? 'Remove Filters' : 'Add Filters'} */}
+                    </IconButton>
+                </Tooltip>
+
+                
 
             </Box>
         </Box>

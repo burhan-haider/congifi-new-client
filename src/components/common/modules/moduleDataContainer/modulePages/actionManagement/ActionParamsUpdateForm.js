@@ -126,7 +126,7 @@ function ActionParamsUpdateForm(props) {
         id="actionParamsPanelHeader"
         classes={{
           root: "w-full",
-          expanded: "bg-[#f4f5fa]",
+          // expanded: "bg-[#f4f5fa]",
         }}
       >
         <Typography

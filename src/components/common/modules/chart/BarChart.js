@@ -228,7 +228,7 @@ export default function BarChart(props) {
       <ReactEcharts 
         ref={myChart} 
         option={option} 
-        style={{minHeight: '350px', cursor: 'pointer'}} 
+        style={{minHeight: window.innerWidth < '992' ? '250px' : '350px', cursor: 'pointer', }} 
         className="pl-2 pr-3 py-1" 
         onEvents={onEvents}
       />

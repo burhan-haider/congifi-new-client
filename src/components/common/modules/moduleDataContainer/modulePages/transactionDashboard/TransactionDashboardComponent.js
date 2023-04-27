@@ -12,7 +12,8 @@ import {
     Menu,
     MenuItem,
     RadioGroup,
-    Radio
+    Radio,
+    Divider
 } from '@mui/material'
 
 import Formsy from "formsy-react";
@@ -20,7 +21,8 @@ import {
     GenericButton,
     GenericDatagrid,
     GenericDatatable,
-    useClasses
+    useClasses,
+    styles
 } from "@application";
 
 import { 
@@ -42,38 +44,38 @@ import commonService from 'services/common/commonService'
 import clsx from 'clsx'
 import httpService from 'services/httpservice/httpService';
 
-const styles = theme => ({
-    root: {
-      width: "100%",
+// const styles = theme => ({
+//     root: {
+//       width: "100%",
   
-      "& .MuiExpansionPanelSummary-content": {
-        margin: "2px 0"
-      },
+//       "& .MuiExpansionPanelSummary-content": {
+//         margin: "2px 0"
+//       },
   
-      " & .MuiExpansionPanelSummary-root": {
-        backgroundColor: "#f4f5fa"
-      }
-    },
-    formControl: {
-      // margin: 1,
-      fullWidth: true,
-      display: "flex",
-      wrap: "nowrap"
-    },
-    expandedPanel: {
-      backgroundColor: "#f4f5fa"
-    },
-    heading: {
-      color: "#052a4f",
-      fontSize: 18,
-      fontWeight: "500"
-    },
-    rowDesign: {
-      paddingTop: 15,
-      paddingRight: 20,
-      paddingLeft: 20,
-    }
-  });
+//       " & .MuiExpansionPanelSummary-root": {
+//         backgroundColor: "#f4f5fa"
+//       }
+//     },
+//     formControl: {
+//       // margin: 1,
+//       fullWidth: true,
+//       display: "flex",
+//       wrap: "nowrap"
+//     },
+//     expandedPanel: {
+//       backgroundColor: "#f4f5fa"
+//     },
+//     heading: {
+//       color: "#052a4f",
+//       fontSize: 18,
+//       fontWeight: "500"
+//     },
+//     rowDesign: {
+//       paddingTop: 15,
+//       paddingRight: 20,
+//       paddingLeft: 20,
+//     }
+//   });
 
 const TransactionDashboard = (props) => {
 
@@ -81,6 +83,8 @@ const TransactionDashboard = (props) => {
         indexPageData,
         moduleCode, 
     } = props;
+
+    const feature = props.feature
 
     const moduleType = props.moduleCode;
     let searchFormData = [];
@@ -160,8 +164,11 @@ const TransactionDashboard = (props) => {
 
 
     return(
-        <Box className='p-5' >
+        <Box className={`${classes.root}`} >
+            <Box className="moduleName">{feature.breadCrumbs[feature.breadCrumbs.length - 1].label}</Box>
+            <Divider className="mb-[10px] border-[#C1C9D3]"></Divider>
             <Accordion
+            className='px-5'
                 expanded={expandedPanel}
                 onChange={()=>setExpandedPanel(!expandedPanel)}
                 id="searchExpansionPanel"
@@ -182,7 +189,7 @@ const TransactionDashboard = (props) => {
                 <AccordionDetails
                     align="left"
                     id="searchExpansionPanelDetails"
-                    style={{ padding: 5 }}
+                    // style={{ padding: 5 }}
                 >
                     <Formsy
                         onValidSubmit={data => handleSubmit(data)}
@@ -195,17 +202,18 @@ const TransactionDashboard = (props) => {
                             container
                             alignItems="flex-start"
                             spacing={2}
-                            className={classes.rowDesign}
+                            className='main_input_container'
                         >
                             {paramObj
                             ? paramObj.map((eachParam, index) =>
                                 eachParam.MODULEPARAMDATATYPE === "date" ? (
-                                    <Grid item xs={3} key={index}>
-                                    <FormControl className={classes.formControl}>
+                                    <Grid className='inputContainer' item xs={4} key={index}>
+                                    <Typography>{eachParam.MODULEPARAMIDNAME}</Typography>
+                                    <FormControl fullWidth>
                                         <DatePickerFormsy
                                         variant="outlined"
                                         name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
-                                        label={`${eachParam.MODULEPARAMIDNAME}`}
+                                        // label={`${eachParam.MODULEPARAMIDNAME}`}
                                         ampm={false} // 24Hr / 12hr clock settings
                                         className={undefined} // optional, if you need for styling
                                         dateTime={false} // true, if need the Date and Time Picker. false if you need only Date Picker
@@ -221,7 +229,8 @@ const TransactionDashboard = (props) => {
                             {paramObj
                             ? paramObj.map((eachParam, index) =>
                                 eachParam.MODULEPARAMDATATYPE === "view" ? (
-                                    <Grid item xs={3} key={index}>
+                                    <Grid className='inputContainer' item xs={4} key={index}>
+                                    <Typography>{eachParam.MODULEPARAMIDNAME}</Typography>
                                     <FormControl
                                         className={
                                         (clsx(classes.margin, classes.textField),
@@ -232,7 +241,7 @@ const TransactionDashboard = (props) => {
                                         <ViewFieldFormsy
                                         className={undefined}
                                         name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
-                                        label={`${eachParam.MODULEPARAMIDNAME}`}
+                                        // label={`${eachParam.MODULEPARAMIDNAME}`}
                                         onChange={() => {}}
                                         validationError=""
                                         //required={true}
@@ -249,12 +258,13 @@ const TransactionDashboard = (props) => {
                             {paramObj
                             ? paramObj.map((eachParam, index) =>
                                 eachParam.MODULEPARAMDATATYPE === "text" ? (
-                                    <Grid item xs={3} key={index}>
-                                    <FormControl className={classes.formControl}>
+                                    <Grid className='inputContainer' item xs={4} key={index}>
+                                    <Typography>{eachParam.MODULEPARAMIDNAME}</Typography>
+                                    <FormControl fullWidth>
                                         <TextFieldFormsy
                                         variant="outlined"
                                         name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
-                                        label={`${eachParam.MODULEPARAMIDNAME}`}
+                                        // label={`${eachParam.MODULEPARAMIDNAME}`}
                                         className={undefined} // optional, if you need for styling
                                         onChange={() => {}} // optional, a callback if you need to do any logic on the value change
                                         validationError="" // optional, to show error if validation fails
@@ -270,15 +280,17 @@ const TransactionDashboard = (props) => {
                             {paramObj
                             ? paramObj.map((eachParam, index) =>
                                 eachParam.MODULEPARAMDATATYPE === "select" ? (
-                                    <Grid item xs={3} key={index}>
-                                    <FormControl className={classes.formControl} variant={'outlined'} >
+                                    <Grid className='inputContainer' item xs={4} key={index}>
+                                    <Typography>{eachParam.MODULEPARAMIDNAME}</Typography>
+                                    <FormControl fullWidth  >
                                         <SelectFormsy
+                                        variant={'outlined'}
                                         name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
                                         //label={`${eachParam.MODULEPARAMIDNAME}`}
-                                        label={commonService.getLabel(
-                                            eachParam.MODULEPARAMNAME,
-                                            eachParam.MODULEPARAMIDNAME
-                                        )}
+                                        // label={commonService.getLabel(
+                                        //     eachParam.MODULEPARAMNAME,
+                                        //     eachParam.MODULEPARAMIDNAME
+                                        // )}
                                         value="" // mandatory, value of the selected element
                                         className={undefined} // optional, if you need for styling
                                         onChange={() => {}} // optional, a callback if you need to do any logic on the value change
@@ -305,8 +317,9 @@ const TransactionDashboard = (props) => {
                             {paramObj
                             ? paramObj.map((eachParam, index) =>
                                 eachParam.MODULEPARAMDATATYPE === "radio" ? (
-                                    <Grid item xs={3} key={index}>
-                                    <FormControl className={classes.formControl}>
+                                    <Grid className='inputContainer' item xs={4} key={index}>
+                                    <Typography>{eachParam.MODULEPARAMIDNAME}</Typography>
+                                    <FormControl fullWidth>
                                         <RadioGroup
                                         row
                                         aria-label={`${eachParam.MODULEPARAMIDNAME}_${eachParam.MODULEPARAMINDEX}`}
@@ -334,8 +347,9 @@ const TransactionDashboard = (props) => {
                             {paramObj
                             ? paramObj.map((eachParam, index) =>
                                 eachParam.MODULEPARAMDATATYPE === "checkbox" ? (
-                                    <Grid item xs={3} key={index}>
-                                    <FormControl className={classes.formControl}>
+                                    <Grid className='inputContainer' item xs={4} key={index}>
+                                    <Typography>{eachParam.MODULEPARAMIDNAME}</Typography>
+                                    <FormControl fullWidth>
                                         <FormControlLabel
                                         className={undefined} // optional, if you need for styling
                                         control={
@@ -346,13 +360,15 @@ const TransactionDashboard = (props) => {
                                             value="" // mandatory, value of the selected element
                                             />
                                         }
-                                        label={`${eachParam.MODULEPARAMIDNAME}`}
+                                        // label={`${eachParam.MODULEPARAMIDNAME}`}
                                         />
                                     </FormControl>
                                     </Grid>
                                 ) : null
                                 )
                             : null}
+
+                            </Grid>
 
                             <Grid
                                 container
@@ -370,7 +386,7 @@ const TransactionDashboard = (props) => {
                                 </GenericButton>
                             </Grid>
                             
-                        </Grid>
+                        
                     </Formsy>
                 </AccordionDetails>
             </Accordion>

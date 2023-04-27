@@ -7,12 +7,13 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Divider
 } from "@mui/material";
 // import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { MdExpandMore as ExpandMoreIcon } from "react-icons/md";
 
 // import { useDispatch, useSelector } from "react-redux";
-import { GenericButton, GenericDatagrid } from "@application";
+import { GenericButton, GenericDatagrid, styles, useClasses } from "@application";
 // import { ActionsBottomContainer } from "../common/bottomPages";
 // import * as Actions from "redux/caseWorkflow/cwfbottomframedata/cwfbottomframedata.actions";
 import caseWorkflowService from "services/caseWorkflow/caseWorkflowService";
@@ -48,6 +49,8 @@ export default function CreateAction(props) {
   const [expandedPanel, setExpandedPanel] = useState("actionExpansionPanel");
   const [actionData, setActionData] = useState({});
   const [submitType, setSubmitType] = useState(null);
+  const classes = useClasses(styles);
+
   // const [dataSelected, setDataSelected] = useState([]);
   // const [openMappingDiv, setOpenMappingDiv] = useState(false);
   // const [showActionForm2, setShowActionForm2] = useState(false);
@@ -157,8 +160,9 @@ export default function CreateAction(props) {
   return (
     // <Paper style={{ padding: 16 }}>
     <React.Fragment>
-      <div id="topFrame" className={"w-full"}>
+      <div id="topFrame" className={`${classes.root} w-full`}>
         <Accordion
+          className={classes.root}
           expanded={expandedPanel === "actionExpansionPanel"}
           onChange={handlePanelExpansion("actionExpansionPanel")}
           id="actionExpansionPanel"
@@ -169,7 +173,7 @@ export default function CreateAction(props) {
             id="actionPanelHeader"
             classes={{
               root: "w-full",
-              expanded: "bg-[#f4f5fa]",
+              // expanded: "bg-[#f4f5fa]",
             }}
           >
             <Typography
@@ -180,10 +184,12 @@ export default function CreateAction(props) {
               Action Master
             </Typography>
           </AccordionSummary>
+          <Divider/>
           <AccordionDetails
+            // className=' pt-4'
             align="left"
             id="actionExpansionPanelDetails"
-            style={{ padding: 5 }}
+            // style={{ padding: 0 }}
           >
             <Formsy
               onValidSubmit={(data) => handleActionSubmit(data)}
@@ -193,6 +199,7 @@ export default function CreateAction(props) {
               className="flex flex-col justify-center w-full"
             >
               <ActionDetailsForm
+                className={classes.root}
                 workflowList={workflowList}
                 allowedRolesList={allowedRolesList}
                 allowedModulesList={allowedModulesList}
@@ -203,10 +210,7 @@ export default function CreateAction(props) {
               {props.isCreate === true ? (
                 <Grid
                   container
-                  alignItems="flex-start"
-                  justify="flex-end"
-                  direction="row"
-                  style={{ marginRight: 15, marginBottom: 10 }}
+                  className="mr-[15px] mb-[10px] flex justify-end flex-row bg-[#fff]"
                 >
                   <GenericButton
                     type="submit"
@@ -238,10 +242,7 @@ export default function CreateAction(props) {
               ) : (
                 <Grid
                   container
-                  alignItems="flex-start"
-                  justify="flex-end"
-                  direction="row"
-                  style={{ marginRight: 15, marginBottom: 10 }}
+                  className="mr-[15px] mb-[10px] flex justify-end flex-row"
                 >
                   <GenericButton
                     type="submit"

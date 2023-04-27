@@ -10,29 +10,30 @@ import {
     AccordionSummary,
     MenuItem,
     Box,
-    Tabs,
-    Tab,
+    Divider,
     Typography
 } from "@mui/material";
-import { GenericButton, GenericDatatable } from "@application";
+import { GenericButton, GenericDatatable, useClasses, styles } from "@application";
 import Formsy from "formsy-react";
 import { 
     TextFieldFormsy, 
     SelectFormsy, 
     DatePickerFormsy 
 } from "components/common/formsyComponents";
-import { useClasses } from '@application';
 import moment from 'moment';
 import httpService from 'services/httpservice/httpService'
 import RiskDashboardBottomContainer from './RiskDashboardBottomContainer'
 
-const RiskDashboardComponent = () => {
+const RiskDashboardComponent = (props) => {
+
+    const feature = props.feature
 
     const [value, setValue] = useState(0);
     const [tableData, setTableData] = useState({});
     const [showTable, setShowTable] = useState(false);
     const [dataSelected, setDataSelected] = useState([]);
     const [searchData, setSearchData] = useState({});
+    const classes = useClasses(styles);
 
     const listData = [
         "Monthly",
@@ -117,11 +118,14 @@ const RiskDashboardComponent = () => {
       }
 
     return(
-        <div className='p-5' >
+        <div className={classes.root} >
+            <Box className="moduleName">{feature.breadCrumbs[feature.breadCrumbs.length - 1].label}</Box>
+            <Divider className="mb-[10px] border-[#C1C9D3]"></Divider>
             <Formsy onValidSubmit={data=>handleSubmit(data)} >
-                <Grid container className="py-5 container" alignItems={'center'}>
-                    <Grid item sm={3} className='pr-3'>
+                <Grid container className={`py-5 container`} alignItems={'center'}>
+                    <Grid className='inputContainer pr-3' item sm={3}>
                         <DatePickerFormsy
+                            fullWidth
                             variant="outlined"
                             name={`FromDate`}
                             label={`From`}
@@ -132,8 +136,9 @@ const RiskDashboardComponent = () => {
                             value={moment(new Date()).format('L')}
                         />
                     </Grid>
-                    <Grid item sm={3} className='pr-3'>
+                    <Grid className='inputContainer pr-3' item sm={3}>
                         <DatePickerFormsy
+                            fullWidth
                             variant="outlined"
                             name={`ToDate`}
                             label={`To`}
@@ -144,8 +149,9 @@ const RiskDashboardComponent = () => {
                             value={moment(new Date()).format('L')}
                         />
                     </Grid>
-                    <Grid item sm={3} className='pr-3' >
+                    <Grid className='inputContainer pr-3' item sm={3}>
                         <SelectFormsy 
+                            fullWidth
                             variant="outlined"
                             name="ReportFrequency"
                             label="Report Frequency"

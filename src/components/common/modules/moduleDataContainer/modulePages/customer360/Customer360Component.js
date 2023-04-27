@@ -3,18 +3,22 @@ import {
     Grid,
     MenuItem,
     Box,
+    Typography,
+    Divider
 } from '@mui/material'
 import httpService from 'services/httpservice/httpService'
 import Formsy from "formsy-react";
-import { GenericButton } from "@application";
+import { GenericButton, styles, useClasses } from "@application";
 import { TextFieldFormsy } from "components/common/formsyComponents";
 import GraphComponent from './data/GraphComponent'
 
-const Customer360Component = () => {
+const Customer360Component = (props) => {
     
     const [customerData, setCustomerData] = useState({});
     const [showTree, setShowTree] = useState(false);
-
+    const classes = useClasses(styles);
+    const feature = props.feature
+    
     const token = window.localStorage.getItem("cognifi_token");
     let config = {
         headers: {
@@ -41,14 +45,17 @@ const Customer360Component = () => {
     };
 
     return(
-        <div className='p-5' >
+        <div className={classes.root} >
+            <Box className="moduleName">{feature.breadCrumbs[feature.breadCrumbs.length - 1].label}</Box>
+            <Divider className="mb-[10px] border-[#C1C9D3]"></Divider>
             <Formsy onValidSubmit={data=>handleSubmit(data)} >
-                <Grid container spacing={3} className="py-5 container">
-                    <Grid item xs={4} className="" >
+                <Grid container spacing={3} className={` main_input_container py-5 container`} >
+                    <Grid className='inputContainer' item xs={4} >
+                        <Typography>Customer Id</Typography>
                         <TextFieldFormsy
                             variant="outlined"
                             name={`customerId`}
-                            label={`Customer Id`}
+                            // label={`Customer Id`}
                             className="w-[80%]"
                             required={true}
                             value=""

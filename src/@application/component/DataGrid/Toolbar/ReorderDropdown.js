@@ -7,7 +7,10 @@ import {
     Checkbox,
     Typography,
     MenuList,
+    IconButton,
+    Tooltip
 } from '@mui/material'
+
 import { move } from 'move-position'
 import { Draggable, Droppable, DragDropContext } from 'react-beautiful-dnd'
 import { FaAngleDown } from 'react-icons/fa'
@@ -78,20 +81,24 @@ const ReorderDropdown = (props) => {
 
     return (
         <div>
-            <Button
+        <Tooltip title='Column Order' placement='top'>
+            <IconButton
                 id="freeze-dropdown-button"
                 aria-controls={open ? 'freeze-dropdown-menu' : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}
-                className="px-5 py-2 mx-2 my-3 normal-case text-app-primary bg-transparent hover:bg-app-primary hover:text-white  text-sm rounded-[25px] shadow-none border-solid border-[1px] border-[#052a4f]"
+                className="text-app-primary mr-4 ml-4"
+                // className="px-5 py-2 mx-2 my-3 normal-case text-app-primary bg-transparent hover:bg-app-primary hover:text-white  text-sm rounded-[25px] shadow-none border-solid border-[1px] border-[#052a4f]"
                 variant="contained"
                 size="small"
                 onClick={handleOpen}
-                endIcon={<FaAngleDown size={12} />}
+                // endIcon={<FaAngleDown size={12} />}
             >
-                <MdViewColumn size={16} className="mr-4" />
-                Column Order
-            </Button>
+                <MdViewColumn size={16} className="mr-2" /> <FaAngleDown size={12} />
+                
+            </IconButton>
+        </Tooltip>
+           
 
             <Menu
                 id="freeze-dropdown-menu"

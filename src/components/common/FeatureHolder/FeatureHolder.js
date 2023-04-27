@@ -371,6 +371,8 @@ const FeatureHolder = ({feature}) => {
   }
 
   const handleClickBreadcrumb = (item) => {
+
+    
       dispatch(setSelectedModule(feature.featureCode, item.id));
       if(item.id!==feature.featureCode && feature.openTabs.filter(e=>e.label===item.label).length<1){
           dispatch(addToOpenTabs(feature.featureCode, item));
@@ -461,7 +463,7 @@ const FeatureHolder = ({feature}) => {
 													<img src={getIconByKey('whitePin')} alt="pin Icon" className="w-5 p-0 h-auto m-0" />
 											</IconButton>
 										)}
-										
+
 										<Breadcrumbs className="text-white text-base font-gSans" >
 											{feature.breadCrumbs.sort((a, b) => a.level > b.level ? 1:-1).map((item)=>(
 												<p 
@@ -516,13 +518,13 @@ const FeatureHolder = ({feature}) => {
 					<>
 						{isModuleLoading?(
 							<Box
-								className={'bg-white m-5 mt-4 mb-2 pb-2 pt-2 rounded-md h-[80vh]'}
+								className={'bg-white m-5 mt-4 mb-2 pb-2 pt-2 h-[80vh]'}
 							>
 								<CircularProgress color='primary' />     
 							</Box>
 						):(
 							<>
-								<ComponentHolder  index={feature.featureCode} type={'main'} value={feature.showModule} >
+								<ComponentHolder index={feature.featureCode} type={'main'} value={feature.showModule} >
 									<MainPage 
 											key={feature.featureCode} 
 											feature={feature} 
@@ -571,7 +573,7 @@ const MainPage = ({feature, getModuleChartData, isRefreshing, setIsRefreshing}) 
     }
 
     return(
-      <Grid container direction={'row'} justifyContent={'flex-start'} alignItems={'flex-start'} className="px-5 py-3" >
+      <Grid container direction={'row'} justifyContent={'flex-start'} alignItems={'flex-start'}  className={'rounded-2xl bg-white pl-[15px] pr-[15px]'} >
 
 				{/* mapping all the modules inside a feature as button */}
         {feature.modules.length>0 && feature.modules.map((item, index)=>{
@@ -579,7 +581,7 @@ const MainPage = ({feature, getModuleChartData, isRefreshing, setIsRefreshing}) 
           let ModuleIcon = buttonIconMapping(item.moduleCode)
 
           return (
-            <Grid item key={index} xs={6} className="sm:max-h-[300px] lg:min-h-[450px]" >
+            <Grid item key={index} xs={6} className="lg:min-h-[400px] sm:max-h-[380px]" >
               {item.parentModule_Id == null?(
                 <>
                   {item.parentModuleId==null&&item.moduleChartDetails!=null?(
@@ -600,7 +602,7 @@ const MainPage = ({feature, getModuleChartData, isRefreshing, setIsRefreshing}) 
                           elevation={2} 
                           key={item.uniqueNo} 
                           onClick={()=>handleClick(item)} 
-                          className='hover:bg-[#eee] cursor-pointer m-3 pt-10'
+                          className='hover:bg-[#eee] cursor-pointer mt-3 mb-3 ml-[7px] pt-10'
                           sx={{
                               height: '100%',
                               minHeight: '300px',

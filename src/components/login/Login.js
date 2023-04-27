@@ -55,7 +55,8 @@ const styles = theme => ({
       fontFamily: "GoogleSans-Regular",
     },
     "& .MuiInputLabel-outlined": {
-      transform: "translate(14px, 16px) scale(1)",
+      // transform: "translate(14px, 16px) scale(1)",
+      lineHeight: '1'
     },
     "& .MuiInputLabel-shrink": {
       transform: " translate(14px, -6px) scale(0.75)",
@@ -76,7 +77,7 @@ const styles = theme => ({
     textAlign: "center",
   },
   formDiv: {
-    width: "35%",
+    width: "32%",
     float: "right",
   },
 
@@ -92,20 +93,20 @@ const styles = theme => ({
 
 const customStyles = {
   root: {
-    width: "60%",
+    width: "80%",
     margin: "4% auto ",
     textAlign: "center",
     display: "flex",
     "& .MuiOutlinedInput-root": {
-      height: "46px",
-      borderRadius: "50px",
+      height: 'auto',
+      borderRadius: "70px",
       fontSize: "14px",
       "& fieldset": {
         borderColor: "default",
       },
     },
     "& .MuiOutlinedInput-input": {
-      padding: "14px 14px",
+      padding: "12px",
       fontFamily: "GoogleSans-Regular",
       // "& fieldset": {
       //   borderColor: "default"
@@ -113,6 +114,7 @@ const customStyles = {
     },
     "& .MuiInputLabel-outlined": {
       transform: "translate(14px, 16px) scale(1)",
+      lineHeight: '1'
     },
     "& .MuiInputLabel-shrink": {
       transform: " translate(14px, -6px) scale(0.75)",
@@ -126,8 +128,8 @@ const customStyles = {
   },
   buttonRoot: {
     borderRadius: "25px",
-    padding: "0.25% 3% 0.25% 3%",
-    marginRight: "21%",
+    padding: "0.25% 5% 0.25% 5%",
+    marginRight: "11%",
     marginTop: "1%",
     marginBottom: '0px',
     fontSize: "14px",
@@ -244,7 +246,7 @@ function Login(props) {
             <img src={Cognifi_Logo_Animated} className="w-1/2" alt="Cognifi" />
           </div>
         </div>
-        <div className="text-center mb-0 pb-0">
+        <div className={`${classes.root}text-center mb-0 pb-0`}>
           <Formsy
             onValidSubmit={(data, resetForm, invalidateForm) =>
               handleSubmit(data, resetForm, invalidateForm)
@@ -266,7 +268,7 @@ function Login(props) {
                 validations="isAlphanumeric"
                 validationError="Invalid input"
                 InputProps={{
-                  className: classes.MuiOutlinedInput,
+                  // className: classes.MuiOutlinedInput,
                   shrink: "true",
                   sx: {fontFamily: 'GoogleSans-Regular'}
                 }}
@@ -281,7 +283,7 @@ function Login(props) {
                 type="password"
                 label="Password"
                 InputProps={{
-                  className: classes.MuiOutlinedInput,
+                  // className: classes.MuiOutlinedInput,
                   shrink: "true",
                   classes: {
                     root: classes.textFieldRoot,
@@ -302,7 +304,7 @@ function Login(props) {
                   native: true,
                 }}
                 InputProps={{
-                  className: classes.MuiOutlinedInput,
+                  // className: classes.MuiOutlinedInput,
                   shrink: "true",
                 }}
               >
@@ -319,7 +321,7 @@ function Login(props) {
               className="text-gray-700 border-gray-400 mt-2"
               disabled={!isFormValid || isSubmitting}
             >
-              {isSubmitting ? <CircularProgress className="my-2 mx-3" size={12} color={'inherit'} /> : "Login"}
+              {isSubmitting ? <CircularProgress className="my-2 mx-3" size={12} color={'inherit'} /> : "Log in"}
             </Button>
             
           </Formsy>
