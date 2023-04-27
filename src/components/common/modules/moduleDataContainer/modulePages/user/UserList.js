@@ -79,20 +79,23 @@ export default function UserComponent(props) {
 
   const HEADER = props.indexPageData["HEADER"];
   const DATA = props.indexPageData["DATA"];
-  const finalHEADER = HEADER.filter(function(h) {
+  const finalHEADER = HEADER ? HEADER.filter(function(h) {
     return h !== "USERPASS";
-  });
+  }) : [];
 
   var letCDATA;
   var finalDATA = [];
-  for (var j = 0; j < DATA.length; j++) {
-    letCDATA = DATA[j].filter(data => data !== DATA[j][1]);
-    finalDATA.push(letCDATA);
-    // console.log(
-    //  "DATA =",
-    //   DATA[i].filter(data => data !== DATA[i][1])
-    // );
+  if(DATA){
+    for (var j = 0; j < DATA.length; j++) {
+      letCDATA = DATA[j].filter(data => data !== DATA[j][1]);
+      finalDATA.push(letCDATA);
+      // console.log(
+      //  "DATA =",
+      //   DATA[i].filter(data => data !== DATA[i][1])
+      // );
+    }
   }
+  
   return (
     <>
       <div>
