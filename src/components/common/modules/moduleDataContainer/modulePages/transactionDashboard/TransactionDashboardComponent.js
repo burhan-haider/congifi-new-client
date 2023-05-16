@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-
+import * as moment from 'moment'
 import {
     Box,
     Grid,
@@ -218,7 +218,7 @@ const TransactionDashboard = (props) => {
                                         className={undefined} // optional, if you need for styling
                                         dateTime={false} // true, if need the Date and Time Picker. false if you need only Date Picker
                                         allowKeyboardControl={true} // optional, this will allow keybord to control the picker.
-                                        value={eachParam.MODULEPARAMDEFAULTVALUE}
+                                        value={moment(new Date()).format('DD/MM/YYYY')}
                                         />
                                     </FormControl>
                                     </Grid>

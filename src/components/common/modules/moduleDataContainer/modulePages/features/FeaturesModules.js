@@ -401,7 +401,7 @@ export default function FeaturesModules(props) {
               treeData.length !== 0 ? (
                 <SortableTree
                   treeData={treeData}
-                  onChange={treeData => setTreeData(treeData)}
+                  onChange={treeData => setTreeData([...treeData])}
                   generateNodeProps={({ node, path }) => ({
                     title: <a href={node.url}>{node.title}</a>,
                     buttons: [

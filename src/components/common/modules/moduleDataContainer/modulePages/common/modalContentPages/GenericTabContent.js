@@ -90,7 +90,7 @@ function GenericDetailsTabContent(props) {
   //VIVEK - TABS DESIGN
   const Tabs = withStyles(theme => ({
     root: {
-      minHeight: theme.typography.pxToRem("30"),
+      minHeight: "30",
       backgroundColor: "#f4f5fa"
     },
     indicator: {
@@ -100,9 +100,9 @@ function GenericDetailsTabContent(props) {
 
   const Tab = withStyles(theme => ({
     root: {
-      minHeight: theme.typography.pxToRem("30"),
+      minHeight: 30,
       fontFamily: "inherit",
-      borderRadius: theme.typography.pxToRem("20"),
+      borderRadius: 20,
       color: "#333333",
       opacity: 1,
       "&$selected, &:focus": {
@@ -110,7 +110,7 @@ function GenericDetailsTabContent(props) {
         color: "#f4f5fa",
         opacity: 1
       },
-      marginRight: theme.typography.pxToRem("2")
+      marginRight: 2
     },
     selected: {}
   }))(MuiTab);

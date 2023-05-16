@@ -9,14 +9,18 @@ function ReportAndScenariosComponent(props) {
 
   useEffect(() => {
     console.log("Reports Index Page Data:-",props.indexPageData);
-  },[])
+  })
 
   return (
     <div className="px-5">
       <GenericDatatable
         dataSet={props.indexPageData}
-        //moduleName="IBA Alerts"
-        moduleName={props.indexPageData.MODULENAME}
+        // moduleName="IBA Alerts"
+        moduleName={
+          props.indexPageData.length > 0 
+            ? props.indexPageData.MODULENAME
+            : "IBA ALerts"
+          }
         isSelection={false}
         isMultipleSelect={false}
         selectionIndex={selectionIndex}

@@ -127,14 +127,14 @@ function RoleFeatureMapping(props) {
                 id: "roleId"
               }}
             >
-              <option aria-label="None" disabled value="" />
+              {/* <option aria-label="None" disabled value="" />
               {roleList.map((role, index) => {
                 return (
                   <option key={role["roleId"]} value={role["roleId"]}>
                     {role["roleName"]}
                   </option>
                 );
-              })}
+              })} */}
             </SelectFormsy>
           </FormControl>
         </Grid>
@@ -166,14 +166,14 @@ function RoleFeatureMapping(props) {
                 </div>
               )}
             >
-              {featureList.map(feature => (
+              {/* {featureList.map(feature => (
                 <MenuItem
                   key={feature.featureName}
                   value={feature.featureName}
                 >
                   {feature.featureName}
                 </MenuItem>
-              ))}
+              ))} */}
             </SelectFormsy>
           </FormControl>
         </Grid>

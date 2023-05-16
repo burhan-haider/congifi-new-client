@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Fab from "@mui/material/Fab";
 // import AddIcon from "@material-ui/icons/Add";
 import { MdAdd as AddIcon } from 'react-icons/md'
@@ -42,6 +42,10 @@ export default function UserComponent(props) {
     }
   };
 
+
+  useEffect(()=>{
+    console.log("User List Props:-", props)
+  })
   const handleOpenModal = () => {
     setOpenModal(true);
   };
@@ -144,6 +148,7 @@ export default function UserComponent(props) {
           <UserCreationForm
             closeModal={handleCloseModal}
             action={action}
+            refreshCurrentModule={props.refreshCurrentModule}
             ></UserCreationForm>
         </GenericDialog>
       </div>

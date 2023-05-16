@@ -412,6 +412,7 @@ console.log('currentAction is:', currentAction)
                                                                     dateTime={false}
                                                                     allowKeyboardControl={true}
                                                                     required={true}
+                                                                    value={new Date()}
                                                                 />
                                                             </FormControl>
                                                         </Grid>
