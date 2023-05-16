@@ -19,6 +19,7 @@ import { UserActionsComponent } from './modulePages';
 import { ELAComponent } from './modulePages'
 import { TransactionDashboard } from './modulePages'
 import { AuditLogComponent } from './modulePages'
+import {AccountProfilingComponent} from './modulePages';
 import { store } from 'redux/store'
 
 /*

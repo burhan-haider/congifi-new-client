@@ -2,6 +2,12 @@
 
 const styles = theme => ({
     root: {
+      '& .MuiAccordion-root:before': {
+        background: 'transparent'
+      },
+      '& .MuiPopover-paper': {
+        maxHeight: '150px'
+      },
       '& .moduleName':{
         width: '100%',
         background: '#EDEEF2',
@@ -56,6 +62,7 @@ const styles = theme => ({
         display: 'flex',
         alignItems: 'center',
         paddingLeft: '16px',
+        paddingTop: '16px'
         // marginTop: '16px'
       },
       '& .MuiAccordionSummary-root': {
@@ -89,6 +96,16 @@ const styles = theme => ({
         paddingBottom: '20px',
         borderRadius: '24px',
         marginBottom: '40px'
+      },
+      '& .primary-btn': {
+        backgroundColor: '#052a4f',
+        color: '#f4f5fa',
+        borderRadius:' 20px',
+        borderColor: '#052a4f'
+      },
+      '& .primary-btn:hover': {
+        backgroundColor: '#f4f5fa',
+        color: '#052a4f'
       }
     },
     formControl: {

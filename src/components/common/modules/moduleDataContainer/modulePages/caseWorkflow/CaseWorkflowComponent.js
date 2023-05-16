@@ -93,7 +93,13 @@ export default function CaseWorkflowComponent(props) {
 
   // const heading = feature.breadCrumbs[feature.breadCrumbs.length - 1]
 
-
+  // const dropdownStyle = theme => ({
+    
+  //   "& .dropdownH": {
+  //     maxHeight: '50vh'
+  //     }
+    
+  // })
   const classes = useClasses(styles);
 
   const paramObj = props.indexPageData;
@@ -338,9 +344,10 @@ export default function CaseWorkflowComponent(props) {
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "select" ? (
+                        //console.log('eachparam:', eachParam);
                         <Grid className="inputContainer" item xs={4} key={index}>
                           <Typography>{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
-                          <FormControl className={`${classes.formControl} w-full`}>
+                          <FormControl fullWidth>
                             <SelectFormsy
                               variant="outlined"
                               name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}

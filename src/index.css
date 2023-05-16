@@ -56,6 +56,25 @@ code {
   overflow-y: scroll;
 }
 
+.scrollhost::-webkit-scrollbar {
+	width: 5px;
+  }
+  
+  /* Track */
+  .scrollhost::-webkit-scrollbar-track {
+	background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  .scrollhost::-webkit-scrollbar-thumb {
+	background: #888; 
+  }
+  
+  /* Handle on hover */
+  .scrollhost::-webkit-scrollbar-thumb:hover {
+	background: #555; 
+  }
+
 .node {
 	cursor: pointer;
 }
@@ -207,6 +226,15 @@ text.keyText {
 
 .jodit-wysiwyg, .jodit-workplace {
 	border-bottom: none !important;
+}
+
+.MuiPopover-paper {
+	max-height: 60vh;
+	/* animation-duration: 0ms!important;
+	transition: none!important;
+	transform-origin: 0%!important; */
+	top: 224px;
+    left: 333px;
 }
 
 /* #root .action-btn.disabled {color: #892c2c;} */

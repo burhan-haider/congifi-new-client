@@ -346,7 +346,7 @@ function ActionParamsForm(props) {
               <Button
                 type="button"
                 aria-label="remove"
-                className='float-right m-[10px] '
+                className='float-right m-[10px] primary-btn'
                 color="primary"
                 variant="outlined"
                 onClick={() => handleAddFields()}
@@ -850,7 +850,7 @@ function ActionParamsForm(props) {
                         <Button
                           type="button"
                           aria-label="remove"
-                          className={classes.margin}
+                          className='primary-btn'
                           style={{ margin: 10 }}
                           color="primary"
                           variant="outlined"

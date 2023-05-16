@@ -80,7 +80,7 @@ import { useClasses, styles } from "@application";
 
 let searchFormData = {};
 
-export default function MasterComponent(props) {
+export default function AccountProfilingComponent(props) {
   const feature = props.feature
   const classes = useClasses(styles);
   const [moduleHeader, setModuleHeader] = useState([]);
@@ -124,7 +124,7 @@ export default function MasterComponent(props) {
     setIsFormValid(false);
     data["moduleType"] = moduleType;
     searchFormData = data;
-    commonService.fetchMasterSearchData(data).then(response => {
+    commonService.fetchAccountProfilingDetails(data).then(response => {
       setSearchData(response);
       console.log('response', commonService)
     }); 
@@ -138,7 +138,7 @@ export default function MasterComponent(props) {
 
   const ResultFrame = () => (
     <div id="bottomFrame" className={classes.root} style={{ padding: '5px 20px 0px' }}>
-      {searchData? (
+      {searchData ? (
         <GenericDatagrid
             tableData={searchData}
             utilColumn={'select'}
@@ -147,7 +147,7 @@ export default function MasterComponent(props) {
             // inputParams={inputParams}
             title={moduleHeader[0]}
             // actionButtons={GenericDetailsBottomContainer}
-            moduleType={"masters"}
+            moduleType={"accountProfiling"}
             // ComponentBottomContainer={GenericDetailsBottomContainer}
           />
          //<GenericDatatable

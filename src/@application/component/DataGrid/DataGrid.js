@@ -103,7 +103,7 @@ const DataGrid = (props) => {
                 },
             })
         }
-
+        
         tableData.DATA.forEach((data, dataIndex) => {
             let tempData = data.map((dval) => {
                 return dval === null ? 'N.A' : dval

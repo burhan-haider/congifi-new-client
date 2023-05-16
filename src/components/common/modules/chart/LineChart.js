@@ -127,7 +127,6 @@ function LineChart(props) {
     function handleResize() {
       // Set window width/height to state
         setOption(options);
-        console.log("Inner Width:-", window.innerWidth)
     }
     // Add event listener
     window.addEventListener("resize", handleResize);

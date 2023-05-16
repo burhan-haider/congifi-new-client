@@ -124,6 +124,7 @@ const ReorderDropdown = (props) => {
                                         key={col.key}
                                         draggableId={col.key}
                                         index={index}
+                                        id={col.key}
                                     >
                                         {(provided, snapshot) => (
                                             <MenuItem

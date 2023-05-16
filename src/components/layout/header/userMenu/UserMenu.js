@@ -120,24 +120,24 @@ function UserMenuList() {
         //endIcon={<AccountCircleRounded />}
         style={{ padding: "0" }}
       >
-        <Avatar className={classes.root}>
-          {/* <AccountCircleRounded /> */}
-          {/* <img src={VivekImage} alt="" /> */}
-        </Avatar>
+        
         <span
           className="hidden xl:block"
           style={{
-            width: "77px",
             wordBreak: "normal",
             lineHeight: "1.2em",
             marginTop: "3px",
             fontFamily: '"GoogleSans-Regular",-apple-system, BlinkMacSystemFont, "Segoe UI",Roboto, Helvetica Neue, Arial, sans-serif',
             textAlign: 'left',
-            marginLeft: '10px'
+            marginRight: '10px'
           }}
         >
           {userData.data.displayName}
         </span>
+        <Avatar className={classes.root}>
+          {/* <AccountCircleRounded /> */}
+          {/* <img src={VivekImage} alt="" /> */}
+        </Avatar>
         {/* VIVEK - 25.04.2020 */}
         {/* //className="ml-1" */}
         
