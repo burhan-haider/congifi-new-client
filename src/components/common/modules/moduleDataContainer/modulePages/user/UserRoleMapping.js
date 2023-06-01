@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 // import Select from "@mui/material/Select";
@@ -39,16 +39,23 @@ const styles = theme => ({
 });
 
 function UserRoleMapping(props) {
+
+  useEffect(()=>{
+    console.log("Index Page Data in UserRoleMapping:-", props);
+  })
   // console.log(props);
-  let userAndRole = props.indexPageData.USERANDROLE || {};
+  let userAndRole = props.indexPageData.USERANDROLE || [];
 
-  let pendingUsers = props.indexPageData.PENDINGUSER || {};
+  let pendingUsers = props.indexPageData.PENDINGUSER || [];
   
-  let roleObjectList = props.indexPageData.ROLEFEATUREMAP.ROLELIST || {};
+  let roleObjectList = [];
+  // let roleObjectList = props.indexPageData.ROLEFEATUREMAP.ROLELIST || {};
 
-  let approvedUserPendingRole = props.indexPageData.APPROVEDUSERPENDINGROLE || {};
+  let approvedUserPendingRole =  [];
+  // let approvedUserPendingRole = props.indexPageData.APPROVEDUSERPENDINGROLE || {};
 
-  let roleFeatureMap = props.indexPageData.ROLEFEATUREMAP.ROLEFEATUREMAPPING || {};
+  let roleFeatureMap = [];
+  // let roleFeatureMap = props.indexPageData.ROLEFEATUREMAP.ROLEFEATUREMAPPING || {};
 
   let userCodeList = [];
 

@@ -34,7 +34,7 @@ const moduleComponentConfig = {
   master: MasterComponent,
   roleComponent: RoleComponent,
   roleFeatureMapping: RoleFeatureMapping,
-  // userOperations: UserList,
+  userOperations: UserList,
   // singleRowEntity: SingleRowEntity,
   userRoleMapping: UserRoleMapping,
   userAction: UserActionsComponent,

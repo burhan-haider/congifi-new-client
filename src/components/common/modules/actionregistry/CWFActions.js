@@ -611,7 +611,7 @@ export const sendEmailByLEVEL2 = (formData) => {
 
 // }
 
-export const closeCaseByLevel3 = (action, data, caseNo, userActionType) =>{
+export const closeCasesByLevel3 = (action, data, caseNo, userActionType) =>{
   return new Promise((resolve, reject)=>{
       // const caseStatus = {
       //     Post: '1',
@@ -637,7 +637,7 @@ export const closeCaseByLevel3 = (action, data, caseNo, userActionType) =>{
           comments: data.comments,
           userActionType: userActionType||"defaultAction",
           reassignToUserCode: 'LEVEL3',
-          caseStatus: '100',
+          caseStatus: '101',
 
         } }
       )

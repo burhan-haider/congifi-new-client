@@ -207,7 +207,7 @@ const AuditLogComponent = (props) => {
                                         className={undefined} // optional, if you need for styling
                                         dateTime={false} // true, if need the Date and Time Picker. false if you need only Date Picker
                                         allowKeyboardControl={true} // optional, this will allow keybord to control the picker.
-                                        value={eachParam.MODULEPARAMDEFAULTVALUE}
+                                        value={new Date()}
                                         />
                                     </FormControl>
                                 </Grid>

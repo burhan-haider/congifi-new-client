@@ -69,14 +69,14 @@ class MasterModuleHyperlinks {
   };
 
   // VIVEK - functions below
-  genericDetailsFunction = (
+  genericDetailsFunction = ({
     hyperlinkTitle,
     hyperlinkDetailsModule,
     hyperlinkRow,
     rowIndex,
     columnIndex,
     dynamicProps
-  ) => {
+  }) => {
     const data = commonService.fetchModuleDetails(
       hyperlinkDetailsModule,
       hyperlinkRow[columnIndex]
@@ -163,14 +163,14 @@ class MasterModuleHyperlinks {
     return customerIDMap;
   };*/
 
-  openAccountProfilingDetails = (
+  openAccountProfilingDetails = ({
     hyperlinkTitle,
     hyperlinkDetailsModule,
     hyperlinkRow,
     rowIndex,
     columnIndex,
     dynamicProps
-  ) => {
+  }) => {
     //console.log(dynamicProps);
     const data = commonService.fetchAccountProfilingDetails(
       hyperlinkDetailsModule,
@@ -190,13 +190,13 @@ class MasterModuleHyperlinks {
     );
   };
 
-  openActionParametersModule = (
+  openActionParametersModule = ({
     hyperlinkTitle,
     hyperlinkDetailsModule,
     hyperlinkRow,
     rowIndex,
     columnIndex
-  ) => {
+  }) => {
     //const actionCode = hyperlinkRow[columnIndex];
     //const dispatch = useDispatch();
     //dispatch(ActionManagementActions.getCWFCases(actionCode));
@@ -218,6 +218,12 @@ class MasterModuleHyperlinks {
     return genericHyperlinksMap;
   }
 
+ functionObj = {
+    genericDetailsFunction: (data) => this.genericDetailsFunction(data),
+    openAccountProfilingDetails: (data) => this.openAccountProfilingDetails(data),
+    openActionParametersModule: (data) => this.openActionParametersModule(data),
+  }
+
   hyperlinkFunction = (
     hyperlinkColumn,
     desiredHyperlinkFunction,
@@ -228,16 +234,19 @@ class MasterModuleHyperlinks {
     columnIndex,
     dynamicProps
   ) => {
-    //console.log(desiredHyperlinkFunction + "---" + hyperlinkDetailsModule);
+    // console.log(desiredHyperlinkFunction + "---" + hyperlinkDetailsModule);
+    // console.log("function call:-", this.functionMap[desiredHyperlinkFunction]());
+
+    const data = {
+      hyperlinkTitle: hyperlinkTitle || "",
+      hyperlinkDetailsModule: hyperlinkDetailsModule || "",
+      hyperlinkRow: hyperlinkRow || "",
+      rowIndex: rowIndex || "",
+      columnIndex: columnIndex || "",
+      dynamicProps: dynamicProps || "",
+    }
     //VIVEK - Below line is for separate functions click for each hyperlink
-    return [desiredHyperlinkFunction](
-      hyperlinkTitle,
-      hyperlinkDetailsModule,
-      hyperlinkRow,
-      rowIndex,
-      columnIndex,
-      dynamicProps
-    );
+    return this.functionObj[desiredHyperlinkFunction](data);
   };
 }
 

@@ -13,6 +13,7 @@ import { GenericButton, useClasses } from "@application";
 import { TextFieldFormsy } from "components/common/formsyComponents";
 import userOperationService from "services/user/UserOperationService";
 import Formsy from "formsy-react";
+import { useEffect } from "react";
 
 const styles = theme => ({
   MuiButton: {
@@ -30,10 +31,14 @@ const styles = theme => ({
 
 export default function UserCreationForm(props) {
 
+  useEffect(()=>{
+    console.log("Props:-", props)
+  })
+
   const addNewUser = (newUserDetails) => {
     // console.log("newUserDetails ", newUserDetails);
     userOperationService
-      .createNewUser("user/", newUserDetails)
+      .createNewUser("api/user/", newUserDetails)
       .then(data => {
         // closeCreaeUserDialog();
         console.log("User Data:-", data)
@@ -41,11 +46,12 @@ export default function UserCreationForm(props) {
         props.closeModal();
       })
       .catch(err => {
-        if (err.response) {
-          alert(err.response.data.message);
-        } else {
-          alert("Error");
-        }
+        console.log("Error Message:-", err)
+        // if (err.response) {
+        //   alert(err.response.data.message);
+        // } else {
+        //   alert("Error", err);
+        // }
       });
   }
   const classes = useClasses(styles);

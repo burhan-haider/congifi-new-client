@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Fab from "@mui/material/Fab";
 // import AddIcon from "@material-ui/icons/Add";
 import { MdAdd as AddIcon } from 'react-icons/md'
@@ -42,6 +42,10 @@ export default function UserComponent(props) {
     }
   };
 
+
+  useEffect(()=>{
+    console.log("User List Props:-", props)
+  })
   const handleOpenModal = () => {
     setOpenModal(true);
   };
@@ -79,20 +83,23 @@ export default function UserComponent(props) {
 
   const HEADER = props.indexPageData["HEADER"];
   const DATA = props.indexPageData["DATA"];
-  const finalHEADER = HEADER.filter(function(h) {
+  const finalHEADER = HEADER ? HEADER.filter(function(h) {
     return h !== "USERPASS";
-  });
+  }) : [];
 
   var letCDATA;
   var finalDATA = [];
-  for (var j = 0; j < DATA.length; j++) {
-    letCDATA = DATA[j].filter(data => data !== DATA[j][1]);
-    finalDATA.push(letCDATA);
-    // console.log(
-    //  "DATA =",
-    //   DATA[i].filter(data => data !== DATA[i][1])
-    // );
+  if(DATA){
+    for (var j = 0; j < DATA.length; j++) {
+      letCDATA = DATA[j].filter(data => data !== DATA[j][1]);
+      finalDATA.push(letCDATA);
+      // console.log(
+      //  "DATA =",
+      //   DATA[i].filter(data => data !== DATA[i][1])
+      // );
+    }
   }
+  
   return (
     <>
       <div>
@@ -141,6 +148,7 @@ export default function UserComponent(props) {
           <UserCreationForm
             closeModal={handleCloseModal}
             action={action}
+            refreshCurrentModule={props.refreshCurrentModule}
             ></UserCreationForm>
         </GenericDialog>
       </div>

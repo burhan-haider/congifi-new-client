@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Fab from "@mui/material/Fab";
 // import AddIcon from "@material-ui/icons/Add";
 import { MdAdd as AddIcon } from 'react-icons/md'
@@ -12,6 +12,10 @@ import userOperationService from "services/user/UserOperationService";
 
 export default function UserComponent(props) {
   const [isDialogopen, setDialogOpen] = React.useState(false);
+
+  useEffect(()=>{
+    console.log("User Component:-", props)
+  })
 
   const openCreaeUserDialog = () => {
     setDialogOpen(true);
@@ -108,6 +112,7 @@ export default function UserComponent(props) {
         <UserCreationForm
           closeCreaeUserDialog={closeCreaeUserDialog}
           addNewUser={addNewUser}
+          // refreshCurrentModule={ref}
         />
       </Dialog>
     </div>

@@ -51,6 +51,7 @@ export default function ModuleDataContainer(props) {
         setDataLoading(true);
         setRefreshCount(refreshCount+1);
         props.setIsRefreshing(false);
+        console.log("indexPageData:" , indexPageData)
         // CommonService.fetchIndexPageData(moduleURL)
         //   .then(data => {
         //     setindexPageData(data);
@@ -84,6 +85,7 @@ export default function ModuleDataContainer(props) {
       CommonService.fetchIndexPageData(moduleURL)
         .then(data => {
           setindexPageData(data);
+          console.log("indexPageData:" , data)
           setDataLoading(false);
         })
         .catch(err => {
@@ -97,6 +99,7 @@ export default function ModuleDataContainer(props) {
             errorDetails["Error"] = err.message;
           }
           setError(errorDetails);
+         
           setDataLoading(false);
         });
     }
