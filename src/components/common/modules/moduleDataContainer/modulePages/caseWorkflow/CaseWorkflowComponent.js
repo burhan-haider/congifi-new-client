@@ -401,51 +401,41 @@ export default function CaseWorkflowComponent(props) {
                     )
                   : null}
 
-                {paramObj
-                  ? paramObj.map((eachParam, index) =>
-                      eachParam.MODULEPARAMDATATYPE === "checkbox" ? (
-                        <Grid className="inputContainer" item xs={4} key={index}>
-                          <FormControl className={classes.formControl}>
-                            <FormControlLabel
-                              className={undefined} // optional, if you need for styling
-                              control={
-                                <CheckboxFormsy
-                                  checked={false} // optional, if you need for styling
-                                  name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`} // mandatory, this will appear in the final JSON data once form is submitted
-                                  onChange={() => {}} // optional, a callback if you need to do any logic on the value change
-                                  value="" // mandatory, value of the selected element
-                                />
-                              }
-                              label={`${eachParam.MODULEPARAMIDNAME}`}
-                            />
-                          </FormControl>
-                        </Grid>
-                      ) : null
+                {paramObj && paramObj.map((eachParam, index) =>
+                    eachParam.MODULEPARAMDATATYPE === "checkbox" && (
+                      <Grid className="inputContainer" item xs={4} key={index}>
+                        <FormControl className={classes.formControl}>
+                          <FormControlLabel
+                            className={undefined} // optional, if you need for styling
+                            control={
+                              <CheckboxFormsy
+                                checked={false} // optional, if you need for styling
+                                name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`} // mandatory, this will appear in the final JSON data once form is submitted
+                                onChange={() => {}} // optional, a callback if you need to do any logic on the value change
+                                value="" // mandatory, value of the selected element
+                              />
+                            }
+                            label={`${eachParam.MODULEPARAMIDNAME}`}
+                          />
+                        </FormControl>
+                      </Grid>
                     )
-                  : null}
+                  )
+                }
               </Grid>
                 <Grid  item xs={12}>
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.ACTIONS != null ? (
-                        <Grid
-                          container
-                          alignItems="flex-end"
-                          justify="flex-end"
-                          direction="row"
-                          // style={{ marginRight: 15, marginBottom: 10 }}
-                          key={index}
-                          className="justify-end bg-white"
-                        >
+                        <Box>
                           {eachParam.ACTIONS.map(eachAction => (
                                 <GenericButton
                                   type="submit"
                                   variant="outlined"
                                   color="primary"
                                   aria-label={eachAction.actionName}
-                                  className={classes.button}
+                                  className={`${classes.button} mt-0`}
                                   id={eachAction.actionCode}
-                                  style={{ margin: 10 }}
                                   startIcon={
                                     `${eachAction.actionCode}`.includes("search") ? (
                                       <SearchButtonIcon />
@@ -461,7 +451,7 @@ export default function CaseWorkflowComponent(props) {
                                 </GenericButton>
                             )
                           )}
-                        </Grid>
+                        </Box>
                       ) : null
                     )
                   : null}
@@ -473,7 +463,11 @@ export default function CaseWorkflowComponent(props) {
         </Accordion>
       </div>
       {/* ) : null} */}
-      {showResults ? <ResultFrame /> : null}
+      {showResults && (
+        <div className="p-4" >
+          <ResultFrame />
+        </div>
+      )}
     </Paper>
   );
 }
