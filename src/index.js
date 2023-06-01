@@ -31,13 +31,12 @@ const theme = createTheme({
             container: rootElement,
         },
     },
-},
+  },
 });
 
 const root = createRoot(rootElement);
 
 root.render(
-  <React.StrictMode>
     <Provider store={store}>
       {/* <PersistGate loading={null} persistor={persistor}> */}
       <Router history={history}>
@@ -57,7 +56,6 @@ root.render(
       </Router>
       {/* </PersistGate> */}
     </Provider>
-  </React.StrictMode>
 );
 
 reportWebVitals();
