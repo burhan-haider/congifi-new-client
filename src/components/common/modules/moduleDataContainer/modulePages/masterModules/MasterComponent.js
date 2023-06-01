@@ -31,7 +31,7 @@ import {
 } from "react-icons/md"
 import commonService from "services/common/commonService";
 // import { useDispatch, useSelector } from "react-redux";
-import { GenericDatatable, GenericButton } from "@application";
+import { GenericDatatable, GenericButton, GenericDatagrid } from "@application";
 import { GenericDetailsBottomContainer } from "components/common/modules/moduleDataContainer/modulePages/common/bottomPages";
 import { useClasses, styles } from "@application";
 
@@ -96,7 +96,9 @@ export default function MasterComponent(props) {
       setModuleHeader(paramObj.map(param => param.MODULENAME));
     }
   }, [paramObj]);
-  const [dataSelected, setDataSelected] = useState([]);
+
+  
+  const [dataSelected, setDataSelected] = useState(null);
 
   //const selectionIndex = "all";
   const selectionIndex = "0,1,2,3,4,5,6,7,8,9";
@@ -114,37 +116,52 @@ export default function MasterComponent(props) {
     setExpandedPanel(expandedPanel ? panel : false);
   };
 
-  const [searchData, setSearchData] = useState({});
+  const [searchData, setSearchData] = useState(null);
   //const [bottomAction, setBottomAction] = useState([]);
 
   const handleSubmit = data => {
-    //console.log("Form JSON data " + JSON.stringify(data));
+    console.log("Form JSON data " + JSON.stringify(data));
     setIsFormValid(false);
     data["moduleType"] = moduleType;
     searchFormData = data;
     commonService.fetchMasterSearchData(data).then(response => {
       setSearchData(response);
-    });
+      console.log('response', commonService)
+    }); 
+    console.log('searchData', searchData)
     setShowResults(true);
     setExpandedPanel(false);
   };
+
+  
   //console.log("VIVEK - searchFormData = "+searchFormData);
 
   const ResultFrame = () => (
-    <div id="bottomFrame" className={classes.root} style={{ paddingTop: 5 }}>
-      {searchData ? (
-        <GenericDatatable
-          dataSet={searchData}
-          infoEnabled={true}
-          moduleName={moduleHeader[0]}
-          isSelection={true}
-          isMultipleSelect={true}
-          selectionIndex={selectionIndex}
-          BottomContainer={GenericDetailsBottomContainer}
-          selected={dataSelected}
-          selectHandler={setDataSelected}
-          dynamicProps={searchFormData}
-        ></GenericDatatable>
+    <div id="bottomFrame" className={classes.root} style={{ padding: '5px 20px 0px' }}>
+      {searchData? (
+        <GenericDatagrid
+            tableData={searchData}
+            utilColumn={'select'}
+            setSelectedData={setDataSelected}
+            selectedData={dataSelected}
+            // inputParams={inputParams}
+            title={moduleHeader[0]}
+            // actionButtons={GenericDetailsBottomContainer}
+            moduleType={"masters"}
+            // ComponentBottomContainer={GenericDetailsBottomContainer}
+          />
+         //<GenericDatatable
+          //dataSet={searchData}
+          //infoEnabled={true}
+          //moduleName={moduleHeader[0]}
+          //isSelection={true}
+          //isMultipleSelect={true}
+          //selectionIndex={selectionIndex}
+          //BottomContainer={GenericDetailsBottomContainer}
+          //selected={dataSelected}
+          //selectHandler={setDataSelected}
+          //dynamicProps={searchFormData}
+        //></GenericDatatable>
       ) : (
         "No data available"
       )}

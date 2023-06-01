@@ -17,3 +17,4 @@ export { default as UserActionsComponent } from './userActions/UserActionsCompon
 export { default as ELAComponent } from './entityLinkAnalysis'
 export { default as TransactionDashboard } from './transactionDashboard'
 export { default as AuditLogComponent } from './auditLog';
+export {default as AccountProfilingComponent} from './AccountProfiling'

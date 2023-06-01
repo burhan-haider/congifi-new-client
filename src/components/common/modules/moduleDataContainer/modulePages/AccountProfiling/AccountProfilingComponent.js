@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 import Formsy from "formsy-react";
 import {
   TextFieldFormsy,
@@ -10,34 +10,30 @@ import {
 import {
   MenuItem,
   FormControl,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
   Typography,
   Paper,
   Grid,
   FormControlLabel,
   Radio,
   RadioGroup,
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Divider
+  Divider,
+  Box
 } from "@mui/material";
-// import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 // import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 // import SearchButtonIcon from "@material-ui/icons/SearchOutlined";
 import { 
-    MdExpandMore as ExpandMoreIcon, 
-    MdOutlineSearch as SearchButtonIcon,
-  } from "react-icons/md"
+  MdExpandMore as ExpandMoreIcon, 
+  MdOutlineSearch as SearchButtonIcon,
+} from "react-icons/md"
 import commonService from "services/common/commonService";
-import { useDispatch, useSelector } from "react-redux";
-import * as CWFActions from "redux/caseWorkflow/cwfbottomframedata/cwfbottomframedata.actions";
-import { GenericButton, useClasses, GenericDatagrid, styles } from "@application";
-import CWFBottomContainer from "./BottomContainer/CWFBottomContainer";
-import { stringify } from "postcss";
-
-// import { CWFDetailsBottomContainer } from "../common/bottomPages";
+// import { useDispatch, useSelector } from "react-redux";
+import { GenericDatatable, GenericButton, GenericDatagrid } from "@application";
+import { GenericDetailsBottomContainer } from "components/common/modules/moduleDataContainer/modulePages/common/bottomPages";
+import { useClasses, styles } from "@application";
 
 // const styles = theme => ({
 //   root: {
@@ -47,171 +43,125 @@ import { stringify } from "postcss";
 //       borderRadius: "70px",
 //       height: 'auto',
 //       backgroundColor: '#fff',
+
+//       // fontSize: "14px",
 //     },
 
 //     "& .MuiExpansionPanelSummary-content": {
 //       margin: "2px 0"
 //     },
+//     "& .MuiOutlinedInput-input": {
+//       padding: '5px 20px'
+//     },
 
 //     " & .MuiExpansionPanelSummary-root": {
 //       backgroundColor: "#f4f5fa",
 //       margin: '0px'
-//     },  
-//     "& .MuiOutlinedInput-input": {
-//       padding: '5px 20px'
-//     },
+//     }
 //   },
 //   formControl: {
-//     margin: 1,
+//     // margin: 1,
 //     fullWidth: true,
 //     display: "flex",
 //     wrap: "nowrap"
 //   },
 //   expandedPanel: {
-//     backgroundColor: "#f4f5fa",
-//     margin: '0px'
+//     backgroundColor: "#f4f5fa"
 //   },
 //   heading: {
 //     color: "#052a4f",
 //     fontSize: 18,
-//     fontWeight: "700"
+//     fontWeight: "500"
 //   },
 //   rowDesign: {
 //     paddingTop: 15
-//   },
-//   button: {
-//     marginLeft: 10
 //   }
 // });
 
+let searchFormData = {};
 
-
-
-export default function CaseWorkflowComponent(props) {
-
-  const feature = props.feature;
-
-  // const heading = feature.breadCrumbs[feature.breadCrumbs.length - 1]
-
-  // const dropdownStyle = theme => ({
-    
-  //   "& .dropdownH": {
-  //     maxHeight: '50vh'
-  //     }
-    
-  // })
+export default function AccountProfilingComponent(props) {
+  const feature = props.feature
   const classes = useClasses(styles);
+  const [moduleHeader, setModuleHeader] = useState([]);
 
-  const paramObj = props.indexPageData;
+  const paramObj = useMemo(() =>
+    props && props.indexPageData.length ? props.indexPageData : []
+  ,[props])
+  
+    
+
+  useEffect(() => {
+    if (paramObj) {
+      setModuleHeader(paramObj.map(param => param.MODULENAME));
+    }
+  }, [paramObj]);
+
+  
+  const [dataSelected, setDataSelected] = useState(null);
+
+  //const selectionIndex = "all";
+  const selectionIndex = "0,1,2,3,4,5,6,7,8,9";
 
   const moduleType = props.moduleCode;
-
-  const moduleHeader = paramObj.map((eachParam, index) => {
-    return eachParam.MODULENAME;
-  });
 
   const formRef = useRef(null);
   const [isFormValid, setIsFormValid] = useState(false);
 
-  const [inputParams, setInputParams] = useState({});
-
   const [showResults, setShowResults] = useState(false);
   const [expandedPanel, setExpandedPanel] = useState("searchExpansionPanel");
 
-  const [dataSelected, setDataSelected] = useState([]);
-  //console.log(dataSelected);
-  // const selectionIndex = "all";
-  //const selectionIndex = "0,1";
-
   const handlePanelExpansion = panel => (event, expandedPanel) => {
+    //console.log(expandedPanel, panel);
     setExpandedPanel(expandedPanel ? panel : false);
   };
 
-  const handleDataChange = useCallback(
-    (newValue) => {
-      setDataSelected(newValue)
-    },
-    [],
-  );
-
-  useEffect(()=> {
-    console.log("Selected Data In Parent", dataSelected);
-  }, [dataSelected])
-
-  // const newdate = new Date();
-  // const datetime = new Date(
-  //   newdate.getTime() - newdate.getTimezoneOffset() * 60000
-  // ).toJSON();
-  // const formattedDate =
-  //   datetime
-  //     .slice(0, 10)
-  //     .replace(new RegExp("-", "g"), "-")
-  //     .split("-")
-  //     .reverse()
-  //     .join("-") + datetime.slice(11, 19);
-  //console.log(formattedDate);
-  // const [selectedFromDate, setSelectedFromDate] = useState(new Date());
-  // const [selectedToDate, setSelectedToDate] = useState(new Date());
-
-  const cwfCases = useSelector(
-    ({ caseWorkflow }) => caseWorkflow.cwfBottomFrameData.data
-  );
-
-  const [cwfCasesData, setCWFCasesData] = useState(null);
-  const [bottomAction, setBottomAction] = useState([]);
-
-  const dispatch = useDispatch();
+  const [searchData, setSearchData] = useState(null);
+  //const [bottomAction, setBottomAction] = useState([]);
 
   const handleSubmit = data => {
+    console.log("Form JSON data " + JSON.stringify(data));
     setIsFormValid(false);
     data["moduleType"] = moduleType;
-    setInputParams(data);
-    dispatch(CWFActions.getCWFCases(data));
-    setDataSelected([])
-    
+    searchFormData = data;
+    commonService.fetchAccountProfilingDetails(data).then(response => {
+      setSearchData(response);
+      console.log('response', commonService)
+    }); 
+    console.log('searchData', searchData)
+    setShowResults(true);
+    setExpandedPanel(false);
   };
 
-  useEffect(() => {
-    setCWFCasesData(cwfCases&&cwfCases!=null?cwfCases:null);
-    setBottomAction(cwfCases&&cwfCases!=null?cwfCases.ACTIONS:[]);
-    if(cwfCasesData !== null){
-      setShowResults(true);
-      setExpandedPanel(false);
-    }
-    
-  }, [cwfCases]);
-
-
+  
+  //console.log("VIVEK - searchFormData = "+searchFormData);
 
   const ResultFrame = () => (
-    <div id="bottomFrame" className={classes.root} style={{ paddingTop: 5 }}>
-      {cwfCasesData ? (
-        <>
-          {/* <GenericDatatable
-            dataSet={cwfCasesData}
-            infoEnabled={true}
-            moduleName={moduleHeader[0]}
-            isSelection={true}
-            isMultipleSelect={true}
-            selectionIndex={selectionIndex}
-            reloadData={handleSubmit}
-            inputParams={inputParams}
-            selected={dataSelected}
-            selectHandler={setDataSelected}
-            BottomContainer={CWFDetailsBottomContainer}
-          ></GenericDatatable> */}
-          <GenericDatagrid
-            tableData={cwfCasesData}
+    <div id="bottomFrame" className={classes.root} style={{ padding: '5px 20px 0px' }}>
+      {searchData ? (
+        <GenericDatagrid
+            tableData={searchData}
             utilColumn={'select'}
-            setSelectedData={handleDataChange}
+            setSelectedData={setDataSelected}
             selectedData={dataSelected}
-            inputParams={inputParams}
-            title={`${moduleHeader[0]} Results`}
-            actionButtons={bottomAction}
-            moduleType={"caseworkflow"}
-            ComponentBottomContainer={CWFBottomContainer}
+            // inputParams={inputParams}
+            title={moduleHeader[0]}
+            // actionButtons={GenericDetailsBottomContainer}
+            moduleType={"accountProfiling"}
+            // ComponentBottomContainer={GenericDetailsBottomContainer}
           />
-        </>
+         //<GenericDatatable
+          //dataSet={searchData}
+          //infoEnabled={true}
+          //moduleName={moduleHeader[0]}
+          //isSelection={true}
+          //isMultipleSelect={true}
+          //selectionIndex={selectionIndex}
+          //BottomContainer={GenericDetailsBottomContainer}
+          //selected={dataSelected}
+          //selectHandler={setDataSelected}
+          //dynamicProps={searchFormData}
+        //></GenericDatatable>
       ) : (
         "No data available"
       )}
@@ -219,27 +169,23 @@ export default function CaseWorkflowComponent(props) {
   );
 
   return (
-    <Paper className={`${classes.root} shadow-none`}>
-      <Box className="moduleName">{feature.breadCrumbs[feature.breadCrumbs.length - 1].label}</Box>
-      <Divider className="mb-[10px] border-[#C1C9D3]"></Divider>
-      <div id="topFrame" >
+    <Paper>
+      <div id="topFrame" className={`${classes.root}`}>
+        <Box className="moduleName">{feature.breadCrumbs[feature.breadCrumbs.length - 1].label}</Box>
+        <Divider className="mb-[10px] border-[#C1C9D3]"></Divider>
         <Accordion
-          className="px-5"
+        className="px-5"
           expanded={expandedPanel === "searchExpansionPanel"}
           onChange={handlePanelExpansion("searchExpansionPanel")}
           id="searchExpansionPanel"
-        > 
+        >
           <AccordionSummary
-            sx={{'& .Mui-expanded': {
-              margin: '0px'}
-            }}
             expandIcon={<ExpandMoreIcon />}
             aria-controls="searchPanelcontent"
             id="searchPanelHeader"
-            className="max-h-[30px]"
             classes={{
               root: classes.root,
-              // expanded: "bg-[#f4f5fa]"
+              // expanded: 'bg-[#F4F5FA]'
             }}
           >
             <Typography className={`${classes.heading} text-[14px] font-bold`} id="searchHeader">
@@ -259,8 +205,8 @@ export default function CaseWorkflowComponent(props) {
               onInvalid={() => setIsFormValid(false)}
               ref={formRef}
               className="flex flex-col justify-center w-full"
+              
             >
-            
               <Grid
                 container
                 alignItems="flex-start"
@@ -271,18 +217,17 @@ export default function CaseWorkflowComponent(props) {
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "date" ? (
                         <Grid className="inputContainer" item xs={4} key={index}>
-                          <Typography>{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
-                          <FormControl className={`${classes.formControl} w-full`}>
+                          <Typography>{`${eachParam.MODULEPARAMIDNAME}`}</Typography>
+                          <FormControl fullWidth>
                             <DatePickerFormsy
-                              sx={{backgroundColor: 'white'}}
                               variant="outlined"
                               name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
                               // label={`${eachParam.MODULEPARAMIDNAME}`}
                               ampm={false} // 24Hr / 12hr clock settings
-                              className={'rounded-lg bg-[#fff] z-20'} // optional, if you need for styling
+                              className={undefined} // optional, if you need for styling
                               dateTime={false} // true, if need the Date and Time Picker. false if you need only Date Picker
                               allowKeyboardControl={true} // optional, this will allow keybord to control the picker.
-                              value={new Date()}
+                              value={eachParam.MODULEPARAMDEFAULTVALUE}
                             />
                           </FormControl>
                         </Grid>
@@ -297,9 +242,10 @@ export default function CaseWorkflowComponent(props) {
                           <Typography>{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
                           <FormControl
                             className={
-                              `$(clsx(classes.margin, classes.textField),
-                              classes.formControl) w-full`
+                              (clsx(classes.margin, classes.textField),
+                              classes.formControl)
                             }
+                            fullWidth
                             variant="outlined"
                           >
                             <ViewFieldFormsy
@@ -323,8 +269,8 @@ export default function CaseWorkflowComponent(props) {
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "text" ? (
                         <Grid className="inputContainer" item xs={4} key={index}>
-                        <Typography>{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
-                          <FormControl className={`${classes.formControl} w-full`}>
+                          <Typography>{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
+                          <FormControl fullWidth>
                             <TextFieldFormsy
                               variant="outlined"
                               name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
@@ -344,10 +290,9 @@ export default function CaseWorkflowComponent(props) {
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "select" ? (
-                        //console.log('eachparam:', eachParam);
                         <Grid className="inputContainer" item xs={4} key={index}>
                           <Typography>{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
-                          <FormControl fullWidth>
+                          <FormControl fullWidth variant={'outlined'} >
                             <SelectFormsy
                               variant="outlined"
                               name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
@@ -356,7 +301,7 @@ export default function CaseWorkflowComponent(props) {
                               //   eachParam.MODULEPARAMNAME,
                               //   eachParam.MODULEPARAMIDNAME
                               // )}
-                              value={`${eachParam.MODULEPARAMDEFAULTVALUE}`} // mandatory, value of the selected element
+                              value="" // mandatory, value of the selected element
                               className={undefined} // optional, if you need for styling
                               onChange={() => {}} // optional, a callback if you need to do any logic on the value change
                               validationError="" // optional, to show error if validation fails
@@ -383,7 +328,8 @@ export default function CaseWorkflowComponent(props) {
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "radio" ? (
                         <Grid className="inputContainer" item xs={4} key={index}>
-                          <FormControl className={classes.formControl}>
+                          <Typography>{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
+                          <FormControl fullWidth>
                             <RadioGroup
                               row
                               aria-label={`${eachParam.MODULEPARAMIDNAME}_${eachParam.MODULEPARAMINDEX}`}
@@ -408,74 +354,95 @@ export default function CaseWorkflowComponent(props) {
                     )
                   : null}
 
-                {paramObj && paramObj.map((eachParam, index) =>
-                    eachParam.MODULEPARAMDATATYPE === "checkbox" && (
-                      <Grid className="inputContainer" item xs={4} key={index}>
-                        <FormControl className={classes.formControl}>
-                          <FormControlLabel
-                            className={undefined} // optional, if you need for styling
-                            control={
-                              <CheckboxFormsy
-                                checked={false} // optional, if you need for styling
-                                name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`} // mandatory, this will appear in the final JSON data once form is submitted
-                                onChange={() => {}} // optional, a callback if you need to do any logic on the value change
-                                value="" // mandatory, value of the selected element
-                              />
-                            }
-                            label={`${eachParam.MODULEPARAMIDNAME}`}
-                          />
-                        </FormControl>
-                      </Grid>
-                    )
-                  )
-                }
-              </Grid>
-                <Grid  item xs={12}>
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
+                      eachParam.MODULEPARAMDATATYPE === "checkbox" ? (
+                        <Grid className="inputContainer" item xs={4} key={index}>
+                          <Typography>{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
+                          <FormControl fullWidth>
+                            <FormControlLabel
+                              className={undefined} // optional, if you need for styling
+                              control={
+                                <CheckboxFormsy
+                                  checked={false} // optional, if you need for styling
+                                  name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`} // mandatory, this will appear in the final JSON data once form is submitted
+                                  onChange={() => {}} // optional, a callback if you need to do any logic on the value change
+                                  value="" // mandatory, value of the selected element
+                                />
+                              }
+                              label={`${eachParam.MODULEPARAMIDNAME}`}
+                            />
+                          </FormControl>
+                        </Grid>
+                      ) : null
+                    )
+                  : null}
+
+              </Grid>
+                <Grid
+                  container
+                  className="mx-4 my-3 flex flex-row justify-end w-100"
+                >
+                  <GenericButton
+                    type="submit"
+                    variant="outlined"
+                    aria-label="search"
+                    startIcon={<SearchButtonIcon />}
+                    disabled={!isFormValid}
+                    value="search"
+                  >
+                    Search
+                  </GenericButton>
+                </Grid>
+                {/* {paramObj
+                  ? paramObj.map((eachParam, index) =>
                       eachParam.ACTIONS != null ? (
-                        <Box>
-                          {eachParam.ACTIONS.map(eachAction => (
-                                <GenericButton
+                        <Grid
+                          key={index}
+                          container
+                          alignItems="flex-start"
+                          justify="flex-end"
+                          direction="row"
+                          style={{ marginRight: 15, marginBottom: 10 }}
+                        >
+                          {eachParam.ACTIONS.map(eachAction =>
+                            Object.entries(eachAction).map((key, value) => {
+                              return (
+                                <Button
                                   type="submit"
                                   variant="outlined"
                                   color="primary"
-                                  aria-label={eachAction.actionName}
-                                  className={`${classes.button} mt-0`}
-                                  id={eachAction.actionCode}
+                                  aria-label={key[1]}
+                                  className={classes.button}
+                                  id={key[1]}
+                                  style={{ margin: 10 }}
                                   startIcon={
-                                    `${eachAction.actionCode}`.includes("search") ? (
+                                    `${key[0]}`.includes("search") ? (
                                       <SearchButtonIcon />
                                     ) : (
                                       ""
                                     )
                                   }
                                   disabled={!isFormValid}
-                                  value={eachAction.actionCode}
-                                  key={eachAction.actionCode}
+                                  value={key[0]}
+                                  key={key[0]}
                                 >
-                                  {eachAction.actionName}
-                                </GenericButton>
-                            )
+                                  {key[1]}
+                                </Button>
+                              );
+                            })
                           )}
-                        </Box>
+                        </Grid>
                       ) : null
                     )
-                  : null}
-                </Grid>
-                
-              
+                  : null} */}
+              {/* </Grid> */}
             </Formsy>
           </AccordionDetails>
         </Accordion>
       </div>
       {/* ) : null} */}
-      {showResults && (
-        <div className="p-4" >
-          <ResultFrame />
-        </div>
-      )}
+      {showResults ? <ResultFrame /> : null}
     </Paper>
   );
 }
-

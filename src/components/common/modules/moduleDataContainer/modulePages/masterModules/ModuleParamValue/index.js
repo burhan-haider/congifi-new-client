@@ -42,7 +42,7 @@ function ModuleParamValue(props) {
 
   const classes = useClasses(styles);
   const [isFormValid, setIsFormValid] = useState(false);
-  const [searchData, setSearchData] = useState({});
+  const [searchData, setSearchData] = useState(null);
   const [showResults, setShowResults] = useState(false);
   const [searchByVal, setSearchByVal] = useState("");
   const [searchTypeVal, setSearchTypeVal] = useState("");

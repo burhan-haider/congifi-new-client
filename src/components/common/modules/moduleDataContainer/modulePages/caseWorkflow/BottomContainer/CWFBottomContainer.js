@@ -202,6 +202,7 @@ const CWFBottomContainer = (props) => {
     }
 
     const handleSubmit = (data) => {
+        console.log("User Action Type:-", userActionType);
         if(userActionType !== null){
             console.log("Form Data", data)
             actionMapping[currentAction.actionCode](currentAction, data, caseNo, userActionType)
@@ -259,7 +260,7 @@ const CWFBottomContainer = (props) => {
             }  
         }
     }
-console.log('currentAction is:', currentAction)
+// console.log('currentAction is:', currentAction)
     return (
         <Box className={`${classes.root} flex flex-row justify-end items-center`} >
             {actionButtons.length > 0 && actionButtons.map((action, index)=>(
@@ -372,7 +373,7 @@ console.log('currentAction is:', currentAction)
                                     <Grid
                                         className='p-[20px] pb-0'
                                         container>
-                                        <Box className='modal_shadow_container'>
+                                        <Box className='modal_shadow_container w-full'>
                                             <Grid container>
                                             {currentAction.actionParams.map((param, index)=>( 
                                                 <>
@@ -403,6 +404,7 @@ console.log('currentAction is:', currentAction)
                                                                 <DatePickerFormsy
                                                                     variant="filled"
                                                                     name={param.paramId}
+                                                                    value={new Date()}
                                                                     // label={param.paramName}
                                                                     ampm={false}
                                                                     className={undefined}

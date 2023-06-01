@@ -414,7 +414,7 @@ const FeatureHolder = ({feature}) => {
 			<Sticky >
 				{({ style }) => (
 					<div style={{ ...style, zIndex: 1 }}> 
-						<div  className={`flex justify-start w-100  bg-[#052a4f] ${feature.openTabs.length<1?'pb-2 pt-2':'pb-5 pt-3'}`} >
+						<div  className={`flex justify-start w-100  bg-[#052a4f] ${feature.openTabs.length<1?'pb-[10px] pt-0':'pb-[10px] pt-0'}`} >
 							<div className="w-full " >
 								{feature.openTabs.length>0&&(
 									<Box className="px-1 pt-1 bottom-1 text-left ml-5" style={{backgroundColor: '#fff'}} >
@@ -424,7 +424,7 @@ const FeatureHolder = ({feature}) => {
 													<Chip 
 														key={item.id} 
 														style={{backgroundColor: '#83a3bb',}} 
-														className="text-sm m-1 text-white font-gSans" 
+														className="text-[12px] m-1 text-white font-gSans" 
 														label={item.label}
 														icon={
 															<IoMdRefreshCircle 
@@ -468,7 +468,7 @@ const FeatureHolder = ({feature}) => {
 											{feature.breadCrumbs.sort((a, b) => a.level > b.level ? 1:-1).map((item)=>(
 												<p 
 													onClick={()=>handleClickBreadcrumb(item)} 
-													className="cursor-pointer my-1 text-white"
+													className="text-[12px] cursor-pointer my-1 text-white"
 													key={item.id}
 												> 
 													{item.label}{feature.breadCrumbs.indexOf(item) === feature.breadCrumbs.length-1&&' /'}
@@ -485,7 +485,7 @@ const FeatureHolder = ({feature}) => {
 									onClick={handleBookmark} 
 									className="m-0 p-0 ml-1 mr-3"
 							>
-								<img src={getIconByKey('yellowPin')} alt="Pinned Modules Logo" className="w-14 h-auto m-0"  />
+								<img src={getIconByKey('yellowPin')} alt="Pinned Modules Logo" className="w-12 h-auto m-0"  />
 							</IconButton>
 							<Menu
 								id="basic-menu"

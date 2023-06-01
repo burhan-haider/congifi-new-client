@@ -32,7 +32,7 @@ const RiskDashboardComponent = (props) => {
     const [tableData, setTableData] = useState({});
     const [showTable, setShowTable] = useState(false);
     const [dataSelected, setDataSelected] = useState([]);
-    const [searchData, setSearchData] = useState({});
+    const [searchData, setSearchData] = useState(null);
     const classes = useClasses(styles);
 
     const listData = [

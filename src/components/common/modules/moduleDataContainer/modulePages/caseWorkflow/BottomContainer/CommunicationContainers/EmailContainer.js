@@ -505,7 +505,7 @@ const EmailContainer = ({ handleModalClose, handleModalOpen, handleSubmit, caseN
             <Grid container className="transition-all duration-300 h-[100%]" wrap="wrap">
                 {/* Grid One */}
 
-                <Grid item xs={2} className="w-[100%] h-[100%] bg-[#fff] py-5 px-5">
+                <Grid item xs={2} className="scrollhost w-[100%] h-full bg-[#fff] py-5 px-5 hover:overflow-auto">
                     <Button
                         variant="contained"
                         className="px-5 py-2 my-3 normal-case text-app-primary bg-transparent hover:bg-app-primary hover:text-white text-lg rounded-[25px] shadow-none border-solid border-[1px] border-[#052a4f] mb-8"
@@ -574,7 +574,7 @@ const EmailContainer = ({ handleModalClose, handleModalOpen, handleSubmit, caseN
                     <Grid
                         item
                         xs={composing ? 4 : 10}
-                        className="w-[100%] bg-[#f5f6fa] py-5 px-5 transition-all duration-300"
+                        className="scrollhost w-[100%] bg-[#f5f6fa] h-full hover:overflow-auto py-5 px-5 transition-all duration-300"
                     >
                         <Box className="flex flex-row justify-between items-center mb-10">
                             <Box className="bg-[#e0e1e7] p-2 rounded-lg flex flex-row justify-between items-center w-[100%]">
@@ -672,7 +672,7 @@ const EmailContainer = ({ handleModalClose, handleModalOpen, handleSubmit, caseN
                     <Grid
                         item
                         xs={composing ? 4 : 10}
-                        className="w-[100%] bg-[#f5f6fa] py-5 px-5 transition-all duration-300"
+                        className="scrollhost w-[100%] bg-[#f5f6fa] py-5 px-5 h-full hover:overflow-auto transition-all duration-300"
                     >
                         {expandedMail!==null&&<OpenMailCard mail={expandedMail} />}
                         
@@ -685,7 +685,7 @@ const EmailContainer = ({ handleModalClose, handleModalOpen, handleSubmit, caseN
                     <Grid
                         item
                         xs={6}
-                        className="bg-[#fff] py-5 px-5 transition-all"
+                        className="scrollhost bg-[#fff] py-5 px-5 transition-all h-full hover:overflow-auto"
                     >
                         <Box className="flex flex-row justify-between items-center w-[100%] mb-14 ">
                             <Box className="flex flex-row justify-start items-center">

@@ -160,7 +160,7 @@ const ELAComponent = (props) => {
     // };
 
     const handleSubmit = async(formData) => {
-        // console.log("Form Data:-", formData)
+        console.log("Form Data:-", formData)
         setShowData(true)
         setExpandedPanel(false)
         await httpService
@@ -191,7 +191,7 @@ const ELAComponent = (props) => {
     }
 
     return(
-        <div className={classes.root} >
+        <div className={`${classes.root}`} >
             <Box className="moduleName">{feature.breadCrumbs[feature.breadCrumbs.length - 1].label}</Box>
             <Divider className="mb-[10px] border-[#C1C9D3]"></Divider>
             <Accordion 
@@ -289,7 +289,7 @@ const ELAComponent = (props) => {
                 </AccordionDetails>
             </Accordion>
             {showData&&(
-                <Accordion defaultExpanded>
+                <Accordion className='px-[20px]'  defaultExpanded>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         id="searchPanelHeader"
@@ -297,6 +297,7 @@ const ELAComponent = (props) => {
                         root: classes.root,
                         expanded: classes.expandedPanel
                         }}
+                        className='border-t-0'
                     >
                         <Typography className={classes.heading} id="searchHeader">
                             Entity Link Data
@@ -305,12 +306,12 @@ const ELAComponent = (props) => {
                     <AccordionDetails
                         align="left"
                         id="searchExpansionPanelDetails"
-                        style={{ padding: '15px' }}
+                        style={{ padding: '15px', background: '#EDEEF2' }}
                     >
                         <Box className="flex flex-row justify-start items-center" >
                             {displayType !== 'table' && (
                                 <Button
-                                    className="px-5 py-2 mx-2 my-3 normal-case text-app-primary bg-transparent hover:bg-app-primary hover:text-white  text-sm rounded-[25px] shadow-none border-solid border-[1px] border-[#052a4f]"
+                                    className="px-5 py-2 mx-2 bg-white my-3 normal-case text-app-primary bg-transparent hover:bg-app-primary hover:text-white  text-sm rounded-[25px] shadow-none border-solid border-[1px] border-[#052a4f]"
                                     variant="contained"
                                     size="small"
                                     onClick={()=>setDisplayType('table')}
@@ -321,7 +322,7 @@ const ELAComponent = (props) => {
                             )}
                             
                             <Button
-                                className="px-5 py-2 mx-2 my-3 normal-case text-app-primary bg-transparent hover:bg-app-primary hover:text-white  text-sm rounded-[25px] shadow-none border-solid border-[1px] border-[#052a4f]"
+                                className="px-5 py-2 mx-2 my-3 z-10 bg-white normal-case text-app-primary hover:bg-app-primary hover:text-white  text-sm rounded-[25px] shadow-none border-solid border-[1px] border-[#052a4f]"
                                 aria-controls={openGraphMenu ? 'freeze-dropdown-menu' : undefined}
                                 aria-haspopup="true"
                                 aria-expanded={openGraphMenu ? 'true' : undefined}
