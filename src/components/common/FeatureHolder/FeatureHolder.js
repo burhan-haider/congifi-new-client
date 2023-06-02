@@ -460,7 +460,7 @@ const FeatureHolder = ({feature}) => {
 									<div className='flex justify-start items-center' >
 										{feature.breadCrumbs.length>1 &&(
 											<IconButton onClick={()=>handlePin()} className="m-0 p-0 ml-1 mr-2" >
-													<img src={getIconByKey('whitePin')} alt="pin Icon" className="w-5 p-0 h-auto m-0" />
+													<img src={getIconByKey('whitePin')} alt="pin Icon" className="w-auto p-0 h-5 m-0" />
 											</IconButton>
 										)}
 
@@ -485,7 +485,7 @@ const FeatureHolder = ({feature}) => {
 									onClick={handleBookmark} 
 									className="m-0 p-0 ml-1 mr-3"
 							>
-								<img src={getIconByKey('yellowPin')} alt="Pinned Modules Logo" className="w-12 h-auto m-0"  />
+								<img src={getIconByKey('yellowPin')} alt="Pinned Modules Logo" className="w-auto h-10 m-0"  />
 							</IconButton>
 							<Menu
 								id="basic-menu"
