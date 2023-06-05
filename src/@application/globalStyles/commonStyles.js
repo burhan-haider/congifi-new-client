@@ -11,7 +11,7 @@ const styles = theme => ({
       '& .moduleName':{
         width: '100%',
         background: '#EDEEF2',
-        padding: '10px',
+        padding: '10px 25px',
         color: '#052A4F',
         fontWeight: '700',
         textAlign: 'left',

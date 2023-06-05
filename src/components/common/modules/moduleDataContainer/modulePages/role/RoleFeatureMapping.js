@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 // import { makeStyles } from "@mui/styles";
-import Grid from "@mui/material/Grid";
-import Chip from "@mui/material/Chip";
+
+import {Grid, Chip, Typography, Box, Divider} from "@mui/material/";
+// import Chip from "@mui/material/Chip";
 // import Select from "@mui/material/Select";
 // import InputLabel from "@mui/material/InputLabel";
 import Input from "@mui/material/Input";
@@ -9,31 +10,32 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import RoleOperationService from "services/role/RoleOperationService";
 import { SelectFormsy } from "components/common/formsyComponents";
-import { GenericButton, useClasses } from "@application";
+import { GenericButton, useClasses, styles } from "@application";
 import Formsy from "formsy-react";
 
-const styles = theme => ({
-  formControl: {
-    margin: 1,
-    minWidth: 120
-  },
-  selectEmpty: {
-    marginTop: 2
-  },
-  chips: {
-    display: "flex",
-    flexWrap: "wrap"
-  },
-  chip: {
-    margin: '1px',
-  },
-  Muigrid: {}
-});
+// const styles = theme => ({
+//   formControl: {
+//     margin: 1,
+//     minWidth: 120
+//   },
+//   selectEmpty: {
+//     marginTop: 2
+//   },
+//   chips: {
+//     display: "flex",
+//     flexWrap: "wrap"
+//   },
+//   chip: {
+//     margin: '1px',
+//   },
+//   Muigrid: {}
+// });
 
 function RoleFeatureMapping(props) {
   let featureList = props.indexPageData.FEATURELIST;
   let roleList = props.indexPageData.ROLELIST;
   let roleFeatureMappingList = props.indexPageData.ROLEFEATUREMAPPING;
+  const feature = props.feature
 
   const classes = useClasses(styles);
   const [selectedFeatureList, setSelectedFeatureList] = useState([]);
@@ -102,21 +104,27 @@ function RoleFeatureMapping(props) {
   };
 
   return (
-    <div style={{ marginTop: "1%" }}>
+    <div className={`${classes.root}`}>
+    <Box className="moduleName">{feature.breadCrumbs[feature.breadCrumbs.length - 1].label}</Box>
+    <Divider className="mb-[10px] border-[#C1C9D3]"></Divider>
       <Formsy>
-      <Grid container justify="center" alignItems="center" spacing={3}>
+      <Grid 
+          className='main_input_container'
+          container justify="center" 
+          alignItems="center" spacing={3}>
         <Grid 
           item 
+          className='inputContainer'
           md={2}
-          className={classes.Muigrid}
         >
+          <Typography>Select Role</Typography>
           <FormControl 
             className={classes.formControl} 
-            fullWidth={true}
+            fullWidth
           >
             <SelectFormsy
               name="Role"
-              label="Select Role"
+              // label="Select Role"
               variant="outlined"
               // style={{ paddingLeft: "10px" }}
               native
@@ -138,14 +146,16 @@ function RoleFeatureMapping(props) {
             </SelectFormsy>
           </FormControl>
         </Grid>
-        <Grid item md={7} className={classes.Muigrid}>
+        <Grid
+        className='inputContainer' item md={7} >
+          <Typography>Feature</Typography>
           <FormControl 
             className={classes.formControl} 
-            fullWidth={true}
+            fullWidth
             >
             <SelectFormsy
               labelId="role-mutiple-chip-label"
-              label="Feature"
+              // label="Feature"
               id="userRole"
               name="Features"
               variant="outlined"
