@@ -161,6 +161,7 @@ export default function ActionMasterComponent(props) {
           variant="scrollable"
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"
+          className="pl-6"
         >
           <Tab label="Action Details" {...selectedTabProps(0)} />
           <Tab label="Action Parameters" {...selectedTabProps(1)} />

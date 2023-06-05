@@ -497,8 +497,8 @@ const FeatureHolder = ({feature}) => {
 								}}
 							>
 								{pinnedModules.length>0 ? pinnedModules.map((item)=>(
-										<MenuItem disableRipple key={item.featureCode}>
-												<Link component="button" onClick={()=>handleOpenPin(item)} className="text-2xl" underline='false' >{item.moduleName}</Link>
+										<MenuItem className='flex justify-between' disableRipple key={item.featureCode}>
+												<Link component="button" onClick={()=>handleOpenPin(item)} className="text-sm text-black" underline='false' >{item.moduleName}</Link>
 												&nbsp;&nbsp;
 												<IconButton sx={{width: '14px', height: '14px'}} className="p-1" onClick={()=>handleRemovePin(item)} >
 														<img src={getIconByKey('closeBlue')} alt="closeIcon" style={{width: '10px', height: '10px'}} className="ml-5" />
