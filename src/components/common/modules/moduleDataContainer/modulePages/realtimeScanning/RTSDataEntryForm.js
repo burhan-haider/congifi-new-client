@@ -42,12 +42,12 @@ function RTSDataEntryForm(props) {
             <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm'].join(" ")}>
               Name 1
             </Grid>
-            <Grid xs={7} item={true} style={{border: 'none'}} className={classes.TestAlignment}>
+            <Grid xs={7} item={true} style={{border: 'none'}} className={`${classes.TestAlignment} w-full rounded-full bg-white`}>
               <TextFieldFormsy
                 size="small"
                 value="osama bin laden"
                 name="NAME1"
-                className="w-full rounded-full bg-white"
+                // className="w-full rounded-full bg-white"
                 variant="standard"
                 InputProps={{
                   className: classes.MuiOutlinedInput,
@@ -62,11 +62,11 @@ function RTSDataEntryForm(props) {
             <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm'].join(" ")}>
               Name 2
             </Grid>
-            <Grid xs={7} item={true} className={classes.TestAlignment}>
+            <Grid xs={7} item={true} className={`${classes.TestAlignment} w-full rounded-full bg-white`}>
               <TextFieldFormsy
                 size="small"
                 name="NAME2"
-                className="w-full rounded-full bg-white"
+                // className="w-full rounded-full bg-white"
                 variant="standard"
                 InputProps={{
                   className: classes.MuiOutlinedInput,
@@ -81,7 +81,7 @@ function RTSDataEntryForm(props) {
             <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm'].join(" ")}>
               Name 3
             </Grid>
-            <Grid xs={6} item={true} className={classes.TestAlignment}>
+            <Grid xs={6} item={true} className={`${classes.TestAlignment} w-full rounded-full bg-white`}>
               <TextFieldFormsy
                 size="small"
                 name="NAME3"
@@ -108,7 +108,7 @@ function RTSDataEntryForm(props) {
             <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm'].join(" ")}>
               Name 4
             </Grid>
-            <Grid xs={7} item={true} className={classes.TestAlignment}>
+            <Grid xs={7} item={true} className={`${classes.TestAlignment} w-full rounded-full bg-white`}>
               <TextFieldFormsy
                 size="small"
                 name="NAME4"
@@ -127,7 +127,7 @@ function RTSDataEntryForm(props) {
             <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm'].join(" ")}>
               Name 5
             </Grid>
-            <Grid xs={7} item={true} className={classes.TestAlignment}>
+            <Grid xs={7} item={true} className={`${classes.TestAlignment} w-full rounded-full bg-white`}>
               <TextFieldFormsy
                 size="small"
                 name="NAME5"
@@ -146,7 +146,7 @@ function RTSDataEntryForm(props) {
             <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm'].join(" ")}>
               Date of Birth
             </Grid>
-            <Grid xs={6} item={true} className={classes.TestAlignment}>
+            <Grid xs={6} item={true} className={`${classes.TestAlignment} w-full rounded-full bg-white`}>
               <TextFieldFormsy
                 size="small"
                 name="DATEOFBIRTH"
@@ -173,7 +173,7 @@ function RTSDataEntryForm(props) {
             <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm'].join(" ")}>
               Passport No
             </Grid>
-            <Grid xs={7} item={true} className={classes.TestAlignment}>
+            <Grid xs={7} item={true} className={`${classes.TestAlignment} w-full rounded-full bg-white`}>
               <TextFieldFormsy
                 size="small"
                 name="PASSPORTNO"
@@ -192,7 +192,7 @@ function RTSDataEntryForm(props) {
             <Grid xs={5} item={true} className={[classes.TestAlignment, , 'text-sm'].join(" ")}>
               National Id value
             </Grid>
-            <Grid xs={7} item={true} className={classes.TestAlignment}>
+            <Grid xs={7} item={true} className={`${classes.TestAlignment} w-full rounded-full bg-white`}>
               <TextFieldFormsy
                 size="small"
                 name="PANNO"
@@ -211,7 +211,7 @@ function RTSDataEntryForm(props) {
             <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm' ].join(" ")}>
               Account No
             </Grid>
-            <Grid xs={6} item={true} className={classes.TestAlignment}>
+            <Grid xs={6} item={true} className={`${classes.TestAlignment} w-full rounded-full bg-white`}>
               <TextFieldFormsy
                 size="small"
                 name="ACCOUNTNO"
@@ -238,7 +238,7 @@ function RTSDataEntryForm(props) {
             <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm'].join(" ")}>
               Customer Id
             </Grid>
-            <Grid xs={7} item={true} className={classes.TestAlignment}>
+            <Grid xs={7} item={true} className={`${classes.TestAlignment} w-full rounded-full bg-white`}>
               <TextFieldFormsy
                 size="small"
                 name="CUSTOMERID"
@@ -257,7 +257,7 @@ function RTSDataEntryForm(props) {
             <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm'].join(" ")}>
               Address
             </Grid>
-            <Grid xs={7} item={true} className={classes.TestAlignment}>
+            <Grid xs={7} item={true} className={`${classes.TestAlignment} w-full rounded-full bg-white`}>
               <TextFieldFormsy
                 size="small"
                 name="ADDRESS"
@@ -276,7 +276,7 @@ function RTSDataEntryForm(props) {
             <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm'].join(" ")}>
               Image File Path
             </Grid>
-            <Grid xs={6} item={true} className={classes.TestAlignment}>
+            <Grid xs={6} item={true} className={`${classes.TestAlignment} w-full rounded-full bg-white`}>
               <TextFieldFormsy
                 size="small"
                 name="IMAGEFILEPATH"
@@ -298,7 +298,7 @@ function RTSDataEntryForm(props) {
             <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm'].join(" ")}>
               Image Scan Threshold
             </Grid>
-            <Grid xs={7} item={true} className={classes.TestAlignment}>
+            <Grid xs={7} item={true} className={`${classes.TestAlignment} w-full rounded-full bg-white`}>
               <TextFieldFormsy
                 size="small"
                 name="IMAGESCANTHRESHOLD"

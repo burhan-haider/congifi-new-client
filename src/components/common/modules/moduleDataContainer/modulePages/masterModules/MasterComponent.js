@@ -34,7 +34,7 @@ import commonService from "services/common/commonService";
 import { GenericDatatable, GenericButton, GenericDatagrid } from "@application";
 import { GenericDetailsBottomContainer } from "components/common/modules/moduleDataContainer/modulePages/common/bottomPages";
 import { useClasses, styles } from "@application";
-
+import moment from 'moment';
 // const styles = theme => ({
 //   root: {
 //     width: "100%",
@@ -218,7 +218,7 @@ export default function MasterComponent(props) {
                       eachParam.MODULEPARAMDATATYPE === "date" ? (
                         <Grid className="inputContainer" item xs={4} key={index}>
                           <Typography>{`${eachParam.MODULEPARAMIDNAME}`}</Typography>
-                          <FormControl fullWidth>
+                          <FormControl fullWidth required>
                             <DatePickerFormsy
                               variant="outlined"
                               name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
@@ -227,7 +227,7 @@ export default function MasterComponent(props) {
                               className={undefined} // optional, if you need for styling
                               dateTime={false} // true, if need the Date and Time Picker. false if you need only Date Picker
                               allowKeyboardControl={true} // optional, this will allow keybord to control the picker.
-                              value={eachParam.MODULEPARAMDEFAULTVALUE}
+                              value={moment(new Date).format('DD/MM/YYYY')}
                             />
                           </FormControl>
                         </Grid>

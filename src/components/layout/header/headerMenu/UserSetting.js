@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import clsx from "clsx";
 // import { makeStyles } from "@mui/material/styles";
-import { useClasses } from "@application";
 import TextField from "@mui/material/TextField";
 import commonService from "services/common/commonService";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,40 +10,42 @@ import httpService from "services/httpservice/httpService";
 import { Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { GenericButton } from "@application";
+import { useClasses, styles } from '@application'
 
-const styles = theme => ({
-  divStyle: {
-    padding: "10px",
-    marginBottom: "10px",
-    backgroundColor: "#f4f5fa",
-    borderRadius: "35px"
-  },
-  textFieldRoot: {
-    width: "100%",
-    fontFamily: "inherit",
-    // background: "linear-gradient(45deg, #89f7fe 30%, #66a6ff 90%)",
-    //boxShadow: '0 3px 5px 2px rgba(124, 217, 254, 1)',
-    borderRadius: 50
-  },
-  textFieldInput: {
-    color: "Black",
-    borderRadius: "50px"
-  },
-  MuiOutlinedInput: {
-    borderRadius: "50px",
-    padding: "0px"
-  },
-  settingsTypography: {
-    width: "100%",
-    fontFamily: "inherit",
-    fontSize: "14px",
-    minHeight: "25px",
-    wordBreak: "break-word",
-    overflowWrap: "anywhere",
-    whiteSpace: "normal",
-    color: "#333333"
-  }
-});
+
+// const styles = theme => ({
+//   divStyle: {
+//     padding: "10px",
+//     marginBottom: "10px",
+//     backgroundColor: "#f4f5fa",
+//     borderRadius: "35px"
+//   },
+//   textFieldRoot: {
+//     width: "100%",
+//     fontFamily: "inherit",
+//     // background: "linear-gradient(45deg, #89f7fe 30%, #66a6ff 90%)",
+//     //boxShadow: '0 3px 5px 2px rgba(124, 217, 254, 1)',
+//     borderRadius: 50
+//   },
+//   textFieldInput: {
+//     color: "Black",
+//     borderRadius: "50px"
+//   },
+//   MuiOutlinedInput: {
+//     borderRadius: "50px",
+//     padding: "0px"
+//   },
+//   settingsTypography: {
+//     width: "100%",
+//     fontFamily: "inherit",
+//     fontSize: "14px",
+//     minHeight: "25px",
+//     wordBreak: "break-word",
+//     overflowWrap: "anywhere",
+//     whiteSpace: "normal",
+//     color: "#333333"
+//   }
+// });
 
 function UserSettings(props) {
   //return <div>settings are here</div>;
@@ -116,8 +117,12 @@ function UserSettings(props) {
   return (
     <div>
       {/* <h3>Settings content</h3> */}
-      <div className={clsx("flex justify-start", classes.divStyle)}>
-        <Grid container spacing={3} sx={{paddingRight: '0.5rem', paddingLeft:'0.5rem'}}>
+      <div className={clsx("flex justify-start bg-[#EDEEF2] rounded-lg mb-10 py-[30px] px-[10px]", classes.root)} style=
+    {{borderRadius: '24px',
+    margin: '0px 0px 40px',
+    padding: '30px 10px 30px',
+    background: '#EDEEF2'}} >
+        <Grid className="" container spacing={3} sx={{paddingRight: '0.5rem', paddingLeft:'0.5rem'}}>
           <Grid item xs={2} sx={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
             <Typography className={classes.settingsTypography}>
               {commonService.getLabel(
@@ -126,8 +131,9 @@ function UserSettings(props) {
               )}
             </Typography>
           </Grid>
-          <Grid item xs={2} sx={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
+          <Grid className='inputContainer' item xs={2} sx={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
             <TextField
+            fullWidth
               select
               variant="outlined"
               name="Timeout Seconds"
@@ -169,7 +175,7 @@ function UserSettings(props) {
               )}
             </Typography>
           </Grid>
-          <Grid item xs={2} sx={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
+          <Grid className='inputContainer' item xs={2} sx={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
             <TextField
               select
               variant="outlined"
@@ -214,7 +220,7 @@ function UserSettings(props) {
               )}
             </Typography>
           </Grid>
-          <Grid item xs={2} sx={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
+          <Grid className='inputContainer' item xs={2} sx={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
             <TextField
               select
               variant="outlined"

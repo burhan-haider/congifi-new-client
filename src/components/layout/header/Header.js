@@ -18,7 +18,7 @@ import {
 // import { Link, Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 // import { addToOpenFeatures, setSelectedFeature } from 'redux/routes/routes.actions';
-import logo from 'assets/header/cognifi-logo.png';
+import logo from 'assets/header/conquer-icon.png';
 import headerBar from 'assets/header/header-bar.png'
 import UserMenuList from './userMenu/UserMenu';
 // import commonService from 'services/common/commonService'
@@ -92,11 +92,11 @@ const Header = () => {
 
     return (
         <Box className={'flex justify-start align-middle px-3 mb-0 pb-0 bg-[#052a4f]'} >
-            <div className='flex justify-start' >
+            <div className='flex justify-center items-center' >
                 <img 
                     src={logo} 
                     alt="cognifi-logo" 
-                    className="h-8 w-8 m-0 mt-[8px] mx-2 cursor-pointer" 
+                    className="h-[35px] w-auto m-0 my-1 mx-2 cursor-pointer" 
                     onClick={()=>window.location.reload()}
                 />
                 {/* <img src={headerBar} alt="header-bar" className="h-9 w-auto m-0 mt-[6px]" /> */}

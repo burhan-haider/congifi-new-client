@@ -139,8 +139,10 @@ const TransactionDashboard = (props) => {
 
     useEffect(()=>{
         if(Object.keys(searchData).length>0){
+            console.log('searchdata', searchData)
             setShowResults(true);
             setExpandedPanel(false);
+            console.log('setshowresult', setShowResults)
         }
     },[searchData])
 
