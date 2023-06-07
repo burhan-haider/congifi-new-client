@@ -19,7 +19,6 @@ import { actionMapping } from 'components/common/modules/actionregistry/ActionMa
 import CommentsContainer from './CommentsContainer';
 
 import { GenericAlert, GenericFilePicker, useClasses, styles } from '@application';
-import EmailContainer from './CommunicationContainers/EmailContainer';
 import CommunicationContainer from './CommunicationContainers/CommunicationContainer';
 
 
@@ -165,7 +164,7 @@ const CWFBottomContainer = (props) => {
                 setCommType('call')
                 setCommModalOpen(true)
             } else if(action.actionCode === 'getFileUploadConfig'){
-                actionMapping['getFileUploadConfig'](action, caseNo, userActionType)
+                actionMapping['getFileUploadConfig'](action, caseNo[0], userActionType)
                     .then((res)=>{
                         console.log("Upload Modal Response:-", res)
                         setFileConfig({
@@ -183,7 +182,7 @@ const CWFBottomContainer = (props) => {
             else{
                 if(showCommentActions.includes(action.actionCode)){
             
-                    actionMapping['getCWFCaseAndCommentsDetails'](action, caseNo, userActionType)
+                    actionMapping['getCWFCaseAndCommentsDetails'](action, caseNo[0], userActionType)
                     .then(res=>{
                             var allTabNames = res['TABNAMES']
                             console.log('tabname///////////////////////////',allTabNames)
@@ -205,7 +204,7 @@ const CWFBottomContainer = (props) => {
         console.log("User Action Type:-", userActionType);
         if(userActionType !== null){
             console.log("Form Data", data)
-            actionMapping[currentAction.actionCode](currentAction, data, caseNo, userActionType)
+            actionMapping[currentAction.actionCode](currentAction, data, caseNo[0], userActionType)
                 .then(res=>{
                     setModalOpen(false)
                     console.log(res)
@@ -223,7 +222,7 @@ const CWFBottomContainer = (props) => {
 
         data.append('file', uploadFileData)
         
-        actionMapping['fileUploadConfig'](data, caseNo)
+        actionMapping['fileUploadConfig'](data, caseNo[0])
         .then(res=>{
             console.log("Response:-", res)
             setAlertType('success')
@@ -247,7 +246,7 @@ const CWFBottomContainer = (props) => {
             }
         }
         else{
-            if(selectedCaseStatus.length == 1){
+            if(selectedCaseStatus.length === 1){
                 if(action.enabledFor.includes('ALL') || action.enabledFor.includes(selectedCaseStatus[0])){
                     return false
                 }
@@ -404,8 +403,6 @@ const CWFBottomContainer = (props) => {
                                                                 <DatePickerFormsy
                                                                     variant="filled"
                                                                     name={param.paramId}
-                                                                    value={new Date()}
-                                                                    // label={param.paramName}
                                                                     ampm={false}
                                                                     className={undefined}
                                                                     format="dd/MM/yyyy"

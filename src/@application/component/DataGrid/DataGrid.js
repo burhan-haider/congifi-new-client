@@ -1,10 +1,10 @@
 import ReactDatagrid, { SelectColumn } from 'react-data-grid'
 import React, { useState, useEffect, useMemo, } from 'react'
-import { 
-    Box, 
-    IconButton, 
-    Menu, 
-    MenuItem, 
+import {
+    Box,
+    IconButton,
+    Menu,
+    MenuItem,
     ClickAwayListener,
     Divider,
     Accordion,
@@ -21,7 +21,7 @@ import {
 import Pagination from './Pagination/Pagination'
 import { BsInfoCircleFill, BsCaretRightFill, BsFilter } from 'react-icons/bs'
 import { AiOutlineSortAscending, AiOutlineSortDescending } from 'react-icons/ai'
-
+import headerConfig from '@application/util/tableHeaderConfig/en'
 import moment from 'moment'
 
 import './tableStyles.css'
@@ -29,12 +29,12 @@ import Toolbar from './Toolbar/Toolbar'
 import BottomContainer from './BottomContainer/BottomContainer'
 
 const DataGrid = (props) => {
-    const { 
-        utilColumn = null, 
-        title, 
+    const {
+        utilColumn = null,
+        title,
         tableData,
         selectedData,
-        setSelectedData, 
+        setSelectedData,
         actionButtons = [],
         moduleType = null,
         ComponentBottomContainer = null,
@@ -103,7 +103,7 @@ const DataGrid = (props) => {
                 },
             })
         }
-        
+
         tableData.DATA.forEach((data, dataIndex) => {
             let tempData = data.map((dval) => {
                 return dval === null ? 'N.A' : dval
@@ -116,12 +116,15 @@ const DataGrid = (props) => {
             tempRows.push(tempObj)
         })
 
+        let srWidth = tableData.HEADER.length < 6 ? `${tableData.HEADER.length / 100}%` : 40;
+        let colWidth = tableData.HEADER.length < 6 ? `${tableData.HEADER.length / 100}%` : 280;
+
         tempColumns.push({
             key: 'INDEX',
             name: 'Sr. No.',
             sortable: true,
             filterable: true,
-            width: 40,
+            width: srWidth,
         })
 
         const linkHeaders = [
@@ -136,10 +139,10 @@ const DataGrid = (props) => {
             if (linkHeaders.includes(header)) {
                 columnObject = {
                     key: header,
-                    name: toTitleCase(header),
+                    name: headerConfig[header] ? toTitleCase(headerConfig[header]) : toTitleCase(header),
                     sortable: true,
                     filterable: true,
-                    width: 280,
+                    width: colWidth,
                     formatter(props) {
                         const value = props.row[header]
                         return (
@@ -152,17 +155,17 @@ const DataGrid = (props) => {
             } else {
                 columnObject = {
                     key: header,
-                    name: toTitleCase(header),
+                    name: headerConfig[header] ? toTitleCase(headerConfig[header]) : toTitleCase(header),
                     sortable: true,
                     filterable: true,
-                    width: 280,
+                    width: colWidth,
                 }
             }
 
-            if(filterActive === true){
+            if (filterActive === true) {
                 columnObject = {
                     ...columnObject,
-                    headerRenderer: (p) => <FiltersRenderer 
+                    headerRenderer: (p) => <FiltersRenderer
                         {...p}
                         rows={tempRows}
                     />,
@@ -172,7 +175,7 @@ const DataGrid = (props) => {
             tempColumns.push(columnObject);
         })
 
-        
+
 
         setColumns(tempColumns)
         setCheckedState(new Array(tempColumns.length).fill(false))
@@ -239,7 +242,7 @@ const DataGrid = (props) => {
                 )
                 let tempCaseNo = [];
                 let tempCaseStatus = [];
-                totalRows.filter(e=>selectedRows.has(e.INDEX)).forEach(row=>{
+                totalRows.filter(e => selectedRows.has(e.INDEX)).forEach(row => {
                     tempCaseNo.push(row["app.common.CASENO"])
                     tempCaseStatus.push(row["app.common.CURRENT_CASESTATUS"])
                 })
@@ -263,19 +266,19 @@ const DataGrid = (props) => {
         }
     }, [selectedRows, isSelected, totalRows, utilColumn])
 
-    useEffect(()=>{
-        if(utilColumn === 'singleSelect'){
-            if(selectedRows.size === 1 ){
-                setSelectedCaseStatus(tableData.DATA[selectedRows.values().next().value-1][1])
-                setCaseNo(tableData.DATA[selectedRows.values().next().value-1][0])
+    useEffect(() => {
+        if (utilColumn === 'singleSelect') {
+            if (selectedRows.size === 1) {
+                setSelectedCaseStatus(tableData.DATA[selectedRows.values().next().value - 1][1])
+                setCaseNo(tableData.DATA[selectedRows.values().next().value - 1][0])
                 // setSelectedData([tableData.DATA[selectedRows.values().next().value-1]])
             }
-            else{
+            else {
                 setCaseNo('')
                 setSelectedCaseStatus('')
             }
         }
-    },[selectedRows, utilColumn, tableData])
+    }, [selectedRows, utilColumn, tableData])
 
 
     // const summaryRows = useMemo(() => {
@@ -350,7 +353,7 @@ const DataGrid = (props) => {
             console.log("Checked:", e.target.checked)
             console.log("TabIndex:", e.target.tabIndex)
             if (e.target.tabIndex === 0 && selectedRows.size > 0) {
-                if(e.target.checked === true){
+                if (e.target.checked === true) {
                     e.target.checked = false
                     e.target.tabIndex = -1
                 }
@@ -402,13 +405,12 @@ const DataGrid = (props) => {
             sortColumns={sortColumns}
             onSortColumnsChange={setSortColumns}
             // summaryRows={summaryRows}
-            className={`rdg-light text-base bg-[#f4f5fa] overflow-hidden hover:overflow-auto min-h-[300px] border-[1.5px] ${filterActive===true&&'border-solid border-app-primary '}`}
+            className={`rdg-light text-base bg-[#f4f5fa] overflow-hidden hover:overflow-auto min-h-[300px] border-[1.5px] ${filterActive === true && 'border-solid border-app-primary '}`}
             direction={direction}
             rowClass={(row, index) =>
-                `border-none ${
-                    selectedRows.has(row.INDEX)
-                        ? 'bg-[#d9d9d9]'
-                        : row.INDEX % 2 !== 0
+                `border-none ${selectedRows.has(row.INDEX)
+                    ? 'bg-[#d9d9d9]'
+                    : row.INDEX % 2 !== 0
                         ? 'bg-[#f4f5fa]'
                         : 'bg-[#ebecf1]'
                 }`
@@ -458,36 +460,36 @@ const DataGrid = (props) => {
                     lastIndex={lastIndex}
                     totalRows={totalRows}
                 />
-                {actionButtons.length>0 && (
+                {actionButtons.length > 0 && (
                     <>
                         <hr color='#ddd' />
-                        {ComponentBottomContainer!==null?(
+                        {ComponentBottomContainer !== null ? (
                             <ComponentBottomContainer
-                                actionButtons={actionButtons} 
+                                actionButtons={actionButtons}
                                 selectedData={selectedData}
                                 moduleType={moduleType}
-                                caseNo={caseNo} 
+                                caseNo={caseNo}
                                 selectedCaseStatus={selectedCaseStatus}
                             />
-                        ):(
-                            <BottomContainer 
-                                actionButtons={actionButtons} 
+                        ) : (
+                            <BottomContainer
+                                actionButtons={actionButtons}
                                 selectedData={selectedData}
                                 moduleType={moduleType}
                                 caseNo={caseNo}
                                 selectedCaseStatus={selectedCaseStatus}
                             />
                         )}
-                        
+
                     </>
                 )}
-                
+
             </Box>
         </div>
     )
 }
 
-const FiltersRenderer = ({isCellSelected, column, children, rows}) => {
+const FiltersRenderer = ({ isCellSelected, column, children, rows }) => {
 
     const [anchorEl, setAnchorEl] = useState(null)
     const [rowData, setRowData] = useState([])
@@ -502,11 +504,11 @@ const FiltersRenderer = ({isCellSelected, column, children, rows}) => {
         setAnchorEl(null)
     }
 
-    useEffect(()=>{
+    useEffect(() => {
 
         let colValues = [];
 
-        rows.forEach((row)=>{
+        rows.forEach((row) => {
             colValues.push(row[column.key])
         })
 
@@ -516,18 +518,18 @@ const FiltersRenderer = ({isCellSelected, column, children, rows}) => {
         setUniqueRowData(uniqueValues);
         setCheckedState(new Array(uniqueValues.length).fill(true))
 
-    },[column, rows])
+    }, [column, rows])
 
     const handleCheckbox = (pos) => {
-        let updatedCheckedState = checkedState.map((item, index)=>
+        let updatedCheckedState = checkedState.map((item, index) =>
             index === pos ? !item : item
         )
 
         setCheckedState(updatedCheckedState)
     }
 
-    const StyledAccordionSummary = styled(AccordionSummary)(({theme})=>({
-        
+    const StyledAccordionSummary = styled(AccordionSummary)(({ theme }) => ({
+
         minHeight: '20px',
         maxHeight: '20px',
         '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
@@ -540,10 +542,10 @@ const FiltersRenderer = ({isCellSelected, column, children, rows}) => {
     }))
 
     const handleCondition = (event) => {
-        setCondition({[column.key]: event.target.value})
+        setCondition({ [column.key]: event.target.value })
     }
 
-    
+
     return (
         <>
             <ClickAwayListener onClickAway={handleClose} >
@@ -552,7 +554,7 @@ const FiltersRenderer = ({isCellSelected, column, children, rows}) => {
                     <IconButton className="p-0" onClick={(e) => handleClick(column.key, e)}>
                         <BsFilter color="white" size={16} />
                     </IconButton>
-                
+
                     <Menu
                         id={`filter-dropdown-${column.key}`}
                         MenuListProps={{
@@ -573,26 +575,26 @@ const FiltersRenderer = ({isCellSelected, column, children, rows}) => {
                         className="text-sm"
                     >
                         <MenuItem className='text-sm' >
-                            Sort Ascending <AiOutlineSortAscending style={{marginLeft: '8px'}} className='ml-2' size={20} />
+                            Sort Ascending <AiOutlineSortAscending style={{ marginLeft: '8px' }} className='ml-2' size={20} />
                         </MenuItem>
                         <MenuItem className='text-sm'>
-                            Sort Descending <AiOutlineSortDescending style={{marginLeft: '8px'}} className='ml-2' size={20} />
+                            Sort Descending <AiOutlineSortDescending style={{ marginLeft: '8px' }} className='ml-2' size={20} />
                         </MenuItem>
                         <Divider />
                         <ListItem className='text-sm' >
-                            <Accordion 
-                                className='border-none shadow-none p-0 bg-transparent w-[100%]' 
+                            <Accordion
+                                className='border-none shadow-none p-0 bg-transparent w-[100%]'
                                 sx={{
                                     boxShadow: 'none',
                                     width: '100%'
                                 }}
                             >
-                                <StyledAccordionSummary 
-                                    className='p-0 h-[0px] m-0'  
+                                <StyledAccordionSummary
+                                    className='p-0 h-[0px] m-0'
                                     sx={{
                                         padding: 0,
                                         margin: 0,
-                                        '&.Mui-expanded':{
+                                        '&.Mui-expanded': {
                                             maxHeight: '20px',
                                             minHeight: '20px',
                                         }
@@ -604,9 +606,9 @@ const FiltersRenderer = ({isCellSelected, column, children, rows}) => {
                                         margin: 0,
                                     }} className='p-0 m-0 text-sm' >Filter By Condition</Typography>
                                 </StyledAccordionSummary>
-                                <AccordionDetails className='p-0' sx={{padding: 0,}}>
+                                <AccordionDetails className='p-0' sx={{ padding: 0, }}>
                                     <FormControl sx={{ width: '90%', fontSize: '14px', lineHeight: '20px', marginTop: '20px' }} size="small" className='text-sm w-[90%] mt-5'>
-                                        <InputLabel id="demo-select-small" className='text-sm' sx={{fontSize: '14px', lineHeight: '20px'}}>Condition</InputLabel>
+                                        <InputLabel id="demo-select-small" className='text-sm' sx={{ fontSize: '14px', lineHeight: '20px' }}>Condition</InputLabel>
                                         <Select
                                             labelId="demo-select-small"
                                             id="demo-select-small"
@@ -628,7 +630,7 @@ const FiltersRenderer = ({isCellSelected, column, children, rows}) => {
                                             }}
                                         >
                                             <MenuItem className='text-sm' value="">
-                                            <em>None</em>
+                                                <em>None</em>
                                             </MenuItem>
                                             <MenuItem className='text-sm' value={'empty'}>Is Empty</MenuItem>
                                             <MenuItem className='text-sm' value={'notEmpty'}>Is Not Empty</MenuItem>
@@ -650,18 +652,18 @@ const FiltersRenderer = ({isCellSelected, column, children, rows}) => {
                         </ListItem>
                         {/* <Divider /> */}
                         <ListItem className='text-sm ' >
-                            <Accordion 
-                                className='border-none shadow-none p-0 bg-transparent w-[100%]' 
+                            <Accordion
+                                className='border-none shadow-none p-0 bg-transparent w-[100%]'
                                 defaultExpanded
                                 sx={{
                                     boxShadow: 'none',
                                 }}
                             >
-                                <StyledAccordionSummary 
-                                    className='p-0 h-[0px] m-0'  
+                                <StyledAccordionSummary
+                                    className='p-0 h-[0px] m-0'
                                     expandIcon={<BsCaretRightFill size={12} />}
                                     sx={{
-                                        '&.Mui-expanded':{
+                                        '&.Mui-expanded': {
                                             maxHeight: '20px',
                                             minHeight: '20px',
                                         },
@@ -677,8 +679,8 @@ const FiltersRenderer = ({isCellSelected, column, children, rows}) => {
                                         overflow: 'auto',
                                         marginTop: '12px'
                                     }} className="max-h-[200px] overflow-auto mt-3">
-                                        {uniqueRowData.map((data, index)=>(
-                                            <Box 
+                                        {uniqueRowData.map((data, index) => (
+                                            <Box
                                                 key={data}
                                                 sx={{
                                                     display: 'flex',
@@ -687,8 +689,8 @@ const FiltersRenderer = ({isCellSelected, column, children, rows}) => {
                                                     alignItems: 'center'
                                                 }}
                                                 className='flex flex-row justify-start items-center'>
-                                                <Checkbox size='small' checked={checkedState[index]} onChange={()=>handleCheckbox(index)} /> 
-                                                <Typography 
+                                                <Checkbox size='small' checked={checkedState[index]} onChange={() => handleCheckbox(index)} />
+                                                <Typography
                                                     className='text-sm'
                                                     sx={{
                                                         fontSize: '14px',
@@ -704,10 +706,10 @@ const FiltersRenderer = ({isCellSelected, column, children, rows}) => {
                                 </AccordionDetails>
                             </Accordion>
                         </ListItem>
-                    </Menu>   
+                    </Menu>
                 </div>
             </ClickAwayListener>
-          
+
         </>
     );
 }

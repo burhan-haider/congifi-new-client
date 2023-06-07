@@ -442,7 +442,7 @@ const FeatureHolder = ({feature}) => {
 													<Chip 
 														key={item.id} 
 														style={{border: '1px solid #83a3bb'}} 
-														className=" bg-transparent font-gSans hover:bg-light-grey hover:text-white text-sm m-1" 
+														className=" bg-transparent font-gSans hover:bg-light-grey hover:text-white text-[12px] m-1" 
 														size="small" 
 														label={item.label} 
 														onClick={()=>handleClick(item)}  
