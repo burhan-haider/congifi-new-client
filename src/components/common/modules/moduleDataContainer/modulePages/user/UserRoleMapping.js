@@ -191,10 +191,16 @@ function UserRoleMapping(props) {
   return (
     <div className="p-3 pb-20" >
       <Formsy>
-        <div style={{ marginTop: "1%" }}>
-          <Grid container justify="center" alignItems="center" spacing={3}>
-            <Grid item md={3}>
-              <FormControl className={classes.formControl} fullWidth={true}>
+        <div className={`${classes.root} mt-5`}>
+          <Grid 
+              className='main_input_container'
+              container 
+              justify="center" 
+              alignItems="center" 
+              spacing={3}>
+            <Grid className='inputContainer' item md={3}>
+              <Typography>Select User Code</Typography>
+              <FormControl className={classes.formControl} fullWidth>
                 {/* <InputLabel htmlFor="age-native-simple">
                   Select User Code
                 </InputLabel> */}
@@ -202,7 +208,7 @@ function UserRoleMapping(props) {
                   variant="outlined"
                   name="userCode"
                   native
-                  label="Select User Code"
+                  // label="Select User Code"
                   value={userCode ? userCode : ""}
                   onChange={userCodeOnChange}
                   inputProps={{
@@ -221,12 +227,13 @@ function UserRoleMapping(props) {
                 </SelectFormsy>
               </FormControl>
             </Grid>
-            <Grid item md={5}>
-              <FormControl className={classes.formControl} fullWidth={true}>
+            <Grid className='inputContainer' item md={5}>
+            <Typography>Select Role</Typography>
+              <FormControl className={classes.formControl} fullWidth>
                 {/* <InputLabel id="userRoleLabel">User Roles</InputLabel> */}
                 <SelectFormsy
                   labelId="role-mutiple-chip-label"
-                  label="Select Role"
+                  // label="Select Role"
                   id="userRole"
                   name="userRole"
                   variant="outlined"

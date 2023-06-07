@@ -35,6 +35,7 @@ import email from './icons/topbar/email.png'
 import log from './icons/topbar/log.png'
 import path from './icons/topbar/path.png'
 import reports from './icons/feature/reports.png'
+import reportsHeaderMenu from './icons/topbar/reports.png'
 import settings from './icons/topbar/settings.png'
 import speak from './icons/topbar/speak .png'
 import trace from './icons/topbar/trace.png'
@@ -77,6 +78,7 @@ const icons = {
     settings,
     speak,
     trace,
+    reportsHeaderMenu,
     search1,
     drsCaseWorkflow,
     masterFeature,

@@ -168,8 +168,8 @@ function HeaderMenu() {
                   <MenuItem className={classes.menuItems}>
                     <ListItemIcon className={classes.listItemIcons}>
                       <img
-                        src={getIconByKey('reports')}
-                        className={classes.topbarIcons}
+                        src={getIconByKey('reportsHeaderMenu')}
+                        className={`${classes.topbarIcons}`}
                         alt="reports"
                       />
                     </ListItemIcon>

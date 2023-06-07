@@ -122,7 +122,7 @@ const RiskDashboardComponent = (props) => {
             <Box className="moduleName">{feature.breadCrumbs[feature.breadCrumbs.length - 1].label}</Box>
             <Divider className="mb-[10px] border-[#C1C9D3]"></Divider>
             <Formsy onValidSubmit={data=>handleSubmit(data)} >
-                <Grid container className={`py-5 container`} alignItems={'center'}>
+                <Grid container className={`main_input_container py-5 container`} alignItems={'center'}>
                     <Grid className='inputContainer pr-3' item sm={3}>
                         <DatePickerFormsy
                             fullWidth

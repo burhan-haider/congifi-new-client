@@ -40,19 +40,21 @@ root.render(
     <Provider store={store}>
       {/* <PersistGate loading={null} persistor={persistor}> */}
       <Router history={history}>
-        <Authentication history={history}>
-          <Authorization history={history}>
-            <ThemeProvider theme={theme}>
-              <StyledEngineProvider injectFirst>
-                {/* <MUIThemeProvider theme={theme}> */}
-                  <Layout>
-                    <App />
-                  </Layout>
-                {/* </MUIThemeProvider> */}
-              </StyledEngineProvider>
-            </ThemeProvider>
-          </Authorization>
-        </Authentication>
+      <ThemeProvider theme={theme}>
+        <StyledEngineProvider injectFirst>
+          <Authentication history={history}>
+            <Authorization history={history}>
+              
+                  {/* <MUIThemeProvider theme={theme}> */}
+                    <Layout>
+                      <App />
+                    </Layout>
+                  {/* </MUIThemeProvider> */}
+                
+            </Authorization>
+          </Authentication>
+        </StyledEngineProvider>
+      </ThemeProvider>
       </Router>
       {/* </PersistGate> */}
     </Provider>
