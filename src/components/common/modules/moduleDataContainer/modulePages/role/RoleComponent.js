@@ -18,9 +18,9 @@ import roleOperationService from "services/role/RoleOperationService";
 import * as MessageActions from "redux/message/message.actions";
 import RoleUpdate from "./RoleUpdate";
 import { useDispatch } from "react-redux";
-import { useClasses } from "@application";
+import { useClasses, styles } from "@application";
 
-const styles = (theme) => ({
+const customStyles = (theme) => ({
   speedDial: {},
   mainDivSpeedDial: {
     position: "relative",
@@ -41,7 +41,7 @@ function RoleComponent(props) {
   const selectionIndex = "all";
   const dispatch = useDispatch();
 
-  const classes = useClasses(styles);
+  const classes = useClasses(styles, customStyles);
   //const selectionIndex = "0,1";
 
   const modalData = {

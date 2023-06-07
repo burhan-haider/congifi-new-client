@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box, Switch, Stack, Typography, InputBase, Button, Tooltip, Divider } from '@mui/material'
+import { Box, Switch, Stack, Typography, InputBase, Button, Tooltip, Divider, Checkbox, MenuItem, FormControl, Select } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import IconButton from '@mui/material/IconButton';
 import ExportDropdown from './ExportDropdown'
@@ -28,7 +28,8 @@ const Toolbar = (props) => {
         searchString,
         setSearchString,
         filterActive,
-        setFilterActive
+        setFilterActive,
+        setIsSelected
     } = props
 
     const CustomSwitch = styled(Switch)(({ theme }) => ({
@@ -96,7 +97,7 @@ const Toolbar = (props) => {
                         alignItems="center"
                         className="ml-2"
                     >
-                        <Typography
+                        {/* <Typography
                             className={`mr-3 font-bold ${
                                 showSelected
                                     ? 'text-slate-400'
@@ -105,6 +106,7 @@ const Toolbar = (props) => {
                         >
                             All
                         </Typography>
+                            
                         <CustomSwitch
                             checked={showSelected}
                             onChange={() => {
@@ -115,13 +117,62 @@ const Toolbar = (props) => {
                             checkedIcon={<RiEye2Fill size={22} />}
                         />
                         <Typography
-                            className={`ml-3 font-bold ${
+                            className={`ml-0 font-bold ${
                                 !showSelected
                                     ? 'text-slate-400'
                                     : 'text-app-dark'
                             }`}
                         >
-                            Selected
+                            Selected Case
+                        </Typography> */}
+                        {/* <Checkbox
+                            className='p-1'
+                            checked={!showSelected}
+                            onChange={() => {
+                                setShowSelected(!showSelected)
+                                setCurrentPage(1)
+                            }}
+                            />
+                        <FormControl fullWidth>
+                            <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            // value={age}
+                            // label="Age"
+                            // onChange={handleChange}/
+                            onChange={() => {
+                            setShowSelected(!showSelected)
+                            setCurrentPage(1)
+                        }}
+                            >
+                            <MenuItem className={`mr-3 font-bold ${
+                            showSelected
+                                ? 'text-slate-400'
+                                : 'text-app-dark'
+                        }`} value={10}>All</MenuItem>
+                            <MenuItem className={`ml-0 font-bold ${
+                            !showSelected
+                                ? 'text-slate-400'
+                                : 'text-app-dark'
+                        }`} value={20}>Selected</MenuItem>
+                            </Select>
+                        </FormControl> */}
+                        <Checkbox
+                            className='p-1'
+                            checked={showSelected}
+                            onChange={() => {
+                                setShowSelected(!showSelected)
+                                setCurrentPage(1)
+                            }}
+                        />
+                        <Typography
+                            className={`ml-0 font-bold ${
+                                !showSelected
+                                    ? 'text-slate-400'
+                                    : 'text-app-dark'
+                            }`}
+                        >
+                            Selected Case
                         </Typography>
                     </Stack>
                 )}

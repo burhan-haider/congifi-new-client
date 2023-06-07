@@ -12,7 +12,10 @@ import {
     Link,
     CircularProgress,
     Card,
-    Typography
+    Typography,
+    Tooltip,
+    ClickAwayListener,
+    Divider
 } from '@mui/material';
 // import { MdPushPin, MdBookmark, MdArrowDropDown, MdRefresh } from 'react-icons/md'
 import { IoMdRefreshCircle } from 'react-icons/io'
@@ -37,6 +40,8 @@ import getIconByKey from 'assets';
 import ModuleChartFrame from 'components/common/modules/mainModuleSearchFrame/ModuleChartFrame'
 import { Sticky, StickyContainer } from 'react-sticky';
 import buttonIconMapping from 'assets/buttonIconMapping';
+import { motion } from "framer-motion";
+
 // import { handleBreakpoints } from '@mui/system';
 
 const styles = theme => ({
@@ -74,6 +79,15 @@ const styles = theme => ({
     //   }
 })
 
+const pinnedUl = ({
+  root: {
+    '& .MuiList-padding': {
+      paddingTop: '0px',
+      paddingBottom: '0px'
+    }
+  }
+})
+
 const FeatureHolder = ({feature}) => {
 
   const [bookMark, toggleBookMark] = useState(null);
@@ -81,8 +95,9 @@ const FeatureHolder = ({feature}) => {
   const [modules, setModules] = useState(null);
   const [isModuleLoading, setIsModuleLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [openTooltip, setOpenTooltip] = useState(false);
 
-  const classes = useClasses(styles);
+  const classes = useClasses(pinnedUl);
 
   const dispatch =  useDispatch();
   const selectedFeature = useSelector(state => state.features.features.featureCode);
@@ -93,7 +108,8 @@ const FeatureHolder = ({feature}) => {
   // const features = useSelector(state => state.features.features);
 
   const open = Boolean(bookMark);
-
+  const pinnedModule = pinnedModules.map((item)=> item.moduleName)
+  // console.log('pinnedModule', pinnedModule[pinnedModule.length - 1])
   const handleBookmark = (event) => {
       toggleBookMark(event.currentTarget);
   }
@@ -387,6 +403,7 @@ const FeatureHolder = ({feature}) => {
   }
 
   const handlePin = () => {
+    setOpenTooltip(true)
       const currentModuleName = feature.modules.filter(e => e.uniqueNo === feature.showModule)[0].moduleName;
       if(pinnedModules.filter(e=>e.selectedModule===feature.showModule).length<1){
         dispatch(addToPinnedModules({
@@ -397,6 +414,18 @@ const FeatureHolder = ({feature}) => {
         }))
       }
   }
+
+  useEffect(()=>{
+    if(openTooltip===true){
+      setTimeout(()=>{
+        setOpenTooltip(false)
+      }, 3000)
+    }
+  })
+
+  // const handleTooltipClose = () => {
+  //   setOpenTooltip(false);
+  // };
 
   const handleOpenPin = (item) => {
       dispatch(openPinnedModule(item.featureCode, item.module));
@@ -460,10 +489,18 @@ const FeatureHolder = ({feature}) => {
 									<div className='flex justify-start items-center' >
 										{feature.breadCrumbs.length>1 &&(
 											<IconButton onClick={()=>handlePin()} className="m-0 p-0 ml-1 mr-2" >
-													<img src={getIconByKey('whitePin')} alt="pin Icon" className="w-auto p-0 h-5 m-0" />
+													<motion.img
+                            whileTap={{ translateY: -5 }}
+                            transition={{
+                              type: "spring",
+                              stiffness: 160,
+                              damping: 10
+                            }}
+                           src={getIconByKey('whitePin')} alt="pin Icon" className="container w-auto p-0 h-5 m-0" />
 											</IconButton>
+                    
 										)}
-
+                            
 										<Breadcrumbs className="text-white text-base font-gSans" >
 											{feature.breadCrumbs.sort((a, b) => a.level > b.level ? 1:-1).map((item)=>(
 												<p 
@@ -478,16 +515,24 @@ const FeatureHolder = ({feature}) => {
 									</div>
 								</Box>
 							</div>
-							<IconButton id="basic-button"
-									aria-controls={open ? 'basic-menu' : undefined}
-									aria-haspopup="true"
-									aria-expanded={open ? 'true' : undefined}
-									onClick={handleBookmark} 
-									className="m-0 p-0 ml-1 mr-3"
-							>
-								<img src={getIconByKey('yellowPin')} alt="Pinned Modules Logo" className="w-auto h-10 m-0"  />
-							</IconButton>
+              
+                <Tooltip
+                      open={openTooltip}
+                      title={<p style={{fontSize: '16px', margin: '5px'}}>{pinnedModule[pinnedModule.length - 1]} is pinned here!</p>}
+                      arrow placement='bottom'>
+                        <IconButton id="basic-button"
+                          aria-controls={open ? 'basic-menu' : undefined}
+                          aria-haspopup="true"
+                          aria-expanded={open ? 'true' : undefined}
+                          onClick={handleBookmark} 
+                          className="m-0 p-0 ml-1 mr-3 h-fit self-center"
+                      >
+                          <img src={getIconByKey('yellowPin')} alt="Pinned Modules Logo" className="w-auto h-11 m-0"  />
+                        </IconButton>
+                  </Tooltip> 
+                                 
 							<Menu
+                className={classes.root}
 								id="basic-menu"
 								anchorEl={bookMark}
 								open={open}
@@ -497,14 +542,17 @@ const FeatureHolder = ({feature}) => {
 								}}
 							>
 								{pinnedModules.length>0 ? pinnedModules.map((item)=>(
-										<MenuItem className='flex justify-between' disableRipple key={item.featureCode}>
+                  <>
+										<MenuItem className='flex justify-between p-3' disableRipple key={item.featureCode}>
 												<Link component="button" onClick={()=>handleOpenPin(item)} className="text-sm text-black" underline='false' >{item.moduleName}</Link>
-												&nbsp;&nbsp;
-												<IconButton sx={{width: '14px', height: '14px'}} className="p-1" onClick={()=>handleRemovePin(item)} >
-														<img src={getIconByKey('closeBlue')} alt="closeIcon" style={{width: '10px', height: '10px'}} className="ml-5" />
+												
+												<IconButton className='w-[14px] h-[14px] ml-4' onClick={()=>handleRemovePin(item)} >
+														<img src={getIconByKey('closeBlue')} alt="closeIcon" style={{width: '10px', height: '10px'}}  />
 												</IconButton>
 										</MenuItem>
-								)):(<p>&nbsp;&nbsp;No Pinned Modules!&nbsp;&nbsp;</p>)}
+                    <Divider className='m-0'/>
+                  </>
+								)):(<div className='min-w-max p-3 flex'>No Pinned Modules!</div>)}
 
 							</Menu>
 						</div>

@@ -6,7 +6,7 @@ import {
     Grid,
     MenuItem
 } from '@mui/material'
-import { GenericButton } from '@application';
+import { GenericButton, styles, useClasses } from '@application';
 import httpService from 'services/httpservice/httpService';
 
 const UserActionsComponent = (props) => {
@@ -17,6 +17,9 @@ const UserActionsComponent = (props) => {
     const [tempUserRoles, setTempUserRoles] = useState([]);
     const [selectedUser, setSelectedUser] = useState("");
     const [showTable, setShowTable] = useState(false);
+
+    const classes = useClasses(styles);
+    
 
     const tableData = [
         {
@@ -131,9 +134,9 @@ const UserActionsComponent = (props) => {
     }
 
     return(
-        <div>
+        <div className={classes.root}>
             <Formsy onValidSubmit={data=>handleSubmit(data)} >
-                <Grid container className="container py-5" >
+                <Grid container className={`main_input_container container py-5`} >
                     <Grid item xs={4}>
                         <SelectFormsy 
                             variant="outlined"

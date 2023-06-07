@@ -7,9 +7,10 @@ import {
     FormControl,
     Dialog,
     Typography,
+    IconButton
 } from '@mui/material'
-
-
+import { AiOutlineClose } from "react-icons/ai";
+// import CloseIcon from '@mui/icons-material/Close';
 import { TextFieldFormsy, DatePickerFormsy, SelectFormsy } from 'components/common/formsyComponents';
 
 import Formsy from 'formsy-react';
@@ -341,7 +342,20 @@ const CWFBottomContainer = (props) => {
                 //     }
                 // }}
             >
-                <Typography>{modalAction}</Typography>
+                <Typography className='pl-5 bg-[#f4f5fa]'>{modalAction}</Typography>
+                    <IconButton
+                    aria-label="close"
+                    onClick={()=>{setModalOpen(false)}}
+                    sx={{
+                        position: 'absolute',
+                        right: 8,
+                        top: 5,
+                        color: 'black',
+                        fontSize: '18px'
+                    }}
+                    >
+                        <AiOutlineClose />
+                    </IconButton>
                 {currentAction!=null&&currentAction.actionParams.length>0?(
                     <>
                         {showCommentActions.includes(currentAction.actionCode)?(
@@ -414,7 +428,6 @@ const CWFBottomContainer = (props) => {
                                                                     dateTime={false}
                                                                     allowKeyboardControl={true}
                                                                     required={true}
-                                                                    value={new Date()}
                                                                 />
                                                             </FormControl>
                                                         </Grid>
@@ -512,7 +525,7 @@ const CWFBottomContainer = (props) => {
                                                 type="submit"
                                                 onClick={()=>{setModalOpen(false)}}
                                                 className="px-5 py-2 mx-2 my-3 normal-case text-app-primary bg-transparent hover:bg-app-primary hover:text-white  text-sm rounded-[25px] shadow-none border-solid border-[1px] border-[#052a4f]">
-                                                Close
+                                                Close Case
                                             </Button>
                                         </Grid>
                                     </Grid>

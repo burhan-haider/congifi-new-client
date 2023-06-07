@@ -444,6 +444,7 @@ const DataGrid = (props) => {
                     setSearchString={setSearchString}
                     filterActive={filterActive}
                     setFilterActive={setFilterActive}
+                    setIsSelected={setIsSelected}
                 />
                 {gridElement(sortedRows)}
                 <Pagination

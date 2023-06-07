@@ -237,4 +237,8 @@ text.keyText {
     left: 333px;
 }
 
+.login-image {
+	box-shadow: 0px 0px 5px #99D6FF;
+}
+
 /* #root .action-btn.disabled {color: #892c2c;} */
