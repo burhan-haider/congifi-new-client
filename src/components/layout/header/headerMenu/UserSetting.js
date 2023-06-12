@@ -122,8 +122,8 @@ function UserSettings(props) {
     margin: '0px 0px 40px',
     padding: '30px 10px 30px',
     background: '#EDEEF2'}} >
-        <Grid className="" container spacing={3} sx={{paddingRight: '0.5rem', paddingLeft:'0.5rem'}}>
-          <Grid item xs={2} sx={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
+        <Grid className="items-center flex" container spacing={3} sx={{paddingRight: '0.5rem', paddingLeft:'0.5rem'}}>
+          <Grid item xs={2} sx={{display: 'flex', justifyContent: 'flex-end', alignItems: 'center'}}>
             <Typography className={classes.settingsTypography}>
               {commonService.getLabel(
                 "app.common.TIMEOUTSECONDS",
@@ -150,7 +150,7 @@ function UserSettings(props) {
               }}
               classes={{
                 root: classes.textFieldRoot,
-                label: classes.textFieldLabel
+                label: {textAlign: 'right'}
               }}
               InputProps={{
                 className: classes.MuiOutlinedInput
@@ -167,7 +167,7 @@ function UserSettings(props) {
               })}
             </TextField>
           </Grid>
-          <Grid item xs={2} sx={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
+          <Grid item xs={2} sx={{display: 'flex', justifyContent: 'flex-end', alignItems: 'center'}}>
             <Typography className={classes.settingsTypography}>
               {commonService.getLabel(
                 "app.common.LABELSLANGUAGE",
@@ -212,15 +212,16 @@ function UserSettings(props) {
               })}
             </TextField>
           </Grid>
-          <Grid item xs={2} sx={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
-            <Typography className={classes.settingsTypography}>
+          <Grid item xs={2} sx={{display: 'flex', justifyContent: 'flex-end', alignItems: 'center'}}>
+            <Typography className={`${classes.settingsTypography} `}>
               {commonService.getLabel(
                 "app.common.LABELSDIRECTION",
                 "Labels Direction"
               )}
             </Typography>
           </Grid>
-          <Grid className='inputContainer' item xs={2} sx={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
+          <Grid className='inputContainer' item xs={2} sx={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center',
+          textAlign: 'right'}}>
             <TextField
               select
               variant="outlined"

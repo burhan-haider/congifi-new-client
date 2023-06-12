@@ -125,12 +125,14 @@ function HeaderMenu() {
         anchorEl={anchorRef.current}
         role={undefined}
         transition
-        className="mt-2"
+        className="m-4"
+        // placement="bottom"
       >
         {({ TransitionProps, placement }) => (
           <Grow
             {...TransitionProps}
             style={{
+              marginTop: '7px',
               transformOrigin:
                 placement === "bottom" ? "center top" : "center bottom"
             }}

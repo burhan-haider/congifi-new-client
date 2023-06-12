@@ -469,7 +469,11 @@ const CWFBottomContainer = (props) => {
                                                     {param.paramDataType === "textarea" && (
                                                         <Grid  className="inputContainer" item xs={12} >
                                                             <Typography>{param.paramName}</Typography>
-                                                            <FormControl fullWidth>
+                                                            <FormControl fullWidth
+                                                            className='bg-white' 
+                                                            sx={{
+                                                                        borderRadius: '20px',
+                                                            }} >
                                                                 <TextFieldFormsy
                                                                     variant="outlined"
                                                                     name={param.paramId}
@@ -481,7 +485,7 @@ const CWFBottomContainer = (props) => {
                                                                     multiline={true}
                                                                     rows={4}
                                                                     sx={{
-                                                                        width: '100%'
+                                                                        width: '100%',
                                                                     }}
                                                                     disabled={!param.enabled}
                                                                 ></TextFieldFormsy>

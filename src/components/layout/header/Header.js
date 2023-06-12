@@ -7,7 +7,9 @@ import {
     IconButton, 
     Box,  
     Badge,
-    Typography
+    Typography,
+    createTheme,
+    ThemeProvider
 } from '@mui/material';
 import { 
     fetchUserFeature,
@@ -24,6 +26,14 @@ import UserMenuList from './userMenu/UserMenu';
 // import commonService from 'services/common/commonService'
 import HeaderMenu from './headerMenu/HeaderMenu';
 
+const theme = createTheme({
+    palette: {
+      primary: {
+        // Purple and green play nicely together.
+        main: '#CCCB2C',
+      }
+    },
+  });
 
 const MyTabScrollButton = styled(TabScrollButton)({
     // display: 'none',
@@ -102,6 +112,7 @@ const Header = () => {
                 {/* <img src={headerBar} alt="header-bar" className="h-9 w-auto m-0 mt-[6px]" /> */}
             </div>
             <Tabs
+                className='max-w-[77%]'
                 value={selectedFeature}
                 onChange={handleChange}
                 variant="scrollable"
@@ -120,9 +131,11 @@ const Header = () => {
                                 <Tab 
                                     key={item.featureCode?item.featureCode:item.featureMapping_Id} 
                                     icon={breadCrumbsCount>1 ? 
-                                    <Badge className='inline-flex' overlap='rectangular'  anchorOrigin={{vertical: 'top',horizontal: 'left',}} variant="dot" color="error">
-                                        <img src={getIconByKey(item.icon)} style={{height: '1.2rem', width: 'auto'}} className="mr-2" alt={item.featureIcon}/>
-                                    </Badge> : 
+                                    <ThemeProvider theme={theme}>
+                                        <Badge className='inline-flex' overlap='rectangular'  anchorOrigin={{vertical: 'top',horizontal: 'left',}} variant="dot" color="primary">
+                                            <img src={getIconByKey(item.icon)} style={{height: '1.2rem', width: 'auto'}} className="mr-2" alt={item.featureIcon}/>
+                                        </Badge>
+                                    </ThemeProvider> : 
                                     <Box className='inline-flex'>
                                         <img src={getIconByKey(item.icon)} style={{height: '1.2rem', width: 'auto'}} className="mr-2" alt={item.featureIcon}/>
                                     </Box>
@@ -149,7 +162,7 @@ const Header = () => {
 
                 <HeaderMenu   />
 
-                <div className='ml-3'>
+                <div className='ml-3 flex items-center'>
                     <ul className="p-0 m-0 mt-1 mr-2">
                         <li className="inline-block z-50">
                             <UserMenuList />

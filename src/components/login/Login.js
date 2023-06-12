@@ -5,13 +5,17 @@ import {
   Button, 
   FormControl, 
   Typography,
-  CircularProgress 
+  CircularProgress,
+  Grid,
+  Box, 
+  Divider
 } from "@mui/material";
 import { useDispatch} from "react-redux";
 // import commonService from "services/common/commonService";
 // import COGNIFI_LOGO_FULL from "assets/icons/cognifi_logo_full.png";
-import QDE_LOGO from "assets/icons/QDE-Logo-Full.png";
+import QDE_LOGO from "assets/icons/qdeLogo.png";
 import Cognifi_Logo_Animated from "assets/header/cognifi-logo.png";
+import qdeLogo from "assets/header/cognifi-logo.png";
 // import Cognifi_Logo_Animated from "assets/icons/Cognifi_Logo_Animated.gif";
 import LoginImage from 'assets/LoginImage.png';
 
@@ -236,139 +240,153 @@ function Login(props) {
   };
 
   return (
-    <div className="flex h-[100vh] bg-[#f8f8f8]">
-      <div className="w-1/2 flex justify-end">
-        <div className='login-image bg-[#F5FBFF] items-start flex flex-col h-[95vh] p-0 w-[70%]'>
-          <div className="px-[30px] mt-[120px] mb-[20px]">
-            <img
-              src={Cognifi_Logo_Animated}
-              alt="Login page"
-              className="w-[75%] h-auto mt-[20px]"
-            />
-          </div>
-          <div className="px-[30px] flex mt-[120px] pt-0 ">
-            <Typography className="font-semibold"
-              style={{
-                fontSize: "16px",
-                fontFamily: "GoogleSans-Regular",
-              }}
-            >
-              Version 0.1
-            </Typography>
-          </div>
+    <div className="h-[100vh] flex flex-col justify-center">
+      <Grid container className="h-[75%]">
+          <Grid item xs={5} className="flex justify-end items-center">
+            <div className="h-1/2 flex items-center py-4 w-[70%]">
+              <img
+                src={Cognifi_Logo_Animated}
+                alt="Login page"
+                className="w-full h-auto mr-6"
+              />
+            </div>
+          </Grid>
+          <Grid item xs={2} className="flex justify-center items-center">
+            <Divider sx={{width: '1px', height: '50%',  background: '#9E9E9E', borderRadius: '4px'}} orientation="vertical" />
+          </Grid>
           
-          <div className="px-[30px] mt-[50px]">
-            <div className="flex mb-5">
-              <img className="w-[70%] p-0 m-0" src={QDE_LOGO} alt="QDE" />
-            </div>  
-            <a
-              href="https://www.quantumdataengines.com/"
-              className="flex no-underline text-gray-900"
-            >
-              <Typography className="font-semibold"
-                style={{ fontSize: "14px", fontFamily: "GoogleSans-Regular"}}
+          <Grid item xs={5} className="flex justify-start items-center">
+            <div className={'w-[70%] py-4 px-6'}>
+              <Formsy
+                onValidSubmit={(data, resetForm, invalidateForm) =>
+                  handleSubmit(data, resetForm, invalidateForm)
+                }
+                onValid={() => setIsFormValid(true)}
+                onInvalid={() => onInValidSubmit()}
+                ref={formRef}
+                className="w-full"
               >
-                www.quantumdataengines.com
-              </Typography>
-            </a>
-          </div>
-        </div>
-        
-      </div>
-      <div className='w-1/2 items-center flex'>
-        {/* <div className="logo-area pt-1 pb-8 text-center">
-          <div className="flex justify-center mr-50 mt-12">
-            <img src={Cognifi_Logo_Animated} className="w-1/2" alt="Cognifi" />
-          </div>
-        </div> */}
-        <div className={`${classes.root}text-center mb-0 pb-0 w-[61%]`}>
-          <Formsy
-            onValidSubmit={(data, resetForm, invalidateForm) =>
-              handleSubmit(data, resetForm, invalidateForm)
-            }
-            onValid={() => setIsFormValid(true)}
-            onInvalid={() => onInValidSubmit()}
-            ref={formRef}
-            className="w-full"
-          >
-            <FormControl variant="outlined" sx={customStyles.root}>
-              <TextFieldFormsy
-                className='bg-white'
-                required
-                // onChange={handleChange}
-                showError="true"
-                errorMessage="lla"
-                variant="outlined"
-                name="userName"
-                label="User Name"
-                validations="isAlphanumeric"
-                validationError="Invalid input"
-                InputProps={{
-                  // className: classes.MuiOutlinedInput,
-                  shrink: "true",
-                  sx: {fontFamily: 'GoogleSans-Regular'}
-                }}
-              />
-            </FormControl>
-            <FormControl variant="outlined" sx={customStyles.root}>
-              <TextFieldFormsy
-                className='bg-white'
-                required
-                // onChange={handleChange}
-                variant="outlined"
-                name="userPassword"
-                type="password"
-                label="Password"
-                InputProps={{
-                  // className: classes.MuiOutlinedInput,
-                  shrink: "true",
-                  classes: {
-                    root: classes.textFieldRoot,
-                    label: classes.textFieldLabel,
-                  },
-                }}
-              />
-            </FormControl>
-            <FormControl variant="outlined" 
-                sx={customStyles.root}
-              >
-              <TextFieldFormsy
-                className='bg-white'
-                select
-                variant="outlined"
-                name="Bank"
-                label="Bank"
-                SelectProps={{
-                  native: true,
-                }}
-                InputProps={{
-                  // className: classes.MuiOutlinedInput,
-                  shrink: "true",
-                }}
-              >
-                <option aria-label="None" value="" />
-                <option value="BankOne">Bank 1</option>
-                <option value="BankTwo">Bank 2</option>
-                <option value="BankThree">Bank 3</option>
-              </TextFieldFormsy>
-            </FormControl>
-            <GenericButton
-              type="submit"
-              variant="outlined"
-              // sx={[customStyles.buttonRoot,customStyles.buttonLabel]}
-              className="float-right mr-[55px]"
-              disabled={!isFormValid || isSubmitting}
-            >
-              {isSubmitting ? <CircularProgress className="my-2 mx-3" size={12} color={'inherit'} /> : "Log in"}
-            </GenericButton>
+                <FormControl variant="outlined" sx={customStyles.root}>
+                  <TextFieldFormsy
+                    className='bg-white'
+                    required
+                    // onChange={handleChange}
+                    showError="true"
+                    errorMessage="lla"
+                    variant="outlined"
+                    name="userName"
+                    label="User Name"
+                    validations="isAlphanumeric"
+                    validationError="Invalid input"
+                    InputProps={{
+                      // className: classes.MuiOutlinedInput,
+                      shrink: "true",
+                      sx: {fontFamily: 'GoogleSans-Regular'}
+                    }}
+                  />
+                </FormControl>
+                <FormControl variant="outlined" sx={customStyles.root}>
+                  <TextFieldFormsy
+                    className='bg-white'
+                    required
+                    // onChange={handleChange}
+                    variant="outlined"
+                    name="userPassword"
+                    type="password"
+                    label="Password"
+                    InputProps={{
+                      // className: classes.MuiOutlinedInput,
+                      shrink: "true",
+                      classes: {
+                        root: classes.textFieldRoot,
+                        label: classes.textFieldLabel,
+                      },
+                    }}
+                  />
+                </FormControl>
+                <FormControl variant="outlined" 
+                    sx={customStyles.root}
+                  >
+                  <TextFieldFormsy
+                    className='bg-white'
+                    select
+                    variant="outlined"
+                    name="Bank"
+                    label="Bank"
+                    SelectProps={{
+                      native: true,
+                    }}
+                    InputProps={{
+                      // className: classes.MuiOutlinedInput,
+                      shrink: "true",
+                    }}
+                  >
+                    <option aria-label="None" value="" />
+                    <option value="BankOne">Bank 1</option>
+                    <option value="BankTwo">Bank 2</option>
+                    <option value="BankThree">Bank 3</option>
+                  </TextFieldFormsy>
+                </FormControl>
+                <GenericButton
+                  type="submit"
+                  variant="outlined"
+                  // sx={[customStyles.buttonRoot,customStyles.buttonLabel]}
+                  className="float-right mr-[55px]"
+                  disabled={!isFormValid || isSubmitting}
+                >
+                  {isSubmitting ? <CircularProgress className="my-2 mx-3" size={12} color={'inherit'} /> : "Log in"}
+                </GenericButton>
+                
+              </Formsy>
+            </div>
+          </Grid>
+        {/*<div className="w-1/2 flex justify-end">
+            <div className='login-image bg-[#F5FBFF] items-start flex flex-col h-[95vh] p-0 w-[70%]'>
+              
+              <div className="px-[30px] flex mt-[120px] pt-0 ">
+                <Typography className="font-semibold"
+                  style={{
+                    fontSize: "16px",
+                    fontFamily: "GoogleSans-Regular",
+                  }}
+                >
+                  Version 0.1
+                </Typography>
+              </div>
+              
+              <div className="px-[30px] mt-[50px]">
+                <div className="flex mb-5">
+                  <img className="w-[70%] p-0 m-0" src={QDE_LOGO} alt="QDE" />
+                </div>  
+                <a
+                  href="https://www.quantumdataengines.com/"
+                  className="flex no-underline text-gray-900"
+                >
+                  <Typography className="font-semibold"
+                    style={{ fontSize: "14px", fontFamily: "GoogleSans-Regular"}}
+                  >
+                    www.quantumdataengines.com
+                  </Typography>
+                </a>
+              </div>
+            </div>
             
-          </Formsy>
-        </div>
-        
-        {/* <hr className={classes.bottomLine} />
-        
-        <a href="https://www.quantumdataengines.com/" className="flex justify-center mt-14" >Forgot Password?</a>*/}
-        
+        </div> */}
+      </Grid>
+      <div className="flex items-center justify-center">
+        <img src={QDE_LOGO} alt="QDE_LOGO" className="w-8 mr-3" />
+        <Typography style={{ fontSize: "14px", fontFamily: "GoogleSans-Regular"}}>Copyright Quantum Data Engines 2016-18</Typography>
+        <span className="mx-3">|</span>
+        <a
+          href="https://www.quantumdataengines.com/"
+          className="flex no-underline text-gray-900 hover:text-black">
+          <Typography
+          // className=""
+            style={{ fontSize: "14px", fontFamily: "GoogleSans-Regular"}}
+          >
+            www.quantumdataengines.com
+          </Typography>
+        </a>
       </div>
     </div>
   );

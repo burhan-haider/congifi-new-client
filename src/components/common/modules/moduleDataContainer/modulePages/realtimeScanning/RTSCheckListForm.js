@@ -67,7 +67,7 @@ function RTSChecklistForm(props) {
   const classes = useClasses(styles);
   return (
     <div className="m-8">
-      <Typography className={classes.MuiTypoGraphy}>CheckList Form</Typography>
+      <Typography className={classes.MuiTypoGraphy}>Check List Form</Typography>
       <Grid
         container
         alignItems="center"

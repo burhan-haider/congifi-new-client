@@ -38,6 +38,7 @@ const styles = theme => ({
         fontSize: '14px',
         textAlign: 'right',
         minWidth: '110px',
+        // width: '40%',
         marginRight: '10px' 
       },
       '& .main_input_container': {

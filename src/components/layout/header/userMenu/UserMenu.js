@@ -40,7 +40,7 @@ const styles = theme => ({
     "&.MuiAvatar-root": {
       width: "30px",
       height: "30px",
-      marginTop: "5px",
+      // marginTop: "5px",
     }
   }
 });
@@ -108,9 +108,9 @@ function UserMenuList() {
   };
 
   return (
-    <div className={classes.Buttonroot}>
+    <div className={`${classes.Buttonroot}`}>
       <Button
-        className={classes.button}
+        className={`${classes.button}`}
         ref={anchorRef}
         aria-controls={open ? "menu-list-grow" : undefined}
         aria-haspopup="true"
@@ -124,12 +124,14 @@ function UserMenuList() {
         <span
           className="hidden xl:block"
           style={{
-            wordBreak: "normal",
+            // wordBreak: "normal",
             lineHeight: "1.2em",
-            marginTop: "3px",
+            // marginTop: "3px",
             fontFamily: '"GoogleSans-Regular",-apple-system, BlinkMacSystemFont, "Segoe UI",Roboto, Helvetica Neue, Arial, sans-serif',
             textAlign: 'left',
-            marginRight: '10px'
+            marginRight: '10px',
+            marginLeft: '5px',
+            minWidth: 'fit-content'
           }}
         >
           {userData.data.displayName}

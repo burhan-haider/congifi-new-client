@@ -105,14 +105,14 @@ function ViewFieldFormsy(props) {
           onChange={changeValue}
           value={value}
           error={Boolean(props.showError && errorMessage)}
-          startAdornment={
-            <InputAdornment position="start" style={{ marginLeft: 12 }}>
+          endAdornment={
+            <InputAdornment position="end">
               <IconButton
                 onClick={() => {
                   openModalForSearch();
                   displayModalContent();
                 }}
-                edge="start"
+                edge="end"
               >
                 <SearchIcon />
               </IconButton>
