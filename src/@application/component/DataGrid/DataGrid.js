@@ -1,4 +1,4 @@
-import ReactDatagrid, { SelectColumn } from 'react-data-grid'
+import ReactDatagrid, { SelectColumn, headerRenderer } from 'react-data-grid'
 import React, { useState, useEffect, useMemo, } from 'react'
 import {
     Box,
@@ -16,21 +16,27 @@ import {
     ListItem,
     InputLabel,
     Select,
-    FormControl
+    FormControl,
+    Button
 } from '@mui/material'
 import Pagination from './Pagination/Pagination'
 import { BsInfoCircleFill, BsCaretRightFill, BsFilter } from 'react-icons/bs'
 import { AiOutlineSortAscending, AiOutlineSortDescending } from 'react-icons/ai'
-import headerConfig from '@application/util/tableHeaderConfig/en'
+import masterModuleHyperlinks from '../hyperlinks/MasterModuleHyperlinks'
 import moment from 'moment'
 
 import './tableStyles.css'
 import Toolbar from './Toolbar/Toolbar'
 import BottomContainer from './BottomContainer/BottomContainer'
+import GenericDialog from '../dialog/GenericDialog'
+import { useSelector } from 'react-redux'
+import HyperlinkModalContentConfig from '../hyperlinks/HyperlinkModalContentConfig'
+import { FaInfoCircle } from 'react-icons/fa'
 
 const DataGrid = (props) => {
     const {
         utilColumn = null,
+        isInfo = false,
         title,
         tableData,
         selectedData,
@@ -38,8 +44,22 @@ const DataGrid = (props) => {
         actionButtons = [],
         moduleType = null,
         ComponentBottomContainer = null,
+        dynamicProps = null,
+        customHyperlinkFunction = null
     } = props
 
+    const headerConfig = useSelector(state => state.auth.user.labels.allLabels);
+    const hyperlinksMap = masterModuleHyperlinks.getAllHyperlinksData();
+
+    const [modalOpen, setModalOpen] = useState(false)
+
+    const handleCloseModal = () => setModalOpen(false);
+    const handleOpenModal = () => setModalOpen(true);
+
+    const [property, setProperty] = useState({})
+    const [hyperlinkContent, setHyperlinkContent] = useState({})
+
+    const [infoOpen, setInfoOpen] = useState(false);
 
     const [sortColumns, setSortColumns] = useState([])
     const [rows, setRows] = useState([])
@@ -81,6 +101,40 @@ const DataGrid = (props) => {
         return value
     }
 
+    const hyperLinkClick = (
+        hyperlinkRow,
+        hyperlinkColumn,
+        hyperlinkFunction,
+        hyperlinkTitle,
+        hyperlinkDetailsModule,
+        rowIndex,
+        columnIndex
+    ) => {
+
+        const data = masterModuleHyperlinks.hyperlinkFunction(
+            hyperlinkColumn,
+            hyperlinkFunction,
+            hyperlinkTitle,
+            hyperlinkDetailsModule,
+            hyperlinkRow,
+            rowIndex,
+            columnIndex,
+            dynamicProps,
+        )
+        console.log("hyperlinkRow:-", hyperlinkRow);
+        console.log("module data:-", data,)
+
+        if (!customHyperlinkFunction) {
+            setProperty(data.modalData)
+            setHyperlinkContent(data)
+            handleOpenModal()
+        }
+        else {
+            customHyperlinkFunction();
+        }
+
+    }
+
     //Setting first and last index of current Page
     useEffect(() => {
         let tempLastIndex = currentPage * dataPerPage
@@ -104,9 +158,10 @@ const DataGrid = (props) => {
             })
         }
 
+
         tableData.DATA.forEach((data, dataIndex) => {
             let tempData = data.map((dval) => {
-                return dval === null ? 'N.A' : dval
+                return dval === null || dval === '' ? 'N.A' : dval
             })
             let tempObj = {}
             tempData.forEach((item, index) => {
@@ -125,18 +180,26 @@ const DataGrid = (props) => {
             sortable: true,
             filterable: true,
             width: srWidth,
+            formatter(props) {
+                return isInfo === true ? (
+                    <div className="flex flex-row justify-start items-center h-[35px]">
+                        <IconButton
+                            onClick={() => {
+                                console.log("Info Props:-", props)
+                            }}
+                            className='mr-2'
+                        >
+                            <FaInfoCircle className='text-gray' size={'14px'} />
+                        </IconButton>
+                        <p>{props.row['INDEX']}</p>
+                    </div>
+                ) : props.row['INDEX']
+            }
         })
-
-        const linkHeaders = [
-            'app.common.CUSTOMERID',
-            'app.common.ACCOUNTNO',
-            'app.common.BRANCHCODE',
-
-        ]
 
         tableData.HEADER.forEach((header, index) => {
             let columnObject = {};
-            if (linkHeaders.includes(header)) {
+            if (hyperlinksMap.has(header)) {
                 columnObject = {
                     key: header,
                     name: headerConfig[header] ? toTitleCase(headerConfig[header]) : toTitleCase(header),
@@ -145,10 +208,33 @@ const DataGrid = (props) => {
                     width: colWidth,
                     formatter(props) {
                         const value = props.row[header]
+                        // console.log("row props:-", props)
+
+                        const hyperlinkRow = Object.values(props.row)
+                        const hyperlinkColumn = props.column.key
+                        const hyperlinkTitle = hyperlinksMap.get(header)['title']
+                        const hyperlinkFunction = hyperlinksMap.get(header)['function']
+                        const hyperlinkDetailsModule = hyperlinksMap.get(header)['detailsModule']
+                        const rowIndex = props.row['INDEX'] - 1;
+                        const columnIndex = utilColumn !== null ? props.column.idx - 2 : props.column.idx - 1;
                         return (
-                            <a href="/" id={value} name={value}>
+                            <Button
+                                variant='text'
+                                className="hover:bg-transparent underline text-app-primary"
+                                onClick={() => hyperLinkClick(
+                                    hyperlinkRow,
+                                    hyperlinkColumn,
+                                    hyperlinkFunction,
+                                    hyperlinkTitle,
+                                    hyperlinkDetailsModule,
+                                    rowIndex,
+                                    columnIndex
+                                )}
+                                id={value}
+                                name={value}
+                            >
                                 {value}
-                            </a>
+                            </Button>
                         )
                     },
                 }
@@ -486,6 +572,16 @@ const DataGrid = (props) => {
                 )}
 
             </Box>
+            <GenericDialog
+                closeModal={handleCloseModal}
+                state={modalOpen}
+                property={property}
+            >
+                <HyperlinkModalContentConfig
+                    data={hyperlinkContent}
+                    closeModal={handleCloseModal}
+                />
+            </GenericDialog>
         </div>
     )
 }

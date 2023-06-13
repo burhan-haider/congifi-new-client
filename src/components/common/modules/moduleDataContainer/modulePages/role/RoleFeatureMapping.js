@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 // import { makeStyles } from "@mui/styles";
 
-import {Grid, Chip, Typography, Box, Divider} from "@mui/material/";
+import { Grid, Chip, Typography, Box, Divider } from "@mui/material/";
 // import Chip from "@mui/material/Chip";
 // import Select from "@mui/material/Select";
 // import InputLabel from "@mui/material/InputLabel";
@@ -39,7 +39,7 @@ function RoleFeatureMapping(props) {
 
   const classes = useClasses(styles);
   const [selectedFeatureList, setSelectedFeatureList] = useState([]);
-  const [featureCodeList, setFeatureCodeList] = useState([]); 
+  const [featureCodeList, setFeatureCodeList] = useState([]);
   const [roleId, setroleId] = useState();
   const [activateField, setActivateField] = useState(false);
   // const [successMessage, setSuccessMessage] = useState();
@@ -49,12 +49,12 @@ function RoleFeatureMapping(props) {
     let currentSelectedroleId = event.target.value;
     setroleId(currentSelectedroleId);
     // userAndRole[currentSelectedUserCode];
-    let roleAssignedFeatureList = roleFeatureMappingList.filter(function(
+    let roleAssignedFeatureList = roleFeatureMappingList.filter(function (
       roleFeaturemapping
     ) {
       return roleFeaturemapping.ROLE.roleId === currentSelectedroleId;
     });
-    console.log("Feature List:-",roleAssignedFeatureList)
+    console.log("Feature List:-", roleAssignedFeatureList)
     let currentSelectedFeatureCodeList = [];
     let currentSelectedFeatureList = [];
 
@@ -63,7 +63,7 @@ function RoleFeatureMapping(props) {
       currentSelectedFeatureList.push(feature.featureMapping_Id);
       return null;
     });
-    
+
     setSelectedFeatureList(currentSelectedFeatureCodeList);
     setFeatureCodeList(currentSelectedFeatureList);
   };
@@ -74,11 +74,11 @@ function RoleFeatureMapping(props) {
     let allFeatures = featureList;
     let currentSelectedFeatureCodeList = [];
 
-    if(selectedList.length > 0){
-      selectedList.map(value=>{
+    if (selectedList.length > 0) {
+      selectedList.map(value => {
         allFeatures.map(feature => {
-          if(feature.featureName === value){
-            if(currentSelectedFeatureCodeList.filter(e=>e===feature.featureName).length === 0){
+          if (feature.featureName === value) {
+            if (currentSelectedFeatureCodeList.filter(e => e === feature.featureName).length === 0) {
               currentSelectedFeatureCodeList.push(feature.featureCode);
             }
             console.log("Selected Feature Code List:-", currentSelectedFeatureCodeList);
@@ -100,42 +100,42 @@ function RoleFeatureMapping(props) {
         alert("Feature has assigned to role");
         props.refreshCurrentModule();
       })
-      .catch(err => {});
+      .catch(err => { });
   };
 
   return (
     <div className={`${classes.root}`}>
-    <Box className="moduleName">{feature.breadCrumbs[feature.breadCrumbs.length - 1].label}</Box>
-    <Divider className="mb-[10px] border-[#C1C9D3]"></Divider>
+      <Box className="moduleName">{feature.breadCrumbs[feature.breadCrumbs.length - 1].label}</Box>
+      <Divider className="mb-[10px] border-[#C1C9D3]"></Divider>
       <Formsy>
-      <Grid 
+        <Grid
           className='main_input_container'
-          container justify="center" 
+          container justify="center"
           alignItems="center" spacing={3}>
-        <Grid 
-          item 
-          className='inputContainer'
-          md={2}
-        >
-          <Typography>Select Role</Typography>
-          <FormControl 
-            className={classes.formControl} 
-            fullWidth
+          <Grid
+            item
+            className='inputContainer'
+            md={2}
           >
-            <SelectFormsy
-              name="Role"
-              // label="Select Role"
-              variant="outlined"
-              // style={{ paddingLeft: "10px" }}
-              native
-              value={roleId ? roleId : ""}
-              onChange={roleOnChange}
-              inputProps={{
-                name: "roleId",
-                id: "roleId"
-              }}
+            <Typography>Select Role</Typography>
+            <FormControl
+              className={classes.formControl}
+              fullWidth
             >
-              {/* <option aria-label="None" disabled value="" />
+              <SelectFormsy
+                name="Role"
+                // label="Select Role"
+                variant="outlined"
+                // style={{ paddingLeft: "10px" }}
+                native
+                value={roleId ? roleId : ""}
+                onChange={roleOnChange}
+                inputProps={{
+                  name: "roleId",
+                  id: "roleId"
+                }}
+              >
+                {/* <option aria-label="None" disabled value="" />
               {roleList.map((role, index) => {
                 return (
                   <option key={role["roleId"]} value={role["roleId"]}>
@@ -143,40 +143,40 @@ function RoleFeatureMapping(props) {
                   </option>
                 );
               })} */}
-            </SelectFormsy>
-          </FormControl>
-        </Grid>
-        <Grid
-        className='inputContainer' item md={7} >
-          <Typography>Feature</Typography>
-          <FormControl 
-            className={classes.formControl} 
-            fullWidth
+              </SelectFormsy>
+            </FormControl>
+          </Grid>
+          <Grid
+            className='inputContainer' item md={7} >
+            <Typography>Feature</Typography>
+            <FormControl
+              className={classes.formControl}
+              fullWidth
             >
-            <SelectFormsy
-              labelId="role-mutiple-chip-label"
-              // label="Feature"
-              id="userRole"
-              name="Features"
-              variant="outlined"
-              disabled={!activateField}
-              multiple
-              value={selectedFeatureList}
-              onChange={handleChangeMultiple}
-              input={<Input id="select-multiple-chip" />}
-              renderValue={selected => (
-                <div className={classes.chips}>
-                  {selected.map((value, index) =>(
-                    <Chip 
-                      key={index}
-                      label={value}
-                      className={classes.chip} 
-                    />
-                  ))}
-                </div>
-              )}
-            >
-              {/* {featureList.map(feature => (
+              <SelectFormsy
+                labelId="role-mutiple-chip-label"
+                // label="Feature"
+                id="userRole"
+                name="Features"
+                variant="outlined"
+                disabled={!activateField}
+                multiple
+                value={selectedFeatureList}
+                onChange={handleChangeMultiple}
+                input={<Input id="select-multiple-chip" />}
+                renderValue={selected => (
+                  <div className={classes.chips}>
+                    {selected.map((value, index) => (
+                      <Chip
+                        key={index}
+                        label={value}
+                        className={classes.chip}
+                      />
+                    ))}
+                  </div>
+                )}
+              >
+                {/* {featureList.map(feature => (
                 <MenuItem
                   key={feature.featureName}
                   value={feature.featureName}
@@ -184,20 +184,20 @@ function RoleFeatureMapping(props) {
                   {feature.featureName}
                 </MenuItem>
               ))} */}
-            </SelectFormsy>
-          </FormControl>
+              </SelectFormsy>
+            </FormControl>
+          </Grid>
+          <Grid item md={2}>
+            <GenericButton
+              variant="contained"
+              color="primary"
+              onClick={assignFeatureToRole}
+            >
+              Assign Feature
+            </GenericButton>
+          </Grid>
         </Grid>
-        <Grid item md={2}>
-          <GenericButton
-            variant="contained"
-            color="primary"
-            onClick={assignFeatureToRole}
-          >
-            Assign Feature
-          </GenericButton>
-        </Grid>
-      </Grid>
-      {/* {successMessage ? <AlertDescription message={AlertDescription} /> : null} */}
+        {/* {successMessage ? <AlertDescription message={AlertDescription} /> : null} */}
       </Formsy>
     </div>
   );

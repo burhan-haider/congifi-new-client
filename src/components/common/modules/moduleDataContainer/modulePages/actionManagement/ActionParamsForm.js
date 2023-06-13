@@ -117,7 +117,7 @@ function ActionParamsForm(props) {
           setIsFormValid(true);
         })
         .catch(error => {
-          console.log("caseworkflow Service Error:-",error);
+          console.log("caseworkflow Service Error:-", error);
         });
     }
   }, [isCallFromActionDetails]);
@@ -179,10 +179,10 @@ function ActionParamsForm(props) {
   };
 
   const handleRemoveFields = index => {
-      const values = [...inputFields];
-      values.splice(index, 1);
-      setInputFields(values);
-    
+    const values = [...inputFields];
+    values.splice(index, 1);
+    setInputFields(values);
+
   };
 
   const handleInputChange = (index, eventName, event, nextEvent) => {
@@ -289,7 +289,7 @@ function ActionParamsForm(props) {
     <div id="bottomFrame" className={classes.root} style={{ paddingTop: 20 }}>
       {actionParamData && actionParamData !== null ? (
         <>
-          <GenericDatatable
+          {/* <GenericDatatable
             dataSet={actionParamData}
             infoEnabled={true}
             moduleName="Action Params List"
@@ -299,11 +299,11 @@ function ActionParamsForm(props) {
             selected={dataSelected}
             selectHandler={setDataSelected}
             BottomContainer={ActionsBottomContainer}
-          ></GenericDatatable>
-          <GenericDatagrid 
-              title={'Entity List Tab View'} 
-              tableData={actionParamData} 
-              utilColumn={'select'}
+          ></GenericDatatable> */}
+          <GenericDatagrid
+            title={'Entity List Tab View'}
+            tableData={actionParamData}
+            utilColumn={'info'}
           />
         </>
       ) : (
@@ -329,18 +329,18 @@ function ActionParamsForm(props) {
               root: "w-full",
               // expanded: "bg-[#f4f5fa]",
             }}
-            styles={{display: 'flex', justifyContent: "flex-end", flexDirection: 'row', alignItems: 'center'}}
+            styles={{ display: 'flex', justifyContent: "flex-end", flexDirection: 'row', alignItems: 'center' }}
           >
-            <Typography sx={{display: 'flex', alignItems: 'center'}} className={classes.heading} id="actionParamHeader" >
+            <Typography sx={{ display: 'flex', alignItems: 'center' }} className={classes.heading} id="actionParamHeader" >
               Action Parameter Master
             </Typography>
-           
+
           </ExpansionPanelSummary>
-          <Divider/>
+          <Divider />
           <ExpansionPanelDetails
             align="left"
             id="actionParamExpansionPanelDetails"
-            // style={{ padding: 10 }}
+          // style={{ padding: 10 }}
           >
             <Box className='bg-[#EDEEF2] flex justify-end'>
               <Button
@@ -354,8 +354,8 @@ function ActionParamsForm(props) {
                 Add Field
               </Button>
             </Box>
-             
-            
+
+
             <Formsy
               onValid={() => setIsFormValid(true)}
               onInvalid={() => setIsFormValid(false)}
@@ -564,18 +564,18 @@ function ActionParamsForm(props) {
                           <MenuItem value="">Select One</MenuItem>
                           {allActionsList
                             ? allActionsList.map(allActions =>
-                                allActions != null
-                                  ? Object.entries(allActions).map(
-                                      (key, value) => {
-                                        return (
-                                          <MenuItem value={key[0]} key={value}>
-                                            {key[0]} - {key[1]}
-                                          </MenuItem>
-                                        );
-                                      }
-                                    )
-                                  : null
-                              )
+                              allActions != null
+                                ? Object.entries(allActions).map(
+                                  (key, value) => {
+                                    return (
+                                      <MenuItem value={key[0]} key={value}>
+                                        {key[0]} - {key[1]}
+                                      </MenuItem>
+                                    );
+                                  }
+                                )
+                                : null
+                            )
                             : null}
                         </SelectFormsy>
                       </FormControl>
@@ -601,11 +601,11 @@ function ActionParamsForm(props) {
                           validationError=""
                           required={true}
                           disabled={actionParamDatatypeEnable}
-                          // disabled={isFieldDisabled(
-                          //   "1234",
-                          //   "actionParamDatatype",
-                          //   "actionCode"
-                          // )}
+                        // disabled={isFieldDisabled(
+                        //   "1234",
+                        //   "actionParamDatatype",
+                        //   "actionCode"
+                        // )}
                         >
                           <MenuItem value="">Select One</MenuItem>
                           <MenuItem value="date">Date</MenuItem>

@@ -93,7 +93,7 @@ function GenericDatatable(props) {
   // VIVEK - using resettedData only for filtering the fields based on resetted columns data
   const [resettedData, setResettedData] = useState(completeData);
 
-    
+
   //console.log("reloadDataFunc :>> ", props.reloadData);
   // console.log("inputParams :>> ", props.inputParams);
   //console.log("Vivek - CompleteHeader", completeHeader);
@@ -128,7 +128,7 @@ function GenericDatatable(props) {
   useEffect(() => {
     console.log("useEffect 3");
     console.log("Headers:-", headers);
-  },[rowComponentView]);
+  }, [rowComponentView]);
 
   useEffect(() => {
     console.log("useEffect 2");
@@ -137,7 +137,7 @@ function GenericDatatable(props) {
     const intermediateAllHeadCells = [];
     const intermediateResetColumnHeaders = [];
 
-    if(props.dataSet !== null && props.dataSet !== undefined && props.dataSet.length !== 0) {
+    if (props.dataSet !== null && props.dataSet !== undefined && props.dataSet.length !== 0) {
       for (var i = 0; i < completeHeader.length; i++) {
         intermediateAllHeadCells.push({
           id: completeHeader[i],
@@ -156,27 +156,28 @@ function GenericDatatable(props) {
         });
         intermediateResetColumnHeaders.push(
           i +
-            "~!!~" +
-            completeHeader[i] +
-            "~!!~" +
-            commonService.getLabel(completeHeader[i], completeHeader[i])
+          "~!!~" +
+          completeHeader[i] +
+          "~!!~" +
+          commonService.getLabel(completeHeader[i], completeHeader[i])
         );
       }
       setAllHeadCells(intermediateAllHeadCells);
+      console.log("intermediateAllHeadCells", intermediateAllHeadCells)
       setHeaders(intermediateAllHeadCells);
       setResetColumnHeaders(intermediateResetColumnHeaders);
     }
-    
+
   }, [
     // completeHeader, 
     hyperlinksMap
   ]);
 
-  
+
 
   useEffect(() => {
     console.log("useEffect 4");
-    if(props.dataSet !== null && props.dataSet !== undefined && Object.keys(props.dataSet).length !== 0) {
+    if (props.dataSet !== null && props.dataSet !== undefined && Object.keys(props.dataSet).length !== 0) {
       if (resetColumns.length === 0) {
         setHeaders(allHeadCells);
         setRows(completeData);
@@ -189,11 +190,11 @@ function GenericDatatable(props) {
           updatedHeaderList.filter((eachHeader, eachIndex) => {
             return eachHeader.id === eachItem ? (mainIndex = eachIndex) : "";
           });
-  
+
           if (mainIndex !== "") {
             updatedHeaderList = removeItem(updatedHeaderList, mainIndex);
             setHeaders(updatedHeaderList);
-  
+
             updatedDataList = updatedDataList.map(eachRow => {
               return removeItem(eachRow, mainIndex);
             });
@@ -203,9 +204,9 @@ function GenericDatatable(props) {
         });
       }
     }
-    
+
   }, [
-    allHeadCells, 
+    allHeadCells,
     // completeData, 
     // resetColumns
   ]);
@@ -413,26 +414,26 @@ function GenericDatatable(props) {
                 direction="row"
                 style={{ marginRight: 15, marginBottom: 10 }}
               >
-                {actionButtons.length>0
+                {actionButtons.length > 0
                   ? actionButtons.map((actions, index) =>
-                              <ActionRegistry
-                                action={{
-                                  actionCode: actions.actionCode,
-                                  actionName: actions.actionName,
-                                  actionParams: actions.actionParams
-                                }}
-                                color="primary"
-                                variant="outlined"
-                                key={index}
-                                data={selected}
-                                marginStyle={{ margin: 10 }}
-                                reloadData={props.reloadData}
-                                inputParams={props.inputParams}
-                                fromInfo={false}
-                                actionHandler={null}
-                              />
-                            )
-                    
+                    <ActionRegistry
+                      action={{
+                        actionCode: actions.actionCode,
+                        actionName: actions.actionName,
+                        actionParams: actions.actionParams
+                      }}
+                      color="primary"
+                      variant="outlined"
+                      key={index}
+                      data={selected}
+                      marginStyle={{ margin: 10 }}
+                      reloadData={props.reloadData}
+                      inputParams={props.inputParams}
+                      fromInfo={false}
+                      actionHandler={null}
+                    />
+                  )
+
                   : null}
               </Grid>
             </Grid>

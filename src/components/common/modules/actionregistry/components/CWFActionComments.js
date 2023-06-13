@@ -99,7 +99,7 @@ function CWFActionComments(props) {
     formData["alertNos"] = "";
     formData["fiuReferenceNo"] = "";
     formData["fiuReferenceDate"] = "";*/
-    data["caseNos"] = caseNo;
+    data["caseNos"] = caseNo[0];
     data["inputActionCode"] = actionCode;
     data["addedToMarkAll"] = "N";
     data["addedToFalsePositive"] = "N";

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef, Fragment} from 'react'
+import React, { useState, useEffect, useRef, Fragment } from 'react'
 import {
     Box,
     Button,
@@ -26,11 +26,11 @@ import CommunicationContainer from './CommunicationContainers/CommunicationConta
 
 const CWFBottomContainer = (props) => {
 
-    const { 
-        actionButtons, 
+    const {
+        actionButtons,
         caseNo,
         selectedCaseStatus,
-        
+
     } = props;
 
     // const styles = theme => ({
@@ -44,7 +44,7 @@ const CWFBottomContainer = (props) => {
     //         height: 'auto',
     //         backgroundColor: '#fff',
     //         },
-          
+
     //     },
     //     formControl: {
     //         margin: 1,
@@ -69,7 +69,7 @@ const CWFBottomContainer = (props) => {
     const [noCaseAlert, setNoCaseAlert] = useState(false);
     const [alertType, setAlertType] = useState('success');
     const [alertMessage, setAlertMessage] = useState('Please Select A Case!');
-    const [modalAction, setModalAction]= useState()
+    const [modalAction, setModalAction] = useState()
     const classes = useClasses(styles);
 
 
@@ -81,7 +81,7 @@ const CWFBottomContainer = (props) => {
 
     })
 
-    
+
 
     const openNoCaseAlert = () => {
         setNoCaseAlert(true);
@@ -101,11 +101,11 @@ const CWFBottomContainer = (props) => {
     ]
     const callActions = []
     const smsActions = []
-    
+
 
     const formRef = useRef()
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log("Action Buttons", actionButtons)
         console.log("Case No:-", caseNo)
         console.log("Case Status:-", selectedCaseStatus);
@@ -118,7 +118,7 @@ const CWFBottomContainer = (props) => {
     const handleUploadClose = () => {
         setUploadModalOpen(false)
     }
-    
+
     const handleCommOpen = () => {
         setCommModalOpen(true)
     }
@@ -128,7 +128,7 @@ const CWFBottomContainer = (props) => {
 
     const handleUploadModal = (action) => {
         actionMapping['getFileUploadConfig'](action, caseNo, userActionType)
-            .then((res)=>{
+            .then((res) => {
                 console.log("Upload Modal Response:-", res)
                 setFileConfig({
                     allowedFileTypes: res.ALLOWFILETYPES,
@@ -138,7 +138,7 @@ const CWFBottomContainer = (props) => {
                 })
                 setUploadModalOpen(true)
             })
-            .catch(err=>{
+            .catch(err => {
                 console.error("Upload API:-", err)
             })
     }
@@ -147,7 +147,7 @@ const CWFBottomContainer = (props) => {
 
         console.log("Action Fires:-", action.actionCode)
 
-        if(caseNo === "") {
+        if (caseNo === "") {
             setAlertMessage('Please Select A Case!')
             setAlertType('error')
             openNoCaseAlert()
@@ -155,18 +155,18 @@ const CWFBottomContainer = (props) => {
             setCurrentAction(action)
             setModalAction(action.actionName)
 
-            if (emailActions.includes(action.actionCode)){
+            if (emailActions.includes(action.actionCode)) {
                 setCommType('email')
                 setCommModalOpen(true)
-            } else if (smsActions.includes(action.actionCode)){
+            } else if (smsActions.includes(action.actionCode)) {
                 setCommType('sms')
                 setCommModalOpen(true)
-            } else if (callActions.includes(action.actionCode)){
+            } else if (callActions.includes(action.actionCode)) {
                 setCommType('call')
                 setCommModalOpen(true)
-            } else if(action.actionCode === 'getFileUploadConfig'){
+            } else if (action.actionCode === 'getFileUploadConfig') {
                 actionMapping['getFileUploadConfig'](action, caseNo[0], userActionType)
-                    .then((res)=>{
+                    .then((res) => {
                         console.log("Upload Modal Response:-", res)
                         setFileConfig({
                             allowedFileTypes: res.ALLOWFILETYPES,
@@ -176,25 +176,25 @@ const CWFBottomContainer = (props) => {
                         })
                         setUploadModalOpen(true)
                     })
-                    .catch(err=>{
+                    .catch(err => {
                         console.error("Upload API:-", err)
                     })
             }
-            else{
-                if(showCommentActions.includes(action.actionCode)){
-            
+            else {
+                if (showCommentActions.includes(action.actionCode)) {
+
                     actionMapping['getCWFCaseAndCommentsDetails'](action, caseNo[0], userActionType)
-                    .then(res=>{
+                        .then(res => {
                             var allTabNames = res['TABNAMES']
-                            console.log('tabname///////////////////////////',allTabNames)
-                            console.log('res in CWFBottomContainer///////////////////////////',res)
+                            console.log('tabname///////////////////////////', allTabNames)
+                            console.log('res in CWFBottomContainer///////////////////////////', res)
                             setAllTabs(allTabNames)
                             setTabName(allTabNames[0])
                             setTotalRes(res)
                         })
-                    .catch(err=>{
-                        console.log(err)
-                    })
+                        .catch(err => {
+                            console.log(err)
+                        })
                 }
                 setModalOpen(true)
             }
@@ -203,14 +203,14 @@ const CWFBottomContainer = (props) => {
 
     const handleSubmit = (data) => {
         console.log("User Action Type:-", userActionType);
-        if(userActionType !== null){
+        if (userActionType !== null) {
             console.log("Form Data", data)
             actionMapping[currentAction.actionCode](currentAction, data, caseNo[0], userActionType)
-                .then(res=>{
+                .then(res => {
                     setModalOpen(false)
                     console.log(res)
                 })
-                .catch(err=>{
+                .catch(err => {
                     console.log(err)
                 })
 
@@ -222,53 +222,53 @@ const CWFBottomContainer = (props) => {
         const data = new FormData()
 
         data.append('file', uploadFileData)
-        
+
         actionMapping['fileUploadConfig'](data, caseNo[0])
-        .then(res=>{
-            console.log("Response:-", res)
-            setAlertType('success')
-            setAlertMessage(res);
-            openNoCaseAlert()
-        })
+            .then(res => {
+                console.log("Response:-", res)
+                setAlertType('success')
+                setAlertMessage(res);
+                openNoCaseAlert()
+            })
         handleUploadClose()
     }
 
     const checkDisabled = (action) => {
         let tempDisabled = false;
-        if(selectedCaseStatus.length>1){
-            if(action.isMultiselect === 'Y'){
-                if(!selectedCaseStatus.every((status)=>action.enabledFor.includes(status))){
+        if (selectedCaseStatus.length > 1) {
+            if (action.isMultiselect === 'Y') {
+                if (!selectedCaseStatus.every((status) => action.enabledFor.includes(status))) {
                     tempDisabled = true;
                 }
                 return tempDisabled;
             }
-            else{
+            else {
                 return true
             }
         }
-        else{
-            if(selectedCaseStatus.length === 1){
-                if(action.enabledFor.includes('ALL') || action.enabledFor.includes(selectedCaseStatus[0])){
+        else {
+            if (selectedCaseStatus.length === 1) {
+                if (action.enabledFor.includes('ALL') || action.enabledFor.includes(selectedCaseStatus[0])) {
                     return false
                 }
-                else{
+                else {
                     return true
                 }
             }
-            else{
+            else {
                 return true
-            }  
+            }
         }
     }
-// console.log('currentAction is:', currentAction)
+    // console.log('currentAction is:', currentAction)
     return (
         <Box className={`${classes.root} flex flex-row justify-end items-center`} >
-            {actionButtons.length > 0 && actionButtons.map((action, index)=>(
+            {actionButtons.length > 0 && actionButtons.map((action, index) => (
                 <Button
-                    onClick={()=>handleClick(action)}
+                    onClick={() => handleClick(action)}
                     disabled={checkDisabled(action)}
                     className="action-btn px-5 py-2 mx-2 my-3 normal-case text-app-primary bg-transparent hover:bg-app-primary hover:text-white  text-sm rounded-[25px] shadow-none border-solid border-[1px] border-[#052a4f] disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none">
-                        {action.actionName}
+                    {action.actionName}
                 </Button>
             ))}
 
@@ -293,17 +293,17 @@ const CWFBottomContainer = (props) => {
                 />
                 <Box className='flex flex-row justify-end items-center mt-5' >
                     <Button
-                        onClick={()=>{handleUploadSubmit()}}
+                        onClick={() => { handleUploadSubmit() }}
                         className="px-5 py-2 mx-2 my-3 normal-case text-app-primary bg-transparent hover:bg-app-primary hover:text-white  text-sm rounded-[25px] shadow-none border-solid border-[1px] border-[#052a4f]">
                         Upload
                     </Button>
                     <Button
-                        onClick={()=>{setUploadModalOpen(false)}}
+                        onClick={() => { setUploadModalOpen(false) }}
                         className="px-5 py-2 mx-2 my-3 normal-case text-app-primary bg-transparent hover:bg-app-primary hover:text-white  text-sm rounded-[25px] shadow-none border-solid border-[1px] border-[#052a4f]">
                         Close
                     </Button>
                 </Box>
-                
+
             </Dialog>
 
             <Dialog
@@ -318,12 +318,12 @@ const CWFBottomContainer = (props) => {
                     }
                 }}
             >
-                <CommunicationContainer 
+                <CommunicationContainer
                     commType={commType}
-                    handleModalOpen={handleCommOpen} 
+                    handleModalOpen={handleCommOpen}
                     handleModalClose={handleCommClose}
                     handleSubmit={handleSubmit}
-                    caseNo={caseNo}
+                    caseNo={caseNo[0]}
                 />
             </Dialog>
 
@@ -332,19 +332,19 @@ const CWFBottomContainer = (props) => {
                 open={modalOpen}
                 onClose={handleClickClose}
                 className={`${classes.root}`}
-                // className='mx-auto rounded-lg p-3' 
-                // PaperProps={{
-                //     className: 'left-0 right-0 mx-auto top-3 min-w-[70vw] rounded-lg p-3',
-                //     sx: {
-                //         padding: '30px',
-                //         borderRadius: '8px'
-                //     }
-                // }}
+            // className='mx-auto rounded-lg p-3' 
+            // PaperProps={{
+            //     className: 'left-0 right-0 mx-auto top-3 min-w-[70vw] rounded-lg p-3',
+            //     sx: {
+            //         padding: '30px',
+            //         borderRadius: '8px'
+            //     }
+            // }}
             >
                 <Typography className='pl-5 bg-[#f4f5fa]'>{modalAction}</Typography>
-                    <IconButton
+                <IconButton
                     aria-label="close"
-                    onClick={()=>{setModalOpen(false)}}
+                    onClick={() => { setModalOpen(false) }}
                     sx={{
                         position: 'absolute',
                         right: 8,
@@ -352,14 +352,14 @@ const CWFBottomContainer = (props) => {
                         color: 'black',
                         fontSize: '18px'
                     }}
-                    >
-                        <AiOutlineClose />
-                    </IconButton>
-                {currentAction!=null&&currentAction.actionParams.length>0?(
+                >
+                    <AiOutlineClose />
+                </IconButton>
+                {currentAction != null && currentAction.actionParams.length > 0 ? (
                     <>
-                        {showCommentActions.includes(currentAction.actionCode)?(
+                        {showCommentActions.includes(currentAction.actionCode) ? (
                             <>
-                                {Object.keys(totalRes).length>0&&(
+                                {Object.keys(totalRes).length > 0 && (
                                     <CommentsContainer
                                         handleSubmit={handleSubmit}
                                         setIsFormValid={setIsFormValid}
@@ -373,8 +373,8 @@ const CWFBottomContainer = (props) => {
                                     />
                                 )}
                             </>
-                            
-                        ):(
+
+                        ) : (
                             <Box className={`${classes.root} bg-[#f4f5fa] p-[10px] m-[10px] rounded-[8px]`}>
                                 <Formsy
                                     onValidSubmit={data => handleSubmit(data)}
@@ -382,145 +382,145 @@ const CWFBottomContainer = (props) => {
                                     onInvalid={() => setIsFormValid(false)}
                                     ref={formRef}
                                     className="flex flex-col justify-center w-full"
-                                >    
+                                >
                                     <Grid
                                         className='p-[20px] pb-0'
                                         container>
                                         <Box className='modal_shadow_container w-full'>
                                             <Grid container>
-                                            {currentAction.actionParams.map((param, index)=>( 
-                                                <>
-                                                    {param.paramDataType === "text" && (
-                                                        <Grid className="inputContainer" item xs={4} >
-                                                            <Typography>{param.paramName}</Typography>
-                                                            <FormControl fullWidth >
-                                                                <TextFieldFormsy
-                                                                    variant="outlined"
-                                                                    name={param.paramId}
-                                                                    // label={param.paramName}
-                                                                    className="w-[100%]"
-                                                                    validationError=""
-                                                                    required={true}
-                                                                    //value={param.paramDefaultValues || ''}
-                                                                    // value={res.COMMENTS}
-                                                                //    value= {accountReviewDate || ''}
-                                                                    disabled={!param.enabled}
-                                                                ></TextFieldFormsy>
-                                                            </FormControl>
-                                                        </Grid>
-                                                    )}
-                                                
-                                                    {param.paramDataType === "date" && (
-                                                        <Grid className="inputContainer" item xs={4}>
-                                                            <Typography>{param.paramName}</Typography>
-                                                            <FormControl fullWidth>
-                                                                <DatePickerFormsy
-                                                                    variant="filled"
-                                                                    name={param.paramId}
-                                                                    ampm={false}
-                                                                    className={undefined}
-                                                                    format="dd/MM/yyyy"
-                                                                    inputFormat="dd/MM/yyyy"
-                                                                    toolbarFormat="dd/MM/yyyy"
-                                                                    dateTime={false}
-                                                                    allowKeyboardControl={true}
-                                                                    required={true}
-                                                                />
-                                                            </FormControl>
-                                                        </Grid>
-                                                    )}
-                                                    
-                                                    {param.paramDataType === 'select' && param.paramStaticValues !== null ? (
-                                                        <Grid  className="inputContainer" item xs={4} key={index}>
-                                                            <Typography>{param.paramName}</Typography>
-                                                            <FormControl fullWidth>
-                                                                <SelectFormsy
-                                                                variant="outlined"
-                                                                name={param.paramId}
-                                                                // label={param.paramName}
-                                                                value={
-                                                                    param.paramDefaultValues === null || " "
-                                                                    ? `NA`
-                                                                    : param.paramDefaultValues
-                                                                }
-                                                                className={classes.root}
-                                                                onChange={() => {}}
-                                                                validationError=""
-                                                                disabled={!param.enabled}
-                                                                //required={true}
-                                                                >
-                                                                <MenuItem value="">Select One</MenuItem>
-                                                                {param.paramStaticValues.split(',').map((option, index) => {
-                                                                    return (
-                                                                    <MenuItem value={option} key={index}>
-                                                                        {option === null || "" ? `NA` : option}
-                                                                    </MenuItem>
-                                                                    );
-                                                                })}
-                                                                </SelectFormsy>
-                                                            </FormControl>
-                                                        </Grid>
-                                    
-                                                    ):(<></>)}
+                                                {currentAction.actionParams.map((param, index) => (
+                                                    <>
+                                                        {param.paramDataType === "text" && (
+                                                            <Grid className="inputContainer" item xs={4} >
+                                                                <Typography>{param.paramName}</Typography>
+                                                                <FormControl fullWidth >
+                                                                    <TextFieldFormsy
+                                                                        variant="outlined"
+                                                                        name={param.paramId}
+                                                                        // label={param.paramName}
+                                                                        className="w-[100%]"
+                                                                        validationError=""
+                                                                        required={true}
+                                                                        //value={param.paramDefaultValues || ''}
+                                                                        // value={res.COMMENTS}
+                                                                        //    value= {accountReviewDate || ''}
+                                                                        disabled={!param.enabled}
+                                                                    ></TextFieldFormsy>
+                                                                </FormControl>
+                                                            </Grid>
+                                                        )}
 
-                                                    {param.paramDataType === "textarea" && (
-                                                        <Grid  className="inputContainer" item xs={12} >
-                                                            <Typography>{param.paramName}</Typography>
-                                                            <FormControl fullWidth>
-                                                                <TextFieldFormsy
-                                                                    variant="outlined"
-                                                                    name={param.paramId}
-                                                                    // label={param.paramName}
-                                                                    onChange={() => {}}
-                                                                    validationError=""
-                                                                    required={true}
-                                                                    //  value= {previousComments || ''}
-                                                                    multiline={true}
-                                                                    rows={4}
-                                                                    sx={{
-                                                                        width: '100%'
-                                                                    }}
-                                                                    disabled={!param.enabled}
-                                                                ></TextFieldFormsy>
-                                                            </FormControl>
-                                                        </Grid>
-                                                    )}
+                                                        {param.paramDataType === "date" && (
+                                                            <Grid className="inputContainer" item xs={4}>
+                                                                <Typography>{param.paramName}</Typography>
+                                                                <FormControl fullWidth>
+                                                                    <DatePickerFormsy
+                                                                        variant="filled"
+                                                                        name={param.paramId}
+                                                                        ampm={false}
+                                                                        className={undefined}
+                                                                        format="dd/MM/yyyy"
+                                                                        inputFormat="dd/MM/yyyy"
+                                                                        toolbarFormat="dd/MM/yyyy"
+                                                                        dateTime={false}
+                                                                        allowKeyboardControl={true}
+                                                                        required={true}
+                                                                    />
+                                                                </FormControl>
+                                                            </Grid>
+                                                        )}
 
-                                                </>
-                                            ))}
+                                                        {param.paramDataType === 'select' && param.paramStaticValues !== null ? (
+                                                            <Grid className="inputContainer" item xs={4} key={index}>
+                                                                <Typography>{param.paramName}</Typography>
+                                                                <FormControl fullWidth>
+                                                                    <SelectFormsy
+                                                                        variant="outlined"
+                                                                        name={param.paramId}
+                                                                        // label={param.paramName}
+                                                                        value={
+                                                                            param.paramDefaultValues === null || " "
+                                                                                ? `NA`
+                                                                                : param.paramDefaultValues
+                                                                        }
+                                                                        className={classes.root}
+                                                                        onChange={() => { }}
+                                                                        validationError=""
+                                                                        disabled={!param.enabled}
+                                                                    //required={true}
+                                                                    >
+                                                                        <MenuItem value="">Select One</MenuItem>
+                                                                        {param.paramStaticValues.split(',').map((option, index) => {
+                                                                            return (
+                                                                                <MenuItem value={option} key={index}>
+                                                                                    {option === null || "" ? `NA` : option}
+                                                                                </MenuItem>
+                                                                            );
+                                                                        })}
+                                                                    </SelectFormsy>
+                                                                </FormControl>
+                                                            </Grid>
+
+                                                        ) : (<></>)}
+
+                                                        {param.paramDataType === "textarea" && (
+                                                            <Grid className="inputContainer" item xs={12} >
+                                                                <Typography>{param.paramName}</Typography>
+                                                                <FormControl fullWidth>
+                                                                    <TextFieldFormsy
+                                                                        variant="outlined"
+                                                                        name={param.paramId}
+                                                                        // label={param.paramName}
+                                                                        onChange={() => { }}
+                                                                        validationError=""
+                                                                        required={true}
+                                                                        //  value= {previousComments || ''}
+                                                                        multiline={true}
+                                                                        rows={4}
+                                                                        sx={{
+                                                                            width: '100%'
+                                                                        }}
+                                                                        disabled={!param.enabled}
+                                                                    ></TextFieldFormsy>
+                                                                </FormControl>
+                                                            </Grid>
+                                                        )}
+
+                                                    </>
+                                                ))}
                                             </Grid>
-                                            
+
                                         </Box>
-                                        
+
                                         <Grid item xs={12} className='flex flex-row justify-end align-center w-full' >
-                                
+
                                             {currentAction.actionCode !== "addViewComments" && (
                                                 <>
                                                     <Button
                                                         type="submit"
-                                                        onClick={()=>{setUserActionType('Post')}}
+                                                        onClick={() => { setUserActionType('Post') }}
                                                         className="px-5 py-2 mx-2 my-3 normal-case text-app-primary bg-transparent hover:bg-app-primary hover:text-white  text-sm rounded-[25px] shadow-none border-solid border-[1px] border-[#052a4f]">
                                                         Post
                                                     </Button>
                                                     <Button
                                                         type="submit"
-                                                        onClick={()=>{setUserActionType('PostAndClose')}}
+                                                        onClick={() => { setUserActionType('PostAndClose') }}
                                                         className="px-5 py-2 mx-2 my-3 normal-case text-app-primary bg-transparent hover:bg-app-primary hover:text-white  text-sm rounded-[25px] shadow-none border-solid border-[1px] border-[#052a4f]">
                                                         Post And Close
                                                     </Button>
-                                                    {uploadActions.includes(currentAction.actionCode)&&(
+                                                    {uploadActions.includes(currentAction.actionCode) && (
                                                         <Button
-                                                            onClick={()=>{handleUploadModal(currentAction)}}
+                                                            onClick={() => { handleUploadModal(currentAction) }}
                                                             className="px-5 py-2 mx-2 my-3 normal-case text-app-primary bg-transparent hover:bg-app-primary hover:text-white  text-sm rounded-[25px] shadow-none border-solid border-[1px] border-[#052a4f]">
                                                             Attach Evidence
                                                         </Button>
                                                     )}
-                                                    
+
                                                 </>
                                             )}
                                             <Button
                                                 type="submit"
-                                                onClick={()=>{setModalOpen(false)}}
+                                                onClick={() => { setModalOpen(false) }}
                                                 className="px-5 py-2 mx-2 my-3 normal-case text-app-primary bg-transparent hover:bg-app-primary hover:text-white  text-sm rounded-[25px] shadow-none border-solid border-[1px] border-[#052a4f]">
                                                 Close Case
                                             </Button>
@@ -530,8 +530,8 @@ const CWFBottomContainer = (props) => {
                             </Box>
                         )}
                     </>
-                    
-                ):'Action Not Found'}
+
+                ) : 'Action Not Found'}
             </Dialog>
             <GenericAlert
                 message={alertMessage}

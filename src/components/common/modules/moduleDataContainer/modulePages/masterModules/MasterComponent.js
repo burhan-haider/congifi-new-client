@@ -25,8 +25,8 @@ import {
 import clsx from "clsx";
 // import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 // import SearchButtonIcon from "@material-ui/icons/SearchOutlined";
-import { 
-  MdExpandMore as ExpandMoreIcon, 
+import {
+  MdExpandMore as ExpandMoreIcon,
   MdOutlineSearch as SearchButtonIcon,
 } from "react-icons/md"
 import commonService from "services/common/commonService";
@@ -87,9 +87,9 @@ export default function MasterComponent(props) {
 
   const paramObj = useMemo(() =>
     props && props.indexPageData.length ? props.indexPageData : []
-  ,[props])
-  
-    
+    , [props])
+
+
 
   useEffect(() => {
     if (paramObj) {
@@ -97,7 +97,7 @@ export default function MasterComponent(props) {
     }
   }, [paramObj]);
 
-  
+
   const [dataSelected, setDataSelected] = useState(null);
 
   //const selectionIndex = "all";
@@ -127,41 +127,44 @@ export default function MasterComponent(props) {
     commonService.fetchMasterSearchData(data).then(response => {
       setSearchData(response);
       console.log('response', commonService)
-    }); 
+    });
     console.log('searchData', searchData)
     setShowResults(true);
     setExpandedPanel(false);
   };
 
-  
+
   //console.log("VIVEK - searchFormData = "+searchFormData);
 
   const ResultFrame = () => (
     <div id="bottomFrame" className={classes.root} style={{ padding: '5px 20px 0px' }}>
-      {searchData? (
-        <GenericDatagrid
+      {searchData ? (
+        <>
+          <GenericDatagrid
             tableData={searchData}
             utilColumn={'select'}
+            isInfo={true}
             setSelectedData={setDataSelected}
             selectedData={dataSelected}
             // inputParams={inputParams}
             title={moduleHeader[0]}
             // actionButtons={GenericDetailsBottomContainer}
             moduleType={"masters"}
-            // ComponentBottomContainer={GenericDetailsBottomContainer}
+          // ComponentBottomContainer={GenericDetailsBottomContainer}
           />
-         //<GenericDatatable
-          //dataSet={searchData}
-          //infoEnabled={true}
-          //moduleName={moduleHeader[0]}
-          //isSelection={true}
-          //isMultipleSelect={true}
-          //selectionIndex={selectionIndex}
-          //BottomContainer={GenericDetailsBottomContainer}
-          //selected={dataSelected}
-          //selectHandler={setDataSelected}
-          //dynamicProps={searchFormData}
-        //></GenericDatatable>
+          <GenericDatatable
+            dataSet={searchData}
+            infoEnabled={true}
+            moduleName={moduleHeader[0]}
+            isSelection={true}
+            isMultipleSelect={true}
+            selectionIndex={selectionIndex}
+            BottomContainer={GenericDetailsBottomContainer}
+            selected={dataSelected}
+            selectHandler={setDataSelected}
+            dynamicProps={searchFormData}
+          ></GenericDatatable>
+        </>
       ) : (
         "No data available"
       )}
@@ -174,7 +177,7 @@ export default function MasterComponent(props) {
         <Box className="moduleName">{feature.breadCrumbs[feature.breadCrumbs.length - 1].label}</Box>
         <Divider className="mb-[10px] border-[#C1C9D3]"></Divider>
         <Accordion
-        className="px-5"
+          className="px-5"
           expanded={expandedPanel === "searchExpansionPanel"}
           onChange={handlePanelExpansion("searchExpansionPanel")}
           id="searchExpansionPanel"
@@ -197,7 +200,7 @@ export default function MasterComponent(props) {
             // className='bg-[#F4F5FA]'
             align="left"
             id="searchExpansionPanelDetails"
-            // style={{ padding: 5 }}
+          // style={{ padding: 5 }}
           >
             <Formsy
               onValidSubmit={data => handleSubmit(data)}
@@ -205,7 +208,7 @@ export default function MasterComponent(props) {
               onInvalid={() => setIsFormValid(false)}
               ref={formRef}
               className="flex flex-col justify-center w-full"
-              
+
             >
               <Grid
                 container
@@ -215,186 +218,186 @@ export default function MasterComponent(props) {
               >
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
-                      eachParam.MODULEPARAMDATATYPE === "date" ? (
-                        <Grid className="inputContainer" item xs={4} key={index}>
-                          <Typography>{`${eachParam.MODULEPARAMIDNAME}`}</Typography>
-                          <FormControl fullWidth required>
-                            <DatePickerFormsy
-                              variant="outlined"
-                              name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
-                              // label={`${eachParam.MODULEPARAMIDNAME}`}
-                              ampm={false} // 24Hr / 12hr clock settings
-                              className={undefined} // optional, if you need for styling
-                              dateTime={false} // true, if need the Date and Time Picker. false if you need only Date Picker
-                              allowKeyboardControl={true} // optional, this will allow keybord to control the picker.
-                              value={moment(new Date).format('DD/MM/YYYY')}
-                            />
-                          </FormControl>
-                        </Grid>
-                      ) : null
-                    )
-                  : null}
-
-                {paramObj
-                  ? paramObj.map((eachParam, index) =>
-                      eachParam.MODULEPARAMDATATYPE === "view" ? (
-                        <Grid className="inputContainer" item xs={4} key={index}>
-                          <Typography>{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
-                          <FormControl
-                            className={
-                              (clsx(classes.margin, classes.textField),
-                              classes.formControl)
-                            }
-                            fullWidth
+                    eachParam.MODULEPARAMDATATYPE === "date" ? (
+                      <Grid className="inputContainer" item xs={4} key={index}>
+                        <Typography>{`${eachParam.MODULEPARAMIDNAME}`}</Typography>
+                        <FormControl fullWidth required>
+                          <DatePickerFormsy
                             variant="outlined"
+                            name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
+                            // label={`${eachParam.MODULEPARAMIDNAME}`}
+                            ampm={false} // 24Hr / 12hr clock settings
+                            className={undefined} // optional, if you need for styling
+                            dateTime={false} // true, if need the Date and Time Picker. false if you need only Date Picker
+                            allowKeyboardControl={true} // optional, this will allow keybord to control the picker.
+                            value={moment(new Date).format('DD/MM/YYYY')}
+                          />
+                        </FormControl>
+                      </Grid>
+                    ) : null
+                  )
+                  : null}
+
+                {paramObj
+                  ? paramObj.map((eachParam, index) =>
+                    eachParam.MODULEPARAMDATATYPE === "view" ? (
+                      <Grid className="inputContainer" item xs={4} key={index}>
+                        <Typography>{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
+                        <FormControl
+                          className={
+                            (clsx(classes.margin, classes.textField),
+                              classes.formControl)
+                          }
+                          fullWidth
+                          variant="outlined"
+                        >
+                          <ViewFieldFormsy
+                            className={undefined}
+                            name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
+                            // label={`${eachParam.MODULEPARAMIDNAME}`}
+                            onChange={() => { }}
+                            validationError=""
+                            //required={true}
+                            value=""
+                            viewname={eachParam.MODULEPARAMVIEWNAME}
+                            ismultipleselect={eachParam.SEARCHMULTIPLESELECT}
+                          />
+                        </FormControl>
+                      </Grid>
+                    ) : null
+                  )
+                  : null}
+
+                {paramObj
+                  ? paramObj.map((eachParam, index) =>
+                    eachParam.MODULEPARAMDATATYPE === "text" ? (
+                      <Grid className="inputContainer" item xs={4} key={index}>
+                        <Typography>{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
+                        <FormControl fullWidth>
+                          <TextFieldFormsy
+                            variant="outlined"
+                            name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
+                            // label={`${eachParam.MODULEPARAMIDNAME}`}
+                            className={undefined} // optional, if you need for styling
+                            onChange={() => { }} // optional, a callback if you need to do any logic on the value change
+                            validationError="" // optional, to show error if validation fails
+                            //required={true} // optional, if make this mandatory field in the form
+                            value=""
+                          ></TextFieldFormsy>
+                        </FormControl>
+                      </Grid>
+                    ) : null
+                  )
+                  : null}
+
+                {paramObj
+                  ? paramObj.map((eachParam, index) =>
+                    eachParam.MODULEPARAMDATATYPE === "select" ? (
+                      <Grid className="inputContainer" item xs={4} key={index}>
+                        <Typography>{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
+                        <FormControl fullWidth variant={'outlined'} >
+                          <SelectFormsy
+                            variant="outlined"
+                            name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
+                            //label={`${eachParam.MODULEPARAMIDNAME}`}
+                            // label={commonService.getLabel(
+                            //   eachParam.MODULEPARAMNAME,
+                            //   eachParam.MODULEPARAMIDNAME
+                            // )}
+                            value="" // mandatory, value of the selected element
+                            className={undefined} // optional, if you need for styling
+                            onChange={() => { }} // optional, a callback if you need to do any logic on the value change
+                            validationError="" // optional, to show error if validation fails
+                          //required={true} // optional, if make this mandatory field in the form
                           >
-                            <ViewFieldFormsy
-                              className={undefined}
-                              name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
-                              // label={`${eachParam.MODULEPARAMIDNAME}`}
-                              onChange={() => {}}
-                              validationError=""
-                              //required={true}
-                              value=""
-                              viewname={eachParam.MODULEPARAMVIEWNAME}
-                              ismultipleselect={eachParam.SEARCHMULTIPLESELECT}
-                            />
-                          </FormControl>
-                        </Grid>
-                      ) : null
-                    )
+                            <MenuItem value="">Select One</MenuItem>
+                            {Object.entries(
+                              eachParam.MODULEPARAMSELECTNAMEVALUES
+                            ).map((key, value) => {
+                              return (
+                                <MenuItem value={key[0]} key={value}>
+                                  {key[1]}
+                                </MenuItem>
+                              );
+                            })}
+                          </SelectFormsy>
+                        </FormControl>
+                      </Grid>
+                    ) : null
+                  )
                   : null}
 
                 {paramObj
                   ? paramObj.map((eachParam, index) =>
-                      eachParam.MODULEPARAMDATATYPE === "text" ? (
-                        <Grid className="inputContainer" item xs={4} key={index}>
-                          <Typography>{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
-                          <FormControl fullWidth>
-                            <TextFieldFormsy
-                              variant="outlined"
-                              name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
-                              // label={`${eachParam.MODULEPARAMIDNAME}`}
-                              className={undefined} // optional, if you need for styling
-                              onChange={() => {}} // optional, a callback if you need to do any logic on the value change
-                              validationError="" // optional, to show error if validation fails
-                              //required={true} // optional, if make this mandatory field in the form
-                              value=""
-                            ></TextFieldFormsy>
-                          </FormControl>
-                        </Grid>
-                      ) : null
-                    )
-                  : null}
-
-                {paramObj
-                  ? paramObj.map((eachParam, index) =>
-                      eachParam.MODULEPARAMDATATYPE === "select" ? (
-                        <Grid className="inputContainer" item xs={4} key={index}>
-                          <Typography>{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
-                          <FormControl fullWidth variant={'outlined'} >
-                            <SelectFormsy
-                              variant="outlined"
-                              name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
-                              //label={`${eachParam.MODULEPARAMIDNAME}`}
-                              // label={commonService.getLabel(
-                              //   eachParam.MODULEPARAMNAME,
-                              //   eachParam.MODULEPARAMIDNAME
-                              // )}
-                              value="" // mandatory, value of the selected element
-                              className={undefined} // optional, if you need for styling
-                              onChange={() => {}} // optional, a callback if you need to do any logic on the value change
-                              validationError="" // optional, to show error if validation fails
-                              //required={true} // optional, if make this mandatory field in the form
-                            >
-                              <MenuItem value="">Select One</MenuItem>
-                              {Object.entries(
-                                eachParam.MODULEPARAMSELECTNAMEVALUES
-                              ).map((key, value) => {
-                                return (
-                                  <MenuItem value={key[0]} key={value}>
-                                    {key[1]}
-                                  </MenuItem>
-                                );
-                              })}
-                            </SelectFormsy>
-                          </FormControl>
-                        </Grid>
-                      ) : null
-                    )
-                  : null}
-
-                {paramObj
-                  ? paramObj.map((eachParam, index) =>
-                      eachParam.MODULEPARAMDATATYPE === "radio" ? (
-                        <Grid className="inputContainer" item xs={4} key={index}>
-                          <Typography>{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
-                          <FormControl fullWidth>
-                            <RadioGroup
-                              row
-                              aria-label={`${eachParam.MODULEPARAMIDNAME}_${eachParam.MODULEPARAMINDEX}`}
-                              name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
-                              onChange={() => {}}
-                            >
-                              {Object.entries(
-                                eachParam.MODULEPARAMSELECTNAMEVALUES
-                              ).map((key, value) => {
-                                return (
-                                  <FormControlLabel
-                                    control={<Radio color="primary" />}
-                                    value={key[0]}
-                                    label={key[1]}
-                                  />
-                                );
-                              })}
-                            </RadioGroup>
-                          </FormControl>
-                        </Grid>
-                      ) : null
-                    )
-                  : null}
-
-                {paramObj
-                  ? paramObj.map((eachParam, index) =>
-                      eachParam.MODULEPARAMDATATYPE === "checkbox" ? (
-                        <Grid className="inputContainer" item xs={4} key={index}>
-                          <Typography>{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
-                          <FormControl fullWidth>
-                            <FormControlLabel
-                              className={undefined} // optional, if you need for styling
-                              control={
-                                <CheckboxFormsy
-                                  checked={false} // optional, if you need for styling
-                                  name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`} // mandatory, this will appear in the final JSON data once form is submitted
-                                  onChange={() => {}} // optional, a callback if you need to do any logic on the value change
-                                  value="" // mandatory, value of the selected element
+                    eachParam.MODULEPARAMDATATYPE === "radio" ? (
+                      <Grid className="inputContainer" item xs={4} key={index}>
+                        <Typography>{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
+                        <FormControl fullWidth>
+                          <RadioGroup
+                            row
+                            aria-label={`${eachParam.MODULEPARAMIDNAME}_${eachParam.MODULEPARAMINDEX}`}
+                            name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
+                            onChange={() => { }}
+                          >
+                            {Object.entries(
+                              eachParam.MODULEPARAMSELECTNAMEVALUES
+                            ).map((key, value) => {
+                              return (
+                                <FormControlLabel
+                                  control={<Radio color="primary" />}
+                                  value={key[0]}
+                                  label={key[1]}
                                 />
-                              }
-                              label={`${eachParam.MODULEPARAMIDNAME}`}
-                            />
-                          </FormControl>
-                        </Grid>
-                      ) : null
-                    )
+                              );
+                            })}
+                          </RadioGroup>
+                        </FormControl>
+                      </Grid>
+                    ) : null
+                  )
+                  : null}
+
+                {paramObj
+                  ? paramObj.map((eachParam, index) =>
+                    eachParam.MODULEPARAMDATATYPE === "checkbox" ? (
+                      <Grid className="inputContainer" item xs={4} key={index}>
+                        <Typography>{`${eachParam.MODULEPARAMALIASNAME}`}</Typography>
+                        <FormControl fullWidth>
+                          <FormControlLabel
+                            className={undefined} // optional, if you need for styling
+                            control={
+                              <CheckboxFormsy
+                                checked={false} // optional, if you need for styling
+                                name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`} // mandatory, this will appear in the final JSON data once form is submitted
+                                onChange={() => { }} // optional, a callback if you need to do any logic on the value change
+                                value="" // mandatory, value of the selected element
+                              />
+                            }
+                            label={`${eachParam.MODULEPARAMIDNAME}`}
+                          />
+                        </FormControl>
+                      </Grid>
+                    ) : null
+                  )
                   : null}
 
               </Grid>
-                <Grid
-                  container
-                  className="mx-4 my-3 flex flex-row justify-end w-100"
+              <Grid
+                container
+                className="mx-4 my-3 flex flex-row justify-end w-100"
+              >
+                <GenericButton
+                  type="submit"
+                  variant="outlined"
+                  aria-label="search"
+                  startIcon={<SearchButtonIcon />}
+                  disabled={!isFormValid}
+                  value="search"
                 >
-                  <GenericButton
-                    type="submit"
-                    variant="outlined"
-                    aria-label="search"
-                    startIcon={<SearchButtonIcon />}
-                    disabled={!isFormValid}
-                    value="search"
-                  >
-                    Search
-                  </GenericButton>
-                </Grid>
-                {/* {paramObj
+                  Search
+                </GenericButton>
+              </Grid>
+              {/* {paramObj
                   ? paramObj.map((eachParam, index) =>
                       eachParam.ACTIONS != null ? (
                         <Grid

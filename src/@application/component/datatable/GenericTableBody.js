@@ -63,7 +63,7 @@ const styles = theme => ({
   checked: {
     color: "#fff !important",
   },
-  
+
   //
 });
 
@@ -167,11 +167,19 @@ function GenericTableBody(props) {
     rowIndex,
     columnIndex
   ) {
-    // console.log(sortedData[rowIndex]);
+    console.group("Old Table Log")
+    console.log("Hyper Link Column:-", hyperlinkColumn);
+    console.log("Hyper Link Function:-", hyperlinkFunction);
+    console.log("Hyper Link Title:-", hyperlinkTitle);
+    console.log("Hyper Link Details Module:-", hyperlinkDetailsModule);
+    console.log("row Index:-", rowIndex);
+    console.log("column Index:-", columnIndex);
+    console.groupEnd()
     // console.log(
     //   rowIndex + "---" + columnIndex + "---" + rows[rowIndex][columnIndex]
     // );
     const hyperlinkRow = sortedData[rowIndex];
+    // console.log("hyperlinkRow:-", hyperlinkRow);
     const data = masterModuleHyperlinks.hyperlinkFunction(
       hyperlinkColumn,
       hyperlinkFunction,
@@ -223,10 +231,10 @@ function GenericTableBody(props) {
               tabIndex={-1}
               key={rowIndex}
               selected={isItemSelected}
-              classes={!isItemSelected?{
+              classes={!isItemSelected ? {
                 root: classes.tableRow,
                 hover: classes.hover,
-              }:{
+              } : {
                 selected: classes.selected
               }}
             >
@@ -254,9 +262,9 @@ function GenericTableBody(props) {
                       onChange={event => handleRadioClick(event, customArray)}
                       value={row[0]}
                       name={row[0] + "_" + rowIndex}
-                      classes={!isItemSelected?{
+                      classes={!isItemSelected ? {
                         root: classes.checkboxRoot,
-                      }:{
+                      } : {
                         checked: classes.checked
                       }}
                     />
@@ -273,81 +281,81 @@ function GenericTableBody(props) {
               </TableCell>
               {row.length
                 ? row.map((eachColumn, columnIndex) => {
-                    if (eachColumn === null) {
-                      eachColumn = "N.A.";
-                    }
-                    const hyperlinkDetails = getHyperlinkDetails(columnIndex);
-                    const hyperlinkFunction = hyperlinkDetails
-                      ? hyperlinkDetails.split("~^^~")[1]
-                      : null;
-                    const hyperlinkTitle = hyperlinkDetails
-                      ? hyperlinkDetails.split("~^^~")[2]
-                      : null;
-                    const hyperlinkDetailsModule = hyperlinkDetails
-                      ? hyperlinkDetails.split("~^^~")[3]
-                      : null;
-                    if (
-                      hyperlinkDetails &&
-                      hyperlinkDetails !== null &&
-                      hyperlinkDetails.split("~^^~")[0] === "true"
-                    ) {
-                      return (
-                        <GenericTooltip
-                          title={eachColumn}
-                          key={columnIndex + "~^^~" + eachColumn}
+                  if (eachColumn === null) {
+                    eachColumn = "N.A.";
+                  }
+                  const hyperlinkDetails = getHyperlinkDetails(columnIndex);
+                  const hyperlinkFunction = hyperlinkDetails
+                    ? hyperlinkDetails.split("~^^~")[1]
+                    : null;
+                  const hyperlinkTitle = hyperlinkDetails
+                    ? hyperlinkDetails.split("~^^~")[2]
+                    : null;
+                  const hyperlinkDetailsModule = hyperlinkDetails
+                    ? hyperlinkDetails.split("~^^~")[3]
+                    : null;
+                  if (
+                    hyperlinkDetails &&
+                    hyperlinkDetails !== null &&
+                    hyperlinkDetails.split("~^^~")[0] === "true"
+                  ) {
+                    return (
+                      <GenericTooltip
+                        title={eachColumn}
+                        key={columnIndex + "~^^~" + eachColumn}
+                      >
+                        <TableCell
+                          //id={eachColumn}
+                          id={headers[columnIndex].id + "~^^~" + eachColumn}
+                          key={headers[columnIndex].id + "~^^~" + eachColumn}
+                          align="left"
+                          className={!isItemSelected ? classes.tableCell : classes.tableCellSelected}
                         >
-                          <TableCell
-                            //id={eachColumn}
-                            id={headers[columnIndex].id + "~^^~" + eachColumn}
-                            key={headers[columnIndex].id + "~^^~" + eachColumn}
-                            align="left"
-                            className={!isItemSelected?classes.tableCell:classes.tableCellSelected}
-                          >
-                            <Link
-                              href="#"
-                              onClick={event => {
-                                hyperLinkClick(
-                                  headers[columnIndex].id,
-                                  hyperlinkFunction,
-                                  hyperlinkTitle,
-                                  hyperlinkDetailsModule,
-                                  rowIndex,
-                                  columnIndex
-                                );
-                              }}
-                              className={classes.hyperlink}
-                            >
-                              {eachColumn}
-                            </Link>
-                          </TableCell>
-                        </GenericTooltip>
-                      );
-                    } else {
-                      return (
-                        <GenericTooltip
-                          title={eachColumn}
-                          key={columnIndex + "~^^~" + eachColumn}
-                        >
-                          <TableCell
-                            id={
-                              headers[columnIndex]
-                                ? headers[columnIndex].id
-                                : "" + "~^^~" + eachColumn
-                            }
-                            key={
-                              headers[columnIndex]
-                                ? headers[columnIndex].id
-                                : "" + "~^^~" + eachColumn
-                            }
-                            align="left"
-                            className={!isItemSelected?classes.tableCell:classes.tableCellSelected}
+                          <Link
+                            href="#"
+                            onClick={event => {
+                              hyperLinkClick(
+                                headers[columnIndex].id,
+                                hyperlinkFunction,
+                                hyperlinkTitle,
+                                hyperlinkDetailsModule,
+                                rowIndex,
+                                columnIndex
+                              );
+                            }}
+                            className={classes.hyperlink}
                           >
                             {eachColumn}
-                          </TableCell>
-                        </GenericTooltip>
-                      );
-                    }
-                  })
+                          </Link>
+                        </TableCell>
+                      </GenericTooltip>
+                    );
+                  } else {
+                    return (
+                      <GenericTooltip
+                        title={eachColumn}
+                        key={columnIndex + "~^^~" + eachColumn}
+                      >
+                        <TableCell
+                          id={
+                            headers[columnIndex]
+                              ? headers[columnIndex].id
+                              : "" + "~^^~" + eachColumn
+                          }
+                          key={
+                            headers[columnIndex]
+                              ? headers[columnIndex].id
+                              : "" + "~^^~" + eachColumn
+                          }
+                          align="left"
+                          className={!isItemSelected ? classes.tableCell : classes.tableCellSelected}
+                        >
+                          {eachColumn}
+                        </TableCell>
+                      </GenericTooltip>
+                    );
+                  }
+                })
                 : null}
             </TableRow>
           );

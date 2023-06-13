@@ -2,7 +2,7 @@
 import commonService from "services/common/commonService";
 // import store from "app/store";
 
-const genericHyperlinksMap = new Map();
+export const genericHyperlinksMap = new Map();
 genericHyperlinksMap.set("app.common.CUSTOMERID", {
   function: "genericDetailsFunction",
   title: "Customer Details",
@@ -142,7 +142,7 @@ class MasterModuleHyperlinks {
   //     hyperlinkRow[columnIndex]
   //   );
   // };
-  
+
 
   /*customerIdClick = (hyperlinkTitle, hyperlinkDetailsModule, event) => {
     console.log("Vivek customerId onClick = ", event.target.textContent);
@@ -175,12 +175,12 @@ class MasterModuleHyperlinks {
     const data = commonService.fetchAccountProfilingDetails(
       hyperlinkDetailsModule,
       hyperlinkRow[columnIndex] +
-        `~~` +
-        dynamicProps["1_FROMDATE"] +
-        `~~` +
-        dynamicProps["2_TODATE"] +
-        `~~` +
-        hyperlinkRow[columnIndex + 1]
+      `~~` +
+      dynamicProps["1_FROMDATE"] +
+      `~~` +
+      dynamicProps["2_TODATE"] +
+      `~~` +
+      hyperlinkRow[columnIndex + 1]
     );
     return this.finalDataConstructor(
       data,
@@ -218,7 +218,7 @@ class MasterModuleHyperlinks {
     return genericHyperlinksMap;
   }
 
- functionObj = {
+  functionObj = {
     genericDetailsFunction: (data) => this.genericDetailsFunction(data),
     openAccountProfilingDetails: (data) => this.openAccountProfilingDetails(data),
     openActionParametersModule: (data) => this.openActionParametersModule(data),
