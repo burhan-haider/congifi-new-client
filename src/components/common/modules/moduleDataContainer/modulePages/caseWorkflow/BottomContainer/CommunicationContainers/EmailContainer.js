@@ -149,6 +149,7 @@ const EmailContainer = ({ handleModalClose, handleModalOpen, handleSubmit, caseN
     const [inboxMails, setInboxMails]  = useState([])
     const [sentMails, setSentMails]  = useState([])
     const [draftMails, setDraftMails]  = useState([])
+    const [refreshing, setRefreshing] = useState(false);
 
     const formRef = useRef(null);
 
@@ -378,14 +379,21 @@ const EmailContainer = ({ handleModalClose, handleModalOpen, handleSubmit, caseN
                 setMailReceived(true)
                 setMailsLoading(false)
                 // setMails(res.data)
+                setRefreshing(true)
             })
             .catch(err=>{
                 setMailsLoading(false)
                 console.error("Error:-", err)
             })
-            
         }
-    }, [mailReceived, caseNo])
+    }, [mailReceived])
+
+    useEffect(()=>{
+        emailService.refreshEmail()
+        .then(res=>{
+            console.log("Emails refreshed", res)
+        })
+    },[])
 
 
     const handleMenuChange = (option, index) => {
@@ -395,8 +403,8 @@ const EmailContainer = ({ handleModalClose, handleModalOpen, handleSubmit, caseN
     }
 
     const MailCard = ({mail, index}) => {
-        const fromId = mail.FROMID!==null?mail.FROMID.replaceAll(/(<([^>]+)>)/ig, ''):''
-        const seen = mail.SEENFLAG === 'N'?false:true
+        const fromId = mail.FROMID !== null ? mail.FROMID.replaceAll(/(<([^>]+)>)/ig, '') : ''
+        const seen = mail.SEENFLAG === 'N' ? false : true
         return (
             <MenuItem
                 onClick={() => handleMailClick(mail)}
@@ -457,7 +465,8 @@ const EmailContainer = ({ handleModalClose, handleModalOpen, handleSubmit, caseN
 
     const OpenMailCard = (mailData) => {
 
-        const mail = mailData.mail        
+        const mail = mailData.mail    
+
         return(
             <Box className="bg-white rounded-lg shadow-lg w-full h-full" >
                 <Box className="flex flex-col justify-start items-start py-5 px-4" >
@@ -480,7 +489,6 @@ const EmailContainer = ({ handleModalClose, handleModalOpen, handleSubmit, caseN
                             {mail.SENTDATE}
                         </Typography>
                     </Box>
-                    <Box className="border-none border-b-[0.5px solid rgb(156 163 175)] w-full" />
                     <Box className="pl-5 w-[80%] pr-5 pb-3">
                         <Box>
                             {parse(mail.MESSAGECONTENT)}

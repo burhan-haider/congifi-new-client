@@ -16,20 +16,14 @@ class AuthService {
         .then((response) => {
           if (response.status === 200) {
             this.setSession(response.data.token);
-            // console.log("response :"+response.data.token);
             resolve(response.data.token);
           } else {
             reject(response.data.message);
           }
         })
         .catch((error) => {
-          console.log("http Service Error:-",error);
-          // if (error.response.status === 500) {
-          //   // resolve(error.response);
-          //   reject(error.response);
-          // } else {
+          console.log("http Service Error:-", error);
           reject(error.response);
-          // }
         });
     });
   };
@@ -77,7 +71,7 @@ class AuthService {
         return;
       }
       httpService
-        .get(`/labels/${lang}/${direction}`)
+        .get(`/api/common/labels/${lang}/${direction}`)
         .then((response) => {
           if (response.status === 200) {
             resolve(response.data);

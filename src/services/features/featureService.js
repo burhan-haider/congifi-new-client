@@ -4,10 +4,8 @@ class featureService {
   fetchFeaturesmodulesList = async featureCode => {
     // console.log(featureCode);
     return await new Promise((resolve, reject) => {
-      // httpService.get(`/common/feature/${featureCode}`).then(response => {
       httpService.get(`/api/features/${featureCode}`).then(response => {
         if (response.status === 200) {
-          //console.log(response.data);
           resolve(response.data);
         } else {
           reject(response.data.err);

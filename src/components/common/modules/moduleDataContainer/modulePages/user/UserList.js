@@ -1,33 +1,32 @@
 import React, { useEffect, useState } from "react";
-import Fab from "@mui/material/Fab";
 // import AddIcon from "@material-ui/icons/Add";
 import { MdAdd as AddIcon } from 'react-icons/md'
-import { GenericDatatable, GenericDialog, useClasses } from "@application";
+import { GenericDatagrid, styles, GenericDialog, useClasses } from "@application";
 import UserCreationForm from "./UserCreationForm";
-import { 
-  AppBar, 
-  Toolbar, 
-  Typography, 
-  Dialog, 
-  Grid,
+import {
   SpeedDial,
   SpeedDialIcon,
   SpeedDialAction,
+  Box,
+  Divider,
+  Paper
 } from "@mui/material";
-import userOperationService from "services/user/UserOperationService";
 
-const styles = theme => ({
-  mainDivSpeedDial: {
-    position: "relative",
-    marginRight: "2%",
-    marginBottom: "1%"
-  },
-  speedDialAction: {
-    background: "#d4d4d4"
-  }
-});
+// const styles = theme => ({
+//   mainDivSpeedDial: {
+//     position: "relative",
+//     marginRight: "2%",
+//     marginBottom: "1%"
+//   },
+//   speedDialAction: {
+//     background: "#d4d4d4"
+//   }
+// });
 
 export default function UserComponent(props) {
+
+  const feature = props.feature;
+
   const classes = useClasses(styles);
   const [isDialogopen, setDialogOpen] = React.useState(false);
   const [open, setOpen] = useState(false);
@@ -43,7 +42,7 @@ export default function UserComponent(props) {
   };
 
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log("User List Props:-", props)
   })
   const handleOpenModal = () => {
@@ -52,7 +51,7 @@ export default function UserComponent(props) {
   const handleCloseModal = () => {
     setOpenModal(false);
   };
-  
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -83,13 +82,13 @@ export default function UserComponent(props) {
 
   const HEADER = props.indexPageData["HEADER"];
   const DATA = props.indexPageData["DATA"];
-  const finalHEADER = HEADER ? HEADER.filter(function(h) {
+  const finalHEADER = HEADER ? HEADER.filter(function (h) {
     return h !== "USERPASS";
   }) : [];
 
   var letCDATA;
   var finalDATA = [];
-  if(DATA){
+  if (DATA) {
     for (var j = 0; j < DATA.length; j++) {
       letCDATA = DATA[j].filter(data => data !== DATA[j][1]);
       finalDATA.push(letCDATA);
@@ -99,25 +98,24 @@ export default function UserComponent(props) {
       // );
     }
   }
-  
+
   return (
-    <>
-      <div>
-        <GenericDatatable
-          dataSet={{
+    <Paper className={`${classes.root} shadow-none`}>
+      <Box className="moduleName">{feature.breadCrumbs[feature.breadCrumbs.length - 1].label}</Box>
+      <Divider className="mb-[10px] border-[#C1C9D3]"></Divider>
+      <div className="p-5" >
+        <GenericDatagrid
+          tableData={{
             DATA: finalDATA,
             HEADER: finalHEADER
           }}
-          infoEnabled={false}
-          moduleName="User"
-          isSelection={true}
-          isMultipleSelect={false}
-          selectionIndex={selectionIndex}
-          selected={rowData}
-          selectHandler={setRowData}
-        ></GenericDatatable>
+          utilColumn={'singleSelect'}
+          setSelectedData={setRowData}
+          selectedData={rowData}
+          title={`User Results`}
+        />
       </div>
-      <div>
+      <div className="mt-4">
         <SpeedDial
           className={classes.mainDivSpeedDial}
           ariaLabel="Add"
@@ -149,10 +147,10 @@ export default function UserComponent(props) {
             closeModal={handleCloseModal}
             action={action}
             refreshCurrentModule={props.refreshCurrentModule}
-            ></UserCreationForm>
+          ></UserCreationForm>
         </GenericDialog>
       </div>
-    </>
+    </Paper>
   );
 }
 
