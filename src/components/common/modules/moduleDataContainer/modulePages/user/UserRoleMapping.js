@@ -11,34 +11,38 @@ import {
   // AccordionActions, 
   AccordionDetails, 
   AccordionSummary,
-  Typography 
+  Typography,
+  Box,
+  Divider
 } from '@mui/material'
 import { MdExpandMore as ExpandMoreIcon } from 'react-icons/md'
 import RoleOperationService from "services/role/RoleOperationService";
 // import AlertDescription from "../../../../common/AlertDescription";
-import { GenericButton } from "@application";
+import { GenericButton, styles } from "@application";
 import { SelectFormsy } from "components/common/formsyComponents";
 import Formsy from "formsy-react";
 import { useClasses } from "@application";
 
-const styles = theme => ({
-  formControl: {
-    margin: 1,
-    minWidth: 120
-  },
-  selectEmpty: {
-    marginTop: 2
-  },
-  chips: {
-    display: "flex",
-    flexWrap: "wrap"
-  },
-  chip: {
-    margin: 2
-  }
-});
+// const styles = theme => ({
+//   formControl: {
+//     margin: 1,
+//     minWidth: 120
+//   },
+//   selectEmpty: {
+//     marginTop: 2
+//   },
+//   chips: {
+//     display: "flex",
+//     flexWrap: "wrap"
+//   },
+//   chip: {
+//     margin: 2
+//   }
+// });
 
 function UserRoleMapping(props) {
+  const feature = props.feature
+
 
   useEffect(()=>{
     console.log("Index Page Data in UserRoleMapping:-", props);
@@ -189,11 +193,13 @@ function UserRoleMapping(props) {
   };
 
   return (
-    <div className="p-3 pb-20" >
+    <div className={`${classes.root}`}>
+    <Box className="moduleName">{feature.breadCrumbs[feature.breadCrumbs.length - 1].label}</Box>
+    <Divider className="mb-[10px] border-[#C1C9D3]"></Divider>
       <Formsy>
-        <div className={`${classes.root} mt-5`}>
+        <div>
           <Grid 
-              className='main_input_container'
+              className='main_input_container rounded-[10px] mx-5'
               container 
               justify="center" 
               alignItems="center" 
@@ -228,7 +234,7 @@ function UserRoleMapping(props) {
               </FormControl>
             </Grid>
             <Grid className='inputContainer' item md={5}>
-            <Typography>Select Role</Typography>
+            <Typography className="min-w-[115px]">Select Role</Typography>
               <FormControl className={classes.formControl} fullWidth>
                 {/* <InputLabel id="userRoleLabel">User Roles</InputLabel> */}
                 <SelectFormsy

@@ -109,7 +109,7 @@ function RoleFeatureMapping(props) {
       <Divider className="mb-[10px] border-[#C1C9D3]"></Divider>
       <Formsy>
         <Grid
-          className='main_input_container'
+          className='main_input_container rounded-[10px] mx-5'
           container justify="center"
           alignItems="center" spacing={3}>
           <Grid

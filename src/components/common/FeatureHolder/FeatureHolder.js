@@ -17,7 +17,7 @@ import {
     ClickAwayListener,
     Divider
 } from '@mui/material';
-// import { MdPushPin, MdBookmark, MdArrowDropDown, MdRefresh } from 'react-icons/md'
+import { MdRefresh, MdOutlineClose } from 'react-icons/md'
 import { IoMdRefreshCircle } from 'react-icons/io'
 import ComponentHolder from 'components/common/componentHolder/ComponentHolder';
 import ModuleHolder from 'components/common/ModuleHolder';
@@ -451,16 +451,22 @@ const FeatureHolder = ({feature}) => {
 											<span key={index} >
 												{feature.showModule===item.id ? (
 													<Chip 
+                            sx={{
+                              '& .MuiChip-deleteIcon': {
+                                color: 'white',
+                              },
+                            }}
 														key={item.id} 
 														style={{backgroundColor: '#83a3bb',}} 
 														className="text-[12px] m-1 text-white font-gSans" 
 														label={item.label}
 														icon={
-															<IoMdRefreshCircle 
-																	className=" text-[#61798b] hover:text-[#565f6f]" 
+															<MdRefresh 
+																	className=" text-white hover:text-[#565f6f]" 
 																	onClick={()=>{handleRefresh(item)}} 
 															/>
 														}
+                            deleteIcon={<MdOutlineClose/>}
 														size="small" 
 														onDelete={()=>handleDelete(item)}
 														classes={{
@@ -474,6 +480,7 @@ const FeatureHolder = ({feature}) => {
 														className=" bg-transparent font-gSans hover:bg-light-grey hover:text-white text-[12px] m-1" 
 														size="small" 
 														label={item.label} 
+                            deleteIcon={<MdOutlineClose/>}
 														onClick={()=>handleClick(item)}  
 														onDelete={()=>handleDelete(item)} 
 														classes={{

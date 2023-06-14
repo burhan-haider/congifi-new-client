@@ -16,7 +16,8 @@ const styles = theme => ({
     padding: "2px 2.5% 2px 2.5%",
     "&:hover": {
       backgroundColor: "#052a4f",
-      color: "white"
+      color: "white",
+      borderColor: "#052a4f",
     }
   },
   MuiButtonLast: {
@@ -26,7 +27,9 @@ const styles = theme => ({
     padding: "2px 2.5% 2px 2.5%",
     "&:hover": {
       backgroundColor: "#052a4f",
-      color: "white"
+      color: "white",
+      borderColor: "#052a4f",
+
     },
     marginRight: "0px"
   },

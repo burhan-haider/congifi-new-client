@@ -234,6 +234,7 @@ const TransactionDashboard = (props) => {
                                     <Grid className='inputContainer' item xs={4} key={index}>
                                     <Typography>{eachParam.MODULEPARAMIDNAME}</Typography>
                                     <FormControl
+                                    fullWidth
                                         className={
                                         (clsx(classes.margin, classes.textField),
                                         classes.formControl)
@@ -241,7 +242,7 @@ const TransactionDashboard = (props) => {
                                         variant="outlined"
                                     >
                                         <ViewFieldFormsy
-                                        className={undefined}
+                                        // className={'w-full'}
                                         name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
                                         // label={`${eachParam.MODULEPARAMIDNAME}`}
                                         onChange={() => {}}
