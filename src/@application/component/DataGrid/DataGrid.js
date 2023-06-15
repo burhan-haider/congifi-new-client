@@ -24,14 +24,16 @@ import { BsInfoCircleFill, BsCaretRightFill, BsFilter } from 'react-icons/bs'
 import { AiOutlineSortAscending, AiOutlineSortDescending } from 'react-icons/ai'
 import masterModuleHyperlinks from '../hyperlinks/MasterModuleHyperlinks'
 import moment from 'moment'
+import commonService from 'services/common/commonService'
 
 import './tableStyles.css'
 import Toolbar from './Toolbar/Toolbar'
 import BottomContainer from './BottomContainer/BottomContainer'
 import GenericDialog from '../dialog/GenericDialog'
+import { GenericDetailsBottomPanel } from 'components/common/modules/moduleDataContainer/modulePages/common/bottomPages'
 import { useSelector } from 'react-redux'
 import HyperlinkModalContentConfig from '../hyperlinks/HyperlinkModalContentConfig'
-import { FaInfoCircle } from 'react-icons/fa'
+import { FaArrowLeft, FaInfoCircle } from 'react-icons/fa'
 
 const DataGrid = (props) => {
     const {
@@ -60,6 +62,8 @@ const DataGrid = (props) => {
     const [hyperlinkContent, setHyperlinkContent] = useState({})
 
     const [infoOpen, setInfoOpen] = useState(false);
+    const [infoRow, setInfoRow] = useState({});
+    const [infoRowArray, setInfoRowArray] = useState([]);
 
     const [sortColumns, setSortColumns] = useState([])
     const [rows, setRows] = useState([])
@@ -88,6 +92,17 @@ const DataGrid = (props) => {
 
     //Filters States
     const [filterActive, setFilterActive] = useState(false)
+
+    const dataSet = {
+        "Customer Details": commonService.fetchModuleDetails(
+            "customerMaster",
+            infoRowArray[2]
+        ),
+        "Account Details": commonService.fetchModuleDetails(
+            "customerMaster",
+            infoRowArray[2]
+        )
+    };
 
     const toTitleCase = (str) => {
         return str.replace(/\w\S*/g, function (txt) {
@@ -146,10 +161,10 @@ const DataGrid = (props) => {
         let tempColumns = []
         let tempRows = []
 
-        if (utilColumn === 'select') {
+        if (utilColumn === 'select' && infoOpen === false) {
             tempColumns.push(SelectColumn)
         }
-        if (utilColumn === 'singleSelect') {
+        if (utilColumn === 'singleSelect' && infoOpen === false) {
             tempColumns.push({
                 ...SelectColumn,
                 headerRenderer(props) {
@@ -181,11 +196,14 @@ const DataGrid = (props) => {
             filterable: true,
             width: srWidth,
             formatter(props) {
-                return isInfo === true ? (
+                return isInfo === true && infoOpen === false ? (
                     <div className="flex flex-row justify-start items-center h-[35px]">
                         <IconButton
                             onClick={() => {
                                 console.log("Info Props:-", props)
+                                setInfoRow(props.row)
+                                setInfoRowArray(Object.values(props.row))
+                                setInfoOpen(true);
                             }}
                             className='mr-2'
                         >
@@ -267,7 +285,7 @@ const DataGrid = (props) => {
         setCheckedState(new Array(tempColumns.length).fill(false))
         setTotalRows(tempRows)
         setTempRowState(tempRows)
-    }, [utilColumn, filterActive, tableData])
+    }, [utilColumn, filterActive, tableData, infoOpen])
 
     //Setting Visible Rows For Pagination
     useEffect(() => {
@@ -291,9 +309,7 @@ const DataGrid = (props) => {
         if (searchString !== '') {
             const newRecords = tempRowState.filter((e) =>
                 Object.values(e).find((f) => {
-                    if (typeof f === 'string' && f.includes(searchString)) {
-                        return true
-                    } else return false
+                    return !!(typeof f === 'string' && f.includes(searchString));
                 })
             )
             setTotalRows(newRecords)
@@ -365,16 +381,6 @@ const DataGrid = (props) => {
             }
         }
     }, [selectedRows, utilColumn, tableData])
-
-
-    // const summaryRows = useMemo(() => {
-    //     const summaryRow = {
-    //         id: 'total_0',
-    //         totalCount: totalRows.length,
-    //         yesCount: totalRows.filter((r) => r.available).length,
-    //     }
-    //     return [summaryRow]
-    // }, [totalRows])
 
     const rowKeyGetter = (row) => {
         return row.INDEX || 0
@@ -491,7 +497,7 @@ const DataGrid = (props) => {
             sortColumns={sortColumns}
             onSortColumnsChange={setSortColumns}
             // summaryRows={summaryRows}
-            className={`rdg-light text-base bg-[#f4f5fa] overflow-hidden hover:overflow-auto min-h-[300px] border-[1.5px] ${filterActive === true && 'border-solid border-app-primary '}`}
+            className={`rdg-light text-base bg-[#f4f5fa] overflow-hidden hover:overflow-auto ${!infoOpen ? 'min-h-[300px]' : 'h-fit'} border-[1.5px] ${filterActive === true && 'border-solid border-app-primary'}`}
             direction={direction}
             rowClass={(row, index) =>
                 `border-none ${selectedRows.has(row.INDEX)
@@ -534,19 +540,37 @@ const DataGrid = (props) => {
                     setFilterActive={setFilterActive}
                     setIsSelected={setIsSelected}
                 />
-                {gridElement(sortedRows)}
-                <Pagination
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
-                    numOfPages={numOfPages}
-                    dataPerPage={dataPerPage}
-                    setDataPerPage={setDataPerPage}
-                    pageNumbers={pageNumbers}
-                    setPageNumbers={setPageNumbers}
-                    firstIndex={firstIndex}
-                    lastIndex={lastIndex}
-                    totalRows={totalRows}
-                />
+                {infoOpen && (
+                    <Box className="flex flex-row w-full justify-start items-center">
+                        <IconButton onClick={() => {
+                            setInfoOpen(false)
+                            setInfoRow({})
+                            setInfoRowArray([])
+                        }} >
+                            <FaArrowLeft className='text-app-primary' size="16px" />
+                        </IconButton>
+                    </Box>
+                )}
+                {infoOpen
+                    ? gridElement([infoRow])
+                    : gridElement(sortedRows)
+                }
+                {(isInfo && infoOpen) && <GenericDetailsBottomPanel data={dataSet} />}
+                {!infoOpen && (
+                    <Pagination
+                        currentPage={currentPage}
+                        setCurrentPage={setCurrentPage}
+                        numOfPages={numOfPages}
+                        dataPerPage={dataPerPage}
+                        setDataPerPage={setDataPerPage}
+                        pageNumbers={pageNumbers}
+                        setPageNumbers={setPageNumbers}
+                        firstIndex={firstIndex}
+                        lastIndex={lastIndex}
+                        totalRows={totalRows}
+                    />
+                )}
+
                 {actionButtons.length > 0 && (
                     <>
                         <hr color='#ddd' />

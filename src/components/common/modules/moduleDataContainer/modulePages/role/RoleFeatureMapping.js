@@ -108,9 +108,9 @@ function RoleFeatureMapping(props) {
       <Box className="moduleName">{feature.breadCrumbs[feature.breadCrumbs.length - 1].label}</Box>
       <Divider className="mb-[10px] border-[#C1C9D3]"></Divider>
       <Formsy>
-      <Grid 
+        <Grid
           className='main_input_container rounded-[10px] mx-5'
-          container justify="center" 
+          container justify="center"
           alignItems="center" spacing={3}>
           <Grid
             item

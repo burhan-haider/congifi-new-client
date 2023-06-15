@@ -7,6 +7,7 @@ import {
   useSelector,
 } from 'react-redux';
 import { getDesiredLabels } from 'redux/auth/user/user.actions';
+import { fetchRoleBasedModules } from 'redux/features/features.actions';
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
   const selectedFeature = useSelector(state => state.features.features.featureCode);
   const labels = useSelector(state => state.auth.user.labels.allLabels);
   const userData = useSelector(state => state.auth.user.data)
+  const roleBasedModules = useSelector(state => state.features.features.userModules);
   // const [features, setFeatures] = useState(newFeatures);
 
   useEffect(() => {
@@ -31,6 +33,10 @@ function App() {
 
     if (Object.keys(labels).length < 1) {
       dispatch(getDesiredLabels(userData.language, userData.labelDirection));
+    }
+
+    if (roleBasedModules.length < 1) {
+      dispatch(fetchRoleBasedModules());
     }
 
   }, [newFeatures])

@@ -80,6 +80,22 @@ class featureService {
       });
     });
   };
+
+  fetchRoleBasedModules = async () => {
+    return new Promise((resolve, reject) => {
+      httpService.post(`/api/features/roleBasedModules`, {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem("cognifi_token")}`
+        },
+      }).then(response => {
+        if (response.status === 200) {
+          resolve(response.data)
+        } else {
+          reject(response.data.err)
+        }
+      });
+    });
+  };
 }
 
 const instance = new featureService();

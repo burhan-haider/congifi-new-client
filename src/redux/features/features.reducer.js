@@ -15,7 +15,8 @@ import {
     ADD_TO_PINNED_MODULES,
     REMOVE_FROM_PINNED_MODULES,
     OPEN_PINNED_MODULE,
-    REMOVE_REFRESH_MODULE
+    REMOVE_REFRESH_MODULE,
+    FETCH_ROLE_BASED_MODULES
 } from 'redux/features/features.types';
 import _ from "lodash";
 import { RESET_STATE_AFTER_LOGOUT } from 'redux/auth/user/user.types';
@@ -29,11 +30,12 @@ const initialState = {
     success: true,
     refreshModule: true,
     isLoading: true,
+    userModules: [],
 }
 
 const features = (state = initialState, action) => {
-    switch(action.type){
-        case FETCH_USER_FEATURES_SUCCESS: 
+    switch (action.type) {
+        case FETCH_USER_FEATURES_SUCCESS:
             return {
                 ...state,
                 userFeatures: action.payload,
@@ -44,6 +46,12 @@ const features = (state = initialState, action) => {
             return {
                 ...state,
                 success: false,
+            };
+
+        case FETCH_ROLE_BASED_MODULES:
+            return {
+                ...state,
+                userModules: action.payload,
             };
 
         case SET_SELECTED_FEATURE:
@@ -64,15 +72,15 @@ const features = (state = initialState, action) => {
             var stateData = state.features;
 
             const featureName = state.userFeatures.filter(item => item.featureCode === featureCode)[0].featureName;
-            
 
-            if(state.features.filter(item => item.featureCode === featureCode).length > 0){
+
+            if (state.features.filter(item => item.featureCode === featureCode).length > 0) {
                 stateData = state.features.map(item => {
 
-                    if(item.featureCode === featureCode){
+                    if (item.featureCode === featureCode) {
 
                         let allModules = [...moduleData, ...item.modules];
-                        
+
                         item.modules = _.unionBy(allModules, "uniqueNo");
                         item.modules = _.uniqBy(allModules, "uniqueNo");
 
@@ -81,32 +89,32 @@ const features = (state = initialState, action) => {
 
                     }
                     return item;
-                    
+
                 });
             }
-            else{
+            else {
                 stateData = [
                     ...state.features,
                     {
                         featureCode: featureCode,
                         modules: [...moduleData],
-                        breadCrumbs:[{
-                            id: featureCode, 
+                        breadCrumbs: [{
+                            id: featureCode,
                             code: featureCode,
                             label: featureName,
                             level: 0,
                         }],
-                        openTabs:[],
+                        openTabs: [],
                         showRoot: true,
                         showModule: featureCode,
                     }
                 ]
             }
-            return {...state, features: stateData};
+            return { ...state, features: stateData };
         }
 
         case FETCH_FEATURE_MODULES_ERROR: {
-            return{
+            return {
                 ...state,
                 success: false,
             }
@@ -121,35 +129,35 @@ const features = (state = initialState, action) => {
             }));
             const showData = state.features.map(f => {
                 if (f.featureCode === featureCode) {
-                f.showModule = uniqueNo;
-                f.showRoot = false;
-        
-                f.modules.map(z =>
-                    z.uniqueNo === uniqueNo ? (z.selected = true) : z.selected
-                );
-        
-                var mergeObj = f.modules.map(
-                    obj => moduleData.find(o => o.uniqueNo === obj.uniqueNo) || obj
-                );
-        
-                let finalObjList = [...mergeObj, ...moduleData];
-                f.modules = _.unionWith(finalObjList, _.isEqual);
-        
-                f.modules = _.uniqBy(finalObjList, "uniqueNo");
+                    f.showModule = uniqueNo;
+                    f.showRoot = false;
+
+                    f.modules.map(z =>
+                        z.uniqueNo === uniqueNo ? (z.selected = true) : z.selected
+                    );
+
+                    var mergeObj = f.modules.map(
+                        obj => moduleData.find(o => o.uniqueNo === obj.uniqueNo) || obj
+                    );
+
+                    let finalObjList = [...mergeObj, ...moduleData];
+                    f.modules = _.unionWith(finalObjList, _.isEqual);
+
+                    f.modules = _.uniqBy(finalObjList, "uniqueNo");
                 }
-        
+
                 return f;
             });
-        
+
             return { ...state, features: showData };
         }
-        case FETCH_MODULE_DATA_ERROR: 
+        case FETCH_MODULE_DATA_ERROR:
             return {
                 ...state,
                 error: action.payload
             };
-        
-        case SET_SELECTED_MODULE: 
+
+        case SET_SELECTED_MODULE:
             return {
                 ...state,
                 features: state.features.map(item => {
@@ -164,12 +172,12 @@ const features = (state = initialState, action) => {
                     return item;
                 })
             }
-        case ADD_TO_BREADCRUMBS: 
-            return{
+        case ADD_TO_BREADCRUMBS:
+            return {
                 ...state,
                 features: state.features.map(item => {
-                    if(item.featureCode === action.payload.featureCode){
-                        return{
+                    if (item.featureCode === action.payload.featureCode) {
+                        return {
                             ...item,
                             breadCrumbs: [...item.breadCrumbs, action.payload.module]
                         }
@@ -178,11 +186,11 @@ const features = (state = initialState, action) => {
                 })
             }
         case REMOVE_FROM_BREADCRUMBS:
-            return{
+            return {
                 ...state,
                 features: state.features.map(item => {
-                    if(item.featureCode === action.payload.featureCode){
-                        return{
+                    if (item.featureCode === action.payload.featureCode) {
+                        return {
                             ...item,
                             breadCrumbs: item.breadCrumbs.filter(item => item.id !== action.payload.module.id)
                         }
@@ -191,11 +199,11 @@ const features = (state = initialState, action) => {
                 })
             }
         case ADD_TO_OPENTABS:
-            return{
+            return {
                 ...state,
                 features: state.features.map(item => {
-                    if(item.featureCode === action.payload.featureCode){
-                        return{
+                    if (item.featureCode === action.payload.featureCode) {
+                        return {
                             ...item,
                             openTabs: [...item.openTabs, action.payload.module]
                         }
@@ -204,11 +212,11 @@ const features = (state = initialState, action) => {
                 })
             }
         case REMOVE_FROM_OPENTABS:
-            return{
+            return {
                 ...state,
                 features: state.features.map(item => {
-                    if(item.featureCode === action.payload.featureCode){
-                        return{
+                    if (item.featureCode === action.payload.featureCode) {
+                        return {
                             ...item,
                             openTabs: item.openTabs.filter(item => item !== action.payload.module)
                         }
@@ -218,44 +226,44 @@ const features = (state = initialState, action) => {
             }
         case PUT_MAP_CLICK_DATA_IN_FEATURES: {
             const showData = state.features.map(f => {
-              if (f.featureCode === state.featureCode) {
-                f.showModule = action.payload.uniqueNo;
-                f.showRoot = false;
-                let newModules = [];
-                action.payload.module.map(item => {
-                    if(f.modules.filter(e=>e.uniqueNo === item.uniqueNo).length == 0){
-                        newModules.push({
-                            ...item,
-                            parentModuleId: action.payload.parentModuleId,
-                            parentModule_Id: action.payload.parentModule_Id,
-                        });
-                    }
-                });
-                f.modules = [...f.modules, ...newModules];
-              }
-              return f;
+                if (f.featureCode === state.featureCode) {
+                    f.showModule = action.payload.uniqueNo;
+                    f.showRoot = false;
+                    let newModules = [];
+                    action.payload.module.map(item => {
+                        if (f.modules.filter(e => e.uniqueNo === item.uniqueNo).length == 0) {
+                            newModules.push({
+                                ...item,
+                                parentModuleId: action.payload.parentModuleId,
+                                parentModule_Id: action.payload.parentModule_Id,
+                            });
+                        }
+                    });
+                    f.modules = [...f.modules, ...newModules];
+                }
+                return f;
             });
-      
+
             return { ...state, features: showData };
-          }
+        }
         case ADD_TO_PINNED_MODULES: {
-            return{
+            return {
                 ...state,
                 pinnedModules: [...state.pinnedModules, action.payload]
             }
         }
         case REMOVE_FROM_PINNED_MODULES: {
-            return{
+            return {
                 ...state,
                 pinnedModules: state.pinnedModules.filter(item => item !== action.payload)
             }
         }
         case OPEN_PINNED_MODULE: {
-            return{
+            return {
                 ...state,
                 featureCode: action.payload.featureCode,
                 features: state.features.map(item => {
-                    if(item.featureCode === action.payload.featureCode){
+                    if (item.featureCode === action.payload.featureCode) {
                         return action.payload.module
                     }
                     return item;
@@ -285,7 +293,7 @@ const features = (state = initialState, action) => {
             return state;
     }
 
-        
+
 
 }
 

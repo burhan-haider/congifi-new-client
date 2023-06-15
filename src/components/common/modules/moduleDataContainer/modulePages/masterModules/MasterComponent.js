@@ -151,8 +151,9 @@ export default function MasterComponent(props) {
             // actionButtons={GenericDetailsBottomContainer}
             moduleType={"masters"}
           // ComponentBottomContainer={GenericDetailsBottomContainer}
+          // InfoContainer={GenericDetailsBottomContainer}
           />
-          <GenericDatatable
+          {/* <GenericDatatable
             dataSet={searchData}
             infoEnabled={true}
             moduleName={moduleHeader[0]}
@@ -163,7 +164,7 @@ export default function MasterComponent(props) {
             selected={dataSelected}
             selectHandler={setDataSelected}
             dynamicProps={searchFormData}
-          ></GenericDatatable>
+          ></GenericDatatable> */}
         </>
       ) : (
         "No data available"

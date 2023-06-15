@@ -17,7 +17,8 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
     width: "100%",
-    backgroundColor: "#ece4e4"
+    backgroundColor: "#ece4e4",
+    marginBottom: '25px'
     //borderRadius: 20,
   },
   heading: {
@@ -82,31 +83,31 @@ function GenericDetailsDataPanel(props) {
   return (
     <div className={classes.root}>
       {props.data
-        ? Object.keys(props.data).map(function(key) {
-            const eachDetail = {
-              dataSet: props.data[key]
-            };
-            return (
-              <ExpansionPanel
-                key={key}
-                expanded={expanded === key}
-                onChange={handleChange(key)}
-                TransitionProps={{ unmountOnExit: true }}
+        ? Object.keys(props.data).map(function (key) {
+          const eachDetail = {
+            dataSet: props.data[key]
+          };
+          return (
+            <ExpansionPanel
+              key={key}
+              expanded={expanded === key}
+              onChange={handleChange(key)}
+              TransitionProps={{ unmountOnExit: true }}
+            >
+              <ExpansionPanelSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls={key}
+                id={key}
+                className="bg-gray-300"
               >
-                <ExpansionPanelSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls={key}
-                  id={key}
-                  className="bg-gray-300"
-                >
-                  <Typography className={classes.heading}>{key}</Typography>
-                </ExpansionPanelSummary>
-                <ExpansionPanelDetails>
-                  <GenericTabContent data={eachDetail} />
-                </ExpansionPanelDetails>
-              </ExpansionPanel>
-            );
-          })
+                <Typography className={classes.heading}>{key}</Typography>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <GenericTabContent data={eachDetail} />
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+          );
+        })
         : null}
     </div>
   );

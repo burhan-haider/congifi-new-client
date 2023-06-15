@@ -25,14 +25,6 @@ import UserMenuList from './userMenu/UserMenu';
 // import commonService from 'services/common/commonService'
 import HeaderMenu from './headerMenu/HeaderMenu';
 
-const theme = createTheme({
-    palette: {
-      primary: {
-        // Purple and green play nicely together.
-        main: '#CCCB2C',
-      }
-    },
-  });
 
 const MyTabScrollButton = styled(TabScrollButton)({
     // display: 'none',
