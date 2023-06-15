@@ -22,14 +22,14 @@ const rootElement = document.getElementById('root')
 const theme = createTheme({
   components: {
     MuiDialog: {
-        defaultProps: {
-            container: rootElement,
-        },
+      defaultProps: {
+        container: rootElement,
+      },
     },
     MuiMenu: {
-        defaultProps: {
-            container: rootElement,
-        },
+      defaultProps: {
+        container: rootElement,
+      },
     },
   },
 });
@@ -37,27 +37,25 @@ const theme = createTheme({
 const root = createRoot(rootElement);
 
 root.render(
-    <Provider store={store}>
-      {/* <PersistGate loading={null} persistor={persistor}> */}
-      <Router history={history}>
+  <Provider store={store}>
+    {/* <PersistGate loading={null} persistor={persistor}> */}
+    <Router history={history}>
       <ThemeProvider theme={theme}>
         <StyledEngineProvider injectFirst>
           <Authentication history={history}>
             <Authorization history={history}>
-              
-                  {/* <MUIThemeProvider theme={theme}> */}
-                    <Layout>
-                      <App />
-                    </Layout>
-                  {/* </MUIThemeProvider> */}
-                
+              {/* <MUIThemeProvider theme={theme}> */}
+              <Layout>
+                <App />
+              </Layout>
+              {/* </MUIThemeProvider> */}
             </Authorization>
           </Authentication>
         </StyledEngineProvider>
       </ThemeProvider>
-      </Router>
-      {/* </PersistGate> */}
-    </Provider>
+    </Router>
+    {/* </PersistGate> */}
+  </Provider>
 );
 
 reportWebVitals();

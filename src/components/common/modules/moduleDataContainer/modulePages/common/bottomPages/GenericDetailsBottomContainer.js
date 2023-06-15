@@ -1,5 +1,5 @@
 //Created by Vivek - 20.04.2020
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@mui/styles";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
@@ -58,6 +58,11 @@ function GenericDetailsBottomContainer(props) {
 
   // console.log("dataSet = ", dataSet);
 
+  useEffect(() => {
+    console.log("headers in bottom container:-", headers);
+    console.log("row in bottom container:-", row)
+  })
+
   return (
     <React.Fragment>
       <TableContainer>
@@ -92,35 +97,35 @@ function GenericDetailsBottomContainer(props) {
             >
               {row.length
                 ? row.map((eachColumn, index) => {
-                    //return <TableCell align="right">{eachColumn}</TableCell>
-                    if (eachColumn === null) {
-                      eachColumn = "N.A.";
-                    }
-                    return (
-                      <GenericTooltip
-                        title={eachColumn}
-                        key={index + "~^^~" + eachColumn}
+                  //return <TableCell align="right">{eachColumn}</TableCell>
+                  if (eachColumn === null) {
+                    eachColumn = "N.A.";
+                  }
+                  return (
+                    <GenericTooltip
+                      title={eachColumn}
+                      key={index + "~^^~" + eachColumn}
+                    >
+                      <TableCell
+                        //id={eachColumn}
+                        id={
+                          headers[index]
+                            ? headers[index].id + "~^^~" + eachColumn
+                            : eachColumn
+                        }
+                        key={
+                          headers[index]
+                            ? headers[index].id + "~^^~" + eachColumn
+                            : eachColumn
+                        }
+                        align="center"
+                        className={classes.tableCell}
                       >
-                        <TableCell
-                          //id={eachColumn}
-                          id={
-                            headers[index]
-                              ? headers[index].id + "~^^~" + eachColumn
-                              : eachColumn
-                          }
-                          key={
-                            headers[index]
-                              ? headers[index].id + "~^^~" + eachColumn
-                              : eachColumn
-                          }
-                          align="center"
-                          className={classes.tableCell}
-                        >
-                          {eachColumn}
-                        </TableCell>
-                      </GenericTooltip>
-                    );
-                  })
+                        {eachColumn}
+                      </TableCell>
+                    </GenericTooltip>
+                  );
+                })
                 : null}
             </TableRow>
           </TableBody>
@@ -134,33 +139,33 @@ function GenericDetailsBottomContainer(props) {
       <div>
         {bottomAction
           ? bottomAction.map(actions =>
-              actions != null
-                ? Object.entries(actions).map((key, value) => {
-                    return (
-                      <GenericButton
-                        type="submit"
-                        variant="outlined"
-                        color="primary"
-                        aria-label={key[1]}
-                        className={classes.button}
-                        style={{ margin: 10 }}
-                        startIcon={
-                          `${key[0]}`.includes("search") ? (
-                            <SearchButtonIcon />
-                          ) : (
-                            ""
-                          )
-                        }
-                        //disabled={!isFormValid}
-                        value={key[0]}
-                        key={value}
-                      >
-                        {key[1]}
-                      </GenericButton>
-                    );
-                  })
-                : null
-            )
+            actions != null
+              ? Object.entries(actions).map((key, value) => {
+                return (
+                  <GenericButton
+                    type="submit"
+                    variant="outlined"
+                    color="primary"
+                    aria-label={key[1]}
+                    className={classes.button}
+                    style={{ margin: 10 }}
+                    startIcon={
+                      `${key[0]}`.includes("search") ? (
+                        <SearchButtonIcon />
+                      ) : (
+                        ""
+                      )
+                    }
+                    //disabled={!isFormValid}
+                    value={key[0]}
+                    key={value}
+                  >
+                    {key[1]}
+                  </GenericButton>
+                );
+              })
+              : null
+          )
           : null}
       </div>
     </React.Fragment>

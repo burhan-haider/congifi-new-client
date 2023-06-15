@@ -2,25 +2,42 @@ import featureService from "services/features/featureService";
 import commonService from "services/common/commonService";
 
 import {
-    FETCH_USER_FEATURES_SUCCESS,
-    FETCH_USER_FEATURES_ERROR,
-    SET_SELECTED_FEATURE,
-    FETCH_FEATURE_MODULES_ERROR,
-    FETCH_FEATURE_MODULES_SUCCESS,
-    FETCH_MODULE_DATA_ERROR,
-    FETCH_MODULE_DATA_SUCCESS,
-    SET_SELECTED_MODULE,
-    ADD_TO_BREADCRUMBS,
-    REMOVE_FROM_BREADCRUMBS,
-    ADD_TO_OPENTABS,
-    REMOVE_FROM_OPENTABS,
-    PUT_MAP_CLICK_DATA_IN_FEATURES,
-    ADD_TO_PINNED_MODULES,
-    REMOVE_FROM_PINNED_MODULES,
-    OPEN_PINNED_MODULE,
-    REMOVE_REFRESH_MODULE
+  FETCH_USER_FEATURES_SUCCESS,
+  FETCH_USER_FEATURES_ERROR,
+  SET_SELECTED_FEATURE,
+  FETCH_FEATURE_MODULES_ERROR,
+  FETCH_FEATURE_MODULES_SUCCESS,
+  FETCH_MODULE_DATA_ERROR,
+  FETCH_MODULE_DATA_SUCCESS,
+  SET_SELECTED_MODULE,
+  ADD_TO_BREADCRUMBS,
+  REMOVE_FROM_BREADCRUMBS,
+  ADD_TO_OPENTABS,
+  REMOVE_FROM_OPENTABS,
+  PUT_MAP_CLICK_DATA_IN_FEATURES,
+  ADD_TO_PINNED_MODULES,
+  REMOVE_FROM_PINNED_MODULES,
+  OPEN_PINNED_MODULE,
+  REMOVE_REFRESH_MODULE,
+  FETCH_ROLE_BASED_MODULES,
 } from './features.types'
 
+export const fetchRoleBasedModules = () => {
+  return dispatch => {
+    featureService
+      .fetchRoleBasedModules()
+      .then(data => {
+        return dispatch({
+          type: FETCH_ROLE_BASED_MODULES,
+          payload: data
+        });
+      })
+      .catch(err => {
+        console.error("Error Fetching Role Based Modules:-", err)
+      })
+  }
+
+}
 
 export const fetchUserFeature = user => {
   return dispatch => {
@@ -135,7 +152,7 @@ export const removeFromOpenTabs = (featureCode, module) => {
 export const putMapClickedDataInFeatures = (module, parentModuleId, parentModule_Id, uniqueNo) => {
   return {
     type: PUT_MAP_CLICK_DATA_IN_FEATURES,
-    payload: { module, parentModuleId, parentModule_Id, uniqueNo}
+    payload: { module, parentModuleId, parentModule_Id, uniqueNo }
   };
 };
 
@@ -152,7 +169,7 @@ export const removeFromPinnedModules = (module) => {
   return dispatch => {
     return dispatch({
       type: REMOVE_FROM_PINNED_MODULES,
-      payload: module 
+      payload: module
     });
   }
 }
