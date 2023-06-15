@@ -331,7 +331,6 @@ function GenericDatatable(props) {
   }
 
   return (
-    <ThemeProvider theme={theme}>
       <div className={classes.root}>
         {isDatatableShown ? (
           //VIVEK - GenericDatatable part started
@@ -462,7 +461,6 @@ function GenericDatatable(props) {
           />
         </GenericDialog>
       </div>
-    </ThemeProvider>
   );
 }
 

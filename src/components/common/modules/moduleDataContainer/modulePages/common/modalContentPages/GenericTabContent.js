@@ -6,6 +6,7 @@ import { GenericTabPanel } from "../modalContentPages";
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
+import Divider from '@mui/material/Divider';
 import MuiTabs from "@mui/material/Tabs";
 import MuiTab from "@mui/material/Tab";
 import { useClasses } from "@application";
@@ -14,7 +15,9 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
     width: "100%",
-    backgroundColor: "#f4f5fa"
+    backgroundColor: "#f4f5fa",
+    height: '100%'
+    // padding: '10px',
     //borderRadius: 20
   },
   textFieldRoot: {
@@ -91,7 +94,8 @@ function GenericDetailsTabContent(props) {
   const Tabs = withStyles(theme => ({
     root: {
       minHeight: "30",
-      backgroundColor: "#f4f5fa"
+      backgroundColor: "#f4f5fa",
+      paddingTop: '10px',
     },
     indicator: {
       backgroundColor: "transparent"
@@ -116,7 +120,7 @@ function GenericDetailsTabContent(props) {
   }))(MuiTab);
 
   return (
-    <div>
+    <div className="min-h-[80vh]">
       <div className={classes.root}>
         <AppBar position="static" color="default">
           <Tabs

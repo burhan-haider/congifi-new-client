@@ -381,7 +381,7 @@ function Login(props) {
           href="https://www.quantumdataengines.com/"
           className="flex no-underline text-gray-900 hover:text-black">
           <Typography
-          // className=""
+          className="hover:font-semibold"
             style={{ fontSize: "14px", fontFamily: "GoogleSans-Regular"}}
           >
             www.quantumdataengines.com

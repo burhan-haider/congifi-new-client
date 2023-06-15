@@ -54,7 +54,7 @@ function GenericDialog(props) {
 
   return (
     <div>
-      <ThemeProvider theme={theme}>
+      {/* <ThemeProvider theme={theme}> */}
         <Dialog
           fullWidth={true}
           open={props.state}
@@ -72,7 +72,7 @@ function GenericDialog(props) {
           </DialogTitle>
           <DialogContent>{props.children}</DialogContent>
         </Dialog>
-      </ThemeProvider>
+      {/* </ThemeProvider> */}
     </div>
   );
 }

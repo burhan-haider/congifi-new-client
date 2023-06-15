@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import Typography from "@mui/material/Typography";
-import { GenericDatatable } from "@application";
+import { GenericDatatable, GenericDatagrid } from "@application";
 import Box from "@mui/material/Box";
 import commonService from "services/common/commonService";
 import Grid from "@mui/material/Grid";
@@ -39,6 +39,7 @@ function GenericDetailsTabPanel(props) {
   if (displayType === "D") {
     return (
       <div
+      className="min-h-[70vh]"
         role="tabpanel"
         hidden={currentValue !== currentIndex}
         id={`scrollable-auto-tabpanel-${index}`}
@@ -54,13 +55,13 @@ function GenericDetailsTabPanel(props) {
                   <React.Fragment key={row}>
                     <Grid item xs={3} className={classes.tabPanelGridItems}>
                       <Typography className={clsx(classes.tabPanelTypography)}>
-                        {commonService.getLabel(row, row)}
+                        {`${commonService.getLabel(row, row)}: `}
                       </Typography>
                     </Grid>
                     <Grid item xs={3} className={classes.tabPanelGridItems}>
                       <Typography
                         className={clsx(
-                          "rounded-lg bg-white p-1",
+                          "p-1",
                           classes.tabPanelTypography
                         )}
                       >
@@ -87,15 +88,17 @@ function GenericDetailsTabPanel(props) {
         {/* <h3>{currentIndex}</h3> */}
         {currentValue === currentIndex ? (
           <Box p={3} className={classes.tabPanelBox}>
-            <GenericDatatable
-              dataSet={tableData}
-              infoEnabled={false}
+            <GenericDatagrid
+              tableData={tableData}
+              // infoEnabled={false}
               moduleCode=""
               isSelection={false}
               isMultipleSelect={false}
               selectionIndex={selectionIndex}
-              selected={dataSelected}
-              selectHandler={setDataSelected}
+              selectedData={dataSelected}
+              setSelectedData={setDataSelected}
+              // inputParams={inputParams}
+              // title={`${moduleHeader[0]} Results`}
             />
           </Box>
         ) : null}

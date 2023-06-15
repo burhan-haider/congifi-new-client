@@ -31,6 +31,11 @@ const theme = createTheme({
             container: rootElement,
         },
     },
+    MuiModal: {
+        defaultProps:{
+            container: rootElement,
+      }
+    }
   },
 });
 

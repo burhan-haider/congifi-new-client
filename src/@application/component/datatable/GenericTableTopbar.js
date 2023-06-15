@@ -2,8 +2,10 @@
 import React, { useState } from "react";
 import clsx from "clsx";
 import { makeStyles } from "@mui/styles";
-import Typography from "@mui/material/Typography";
+import {Typography, Grid} from "@mui/material/";
 import TextField from "@mui/material/TextField";
+import Box from "@mui/material/TextField";
+import Button from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 import Input from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
@@ -26,7 +28,10 @@ const styles = theme => ({
     backgroundColor: "#f4f5fa",
     paddingBottom: "15px",
     borderTopLeftRadius: 12,
-    borderTopRightRadius: 12
+    borderTopRightRadius: 12,
+    // alignItems: 'center',
+    display: 'flex',
+    // justifyContent: 'space-between'
   },
   moduleNameDiv: {
     maxHeight: "60px",
@@ -87,6 +92,11 @@ const styles = theme => ({
     maxWidth: "60px",
     maxHeight: "60px",
     cursor: "pointer"
+  },
+  mainContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'end'
   }
 });
 
@@ -140,8 +150,8 @@ function GenericTableTopbar(props) {
   };
 
   return (
-    <div className={clsx("justify-start my-2 p-2 h-10", classes.parentDiv)}>
-      <div className={clsx("flex pl-3 float-left", classes.moduleNameDiv)}>
+    <div className={`justify-between items-center flex my-2 p-2 h-10 ${classes.parentDiv}`}>
+      <div className={`flex pl-3 float-left ${classes.moduleNameDiv}`}>
         <Typography
           variant="h6"
           className="font-gSans text-xl font-bold"
@@ -149,8 +159,8 @@ function GenericTableTopbar(props) {
           {moduleName} Results
         </Typography>
       </div>
-      <div className="flex pr-2 items-center float-right">
-        <div className="flex mr-2">
+      <div className='flex flex-row items-center'>
+        <div className='flex'>
           <img
             src={getIconByKey('print')}
             className={classes.exportIcons}
